@@ -11,11 +11,13 @@ set(CMAKE_CXX_COMPILER_ID "GNU")
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "../PotentialFields_lib"
+  "../Utils_lib"
   )
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
   "/home/damian/Planning/cmake-build-debug/PotentialFields_lib/CMakeFiles/PotentialFields_lib.dir/DependInfo.cmake"
+  "/home/damian/Planning/cmake-build-debug/Utils_lib/CMakeFiles/Utils_lib.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

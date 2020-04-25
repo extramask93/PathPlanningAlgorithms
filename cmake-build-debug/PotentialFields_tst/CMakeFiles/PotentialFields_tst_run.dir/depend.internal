@@ -4,6 +4,16 @@
 PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/CatchMain.cpp.o
  /home/damian/Planning/PotentialFields_tst/CatchMain.cpp
  /home/damian/Planning/PotentialFields_tst/catch.hpp
+PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/GridMapTests.cpp.o
+ ../Utils_lib/GridMap.h
+ ../Utils_lib/Location.h
+ ../Utils_lib/MapException.h
+ /home/damian/Planning/PotentialFields_tst/GridMapTests.cpp
+ /home/damian/Planning/PotentialFields_tst/catch.hpp
+PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/LocationTests.cpp.o
+ ../Utils_lib/Location.h
+ /home/damian/Planning/PotentialFields_tst/LocationTests.cpp
+ /home/damian/Planning/PotentialFields_tst/catch.hpp
 PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/PlannerTests.cpp.o
  ../PotentialFields_lib/PotentialFieldsPlanner.h
  /home/damian/Planning/PotentialFields_tst/PlannerTests.cpp

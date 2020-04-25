@@ -25,6 +25,7 @@ namespace pf {
         void findObstacles();
         boost::optional<uint> findClosestObstacleIndex(uint index);
         std::vector<std::pair<int,int>> getMotionModel() const;
+        double distance(uint fromIndex, uint toIndex);
     private:
         std::vector<bool> ogm_;
         std::vector<uint> obstacleIndexes_;
@@ -40,7 +41,6 @@ namespace pf {
         static constexpr double ATTRACTIVE_POTENTIAL_GAIN = 5.0;
         static constexpr double REPULSIVE_POTENTIAL_GAIN = 100.0;
         static constexpr double POTENTIAL_AREA_WIDTH = 30.0;
-        double distance(uint fromIndex, uint toIndex);
     };
 }
 

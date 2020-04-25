@@ -1,6 +1,7 @@
-set(SOURCE_FILES CatchMain.cpp PlannerTests.cpp)
+set(SOURCE_FILES CatchMain.cpp PlannerTests.cpp LocationTests.cpp GridMapTests.cpp)
 add_executable(PotentialFields_tst_run ${SOURCE_FILES})
 find_package(Python3 COMPONENTS Development NumPy)
 include_directories(PotentialFields_tst_run PRIVATE ${Python3_INCLUDE_DIRS} ${Python3_NumPy_INCLUDE_DIRS})
 target_link_libraries(PotentialFields_tst_run Python3::Python Python3::NumPy)
 target_link_libraries(PotentialFields_tst_run PotentialFields_lib)
+target_link_libraries(PotentialFields_tst_run Utils_lib)

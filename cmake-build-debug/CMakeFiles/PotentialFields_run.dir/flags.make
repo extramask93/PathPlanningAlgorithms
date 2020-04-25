@@ -6,5 +6,5 @@ CXX_FLAGS = -g   -Wextra -Wall -Wpedantic -std=c++17
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/damian/Planning/PotentialFields_lib 
+CXX_INCLUDES = -I/home/damian/Planning/PotentialFields_lib -I/home/damian/Planning/Utils_lib 
 

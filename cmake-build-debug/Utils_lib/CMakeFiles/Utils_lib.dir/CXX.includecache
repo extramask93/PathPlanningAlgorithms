@@ -1,0 +1,46 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../Utils_lib/Location.h
+boost/format.hpp
+-
+
+../Utils_lib/MapException.h
+exception
+-
+string
+-
+
+/home/damian/Planning/Utils_lib/GridMap.cpp
+GridMap.h
+/home/damian/Planning/Utils_lib/GridMap.h
+
+/home/damian/Planning/Utils_lib/GridMap.h
+vector
+-
+cmath
+-
+Location.h
+-
+MapException.h
+-
+boost/optional.hpp
+-
+boost/format.hpp
+-
+
+/home/damian/Planning/Utils_lib/Robot.cpp
+Robot.h
+/home/damian/Planning/Utils_lib/Robot.h
+
+/home/damian/Planning/Utils_lib/Robot.h
+vector
+-
+Location.h
+-
+

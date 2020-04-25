@@ -152,6 +152,60 @@ CatchMain.cpp.s:
 	cd /home/damian/Planning/cmake-build-debug && $(MAKE) -f PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/build.make PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/CatchMain.cpp.s
 .PHONY : CatchMain.cpp.s
 
+GridMapTests.o: GridMapTests.cpp.o
+
+.PHONY : GridMapTests.o
+
+# target to build an object file
+GridMapTests.cpp.o:
+	cd /home/damian/Planning/cmake-build-debug && $(MAKE) -f PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/build.make PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/GridMapTests.cpp.o
+.PHONY : GridMapTests.cpp.o
+
+GridMapTests.i: GridMapTests.cpp.i
+
+.PHONY : GridMapTests.i
+
+# target to preprocess a source file
+GridMapTests.cpp.i:
+	cd /home/damian/Planning/cmake-build-debug && $(MAKE) -f PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/build.make PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/GridMapTests.cpp.i
+.PHONY : GridMapTests.cpp.i
+
+GridMapTests.s: GridMapTests.cpp.s
+
+.PHONY : GridMapTests.s
+
+# target to generate assembly for a file
+GridMapTests.cpp.s:
+	cd /home/damian/Planning/cmake-build-debug && $(MAKE) -f PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/build.make PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/GridMapTests.cpp.s
+.PHONY : GridMapTests.cpp.s
+
+LocationTests.o: LocationTests.cpp.o
+
+.PHONY : LocationTests.o
+
+# target to build an object file
+LocationTests.cpp.o:
+	cd /home/damian/Planning/cmake-build-debug && $(MAKE) -f PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/build.make PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/LocationTests.cpp.o
+.PHONY : LocationTests.cpp.o
+
+LocationTests.i: LocationTests.cpp.i
+
+.PHONY : LocationTests.i
+
+# target to preprocess a source file
+LocationTests.cpp.i:
+	cd /home/damian/Planning/cmake-build-debug && $(MAKE) -f PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/build.make PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/LocationTests.cpp.i
+.PHONY : LocationTests.cpp.i
+
+LocationTests.s: LocationTests.cpp.s
+
+.PHONY : LocationTests.s
+
+# target to generate assembly for a file
+LocationTests.cpp.s:
+	cd /home/damian/Planning/cmake-build-debug && $(MAKE) -f PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/build.make PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/LocationTests.cpp.s
+.PHONY : LocationTests.cpp.s
+
 PlannerTests.o: PlannerTests.cpp.o
 
 .PHONY : PlannerTests.o
@@ -191,6 +245,12 @@ help:
 	@echo "... CatchMain.o"
 	@echo "... CatchMain.i"
 	@echo "... CatchMain.s"
+	@echo "... GridMapTests.o"
+	@echo "... GridMapTests.i"
+	@echo "... GridMapTests.s"
+	@echo "... LocationTests.o"
+	@echo "... LocationTests.i"
+	@echo "... LocationTests.s"
 	@echo "... PlannerTests.o"
 	@echo "... PlannerTests.i"
 	@echo "... PlannerTests.s"

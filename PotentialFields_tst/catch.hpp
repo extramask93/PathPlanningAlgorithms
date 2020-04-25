@@ -465,6 +465,7 @@ namespace Catch {
 #endif
 
 #include <iosfwd>
+#include <boost/optional/optional_io.hpp>
 #include <string>
 #include <cstdint>
 

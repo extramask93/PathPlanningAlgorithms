@@ -256,6 +256,12 @@ Tests_BINARY_DIR:STATIC=/home/damian/Planning/cmake-build-debug/PotentialFields_
 //Value Computed by CMake
 Tests_SOURCE_DIR:STATIC=/home/damian/Planning/PotentialFields_tst
 
+//Value Computed by CMake
+Utils_BINARY_DIR:STATIC=/home/damian/Planning/cmake-build-debug/Utils_lib
+
+//Value Computed by CMake
+Utils_SOURCE_DIR:STATIC=/home/damian/Planning/Utils_lib
+
 
 ########################
 # INTERNAL cache entries
@@ -373,7 +379,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=3
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=4
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

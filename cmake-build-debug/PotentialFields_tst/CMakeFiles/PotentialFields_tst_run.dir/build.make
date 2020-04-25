@@ -83,21 +83,52 @@ PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/PlannerTests.cpp.s: c
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/PotentialFields_tst_run.dir/PlannerTests.cpp.s"
 	cd /home/damian/Planning/cmake-build-debug/PotentialFields_tst && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/damian/Planning/PotentialFields_tst/PlannerTests.cpp -o CMakeFiles/PotentialFields_tst_run.dir/PlannerTests.cpp.s
 
+PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/LocationTests.cpp.o: PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/flags.make
+PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/LocationTests.cpp.o: ../PotentialFields_tst/LocationTests.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/damian/Planning/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/LocationTests.cpp.o"
+	cd /home/damian/Planning/cmake-build-debug/PotentialFields_tst && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/PotentialFields_tst_run.dir/LocationTests.cpp.o -c /home/damian/Planning/PotentialFields_tst/LocationTests.cpp
+
+PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/LocationTests.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/PotentialFields_tst_run.dir/LocationTests.cpp.i"
+	cd /home/damian/Planning/cmake-build-debug/PotentialFields_tst && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/damian/Planning/PotentialFields_tst/LocationTests.cpp > CMakeFiles/PotentialFields_tst_run.dir/LocationTests.cpp.i
+
+PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/LocationTests.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/PotentialFields_tst_run.dir/LocationTests.cpp.s"
+	cd /home/damian/Planning/cmake-build-debug/PotentialFields_tst && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/damian/Planning/PotentialFields_tst/LocationTests.cpp -o CMakeFiles/PotentialFields_tst_run.dir/LocationTests.cpp.s
+
+PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/GridMapTests.cpp.o: PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/flags.make
+PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/GridMapTests.cpp.o: ../PotentialFields_tst/GridMapTests.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/damian/Planning/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/GridMapTests.cpp.o"
+	cd /home/damian/Planning/cmake-build-debug/PotentialFields_tst && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/PotentialFields_tst_run.dir/GridMapTests.cpp.o -c /home/damian/Planning/PotentialFields_tst/GridMapTests.cpp
+
+PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/GridMapTests.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/PotentialFields_tst_run.dir/GridMapTests.cpp.i"
+	cd /home/damian/Planning/cmake-build-debug/PotentialFields_tst && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/damian/Planning/PotentialFields_tst/GridMapTests.cpp > CMakeFiles/PotentialFields_tst_run.dir/GridMapTests.cpp.i
+
+PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/GridMapTests.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/PotentialFields_tst_run.dir/GridMapTests.cpp.s"
+	cd /home/damian/Planning/cmake-build-debug/PotentialFields_tst && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/damian/Planning/PotentialFields_tst/GridMapTests.cpp -o CMakeFiles/PotentialFields_tst_run.dir/GridMapTests.cpp.s
+
 # Object files for target PotentialFields_tst_run
 PotentialFields_tst_run_OBJECTS = \
 "CMakeFiles/PotentialFields_tst_run.dir/CatchMain.cpp.o" \
-"CMakeFiles/PotentialFields_tst_run.dir/PlannerTests.cpp.o"
+"CMakeFiles/PotentialFields_tst_run.dir/PlannerTests.cpp.o" \
+"CMakeFiles/PotentialFields_tst_run.dir/LocationTests.cpp.o" \
+"CMakeFiles/PotentialFields_tst_run.dir/GridMapTests.cpp.o"
 
 # External object files for target PotentialFields_tst_run
 PotentialFields_tst_run_EXTERNAL_OBJECTS =
 
 PotentialFields_tst/PotentialFields_tst_run: PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/CatchMain.cpp.o
 PotentialFields_tst/PotentialFields_tst_run: PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/PlannerTests.cpp.o
+PotentialFields_tst/PotentialFields_tst_run: PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/LocationTests.cpp.o
+PotentialFields_tst/PotentialFields_tst_run: PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/GridMapTests.cpp.o
 PotentialFields_tst/PotentialFields_tst_run: PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/build.make
 PotentialFields_tst/PotentialFields_tst_run: /usr/lib/x86_64-linux-gnu/libpython3.7m.so
 PotentialFields_tst/PotentialFields_tst_run: PotentialFields_lib/libPotentialFields_lib.a
+PotentialFields_tst/PotentialFields_tst_run: Utils_lib/libUtils_lib.a
 PotentialFields_tst/PotentialFields_tst_run: PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/damian/Planning/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable PotentialFields_tst_run"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/damian/Planning/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable PotentialFields_tst_run"
 	cd /home/damian/Planning/cmake-build-debug/PotentialFields_tst && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/PotentialFields_tst_run.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

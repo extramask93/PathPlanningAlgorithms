@@ -6,5 +6,5 @@ CXX_FLAGS = -g
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/damian/Planning/PotentialFields_tst/PotentialFields_tst_run -I/home/damian/Planning/PotentialFields_tst/PRIVATE -I/home/damian/Planning/PotentialFields_lib -isystem /usr/include/python3.7m -isystem /usr/local/lib/python3.7/dist-packages/numpy/core/include 
+CXX_INCLUDES = -I/home/damian/Planning/PotentialFields_tst/PotentialFields_tst_run -I/home/damian/Planning/PotentialFields_tst/PRIVATE -I/home/damian/Planning/PotentialFields_lib -I/home/damian/Planning/Utils_lib -isystem /usr/include/python3.7m -isystem /usr/local/lib/python3.7/dist-packages/numpy/core/include 
 

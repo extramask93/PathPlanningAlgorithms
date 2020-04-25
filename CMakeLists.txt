@@ -10,8 +10,10 @@ target_compile_options(PotentialFields_run PRIVATE ${flags})
 set_target_properties(PotentialFields_run PROPERTIES CXX_STANDARD 17 CXX_EXTENSIONS OFF CXX_STANDARD_REQUIRED ON)
 #add subprojects
 add_subdirectory(PotentialFields_lib)
+add_subdirectory(Utils_lib)
 add_subdirectory(PotentialFields_tst)
 #add dependencies
-include_directories(PotentialFields_lib)
-target_link_libraries(PotentialFields_run PotentialFields_lib)
+include_directories(PotentialFields_lib Utils_lib)
+target_link_libraries(PotentialFields_run PotentialFields_lib Utils_lib)
+target_link_libraries(PotentialFields_lib Utils_lib)
 
