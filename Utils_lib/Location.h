@@ -11,6 +11,12 @@ namespace util {
     struct Location {
         int x = 0;
         int y = 0;
+        friend util::Location operator+(const Location &lhs, const Location &rhs) {
+            return util::Location{lhs.x + rhs.x, lhs.y + rhs.y};
+        }
+        friend util::Location operator-(const Location &lhs, const Location &rhs) {
+            return util::Location{lhs.x - rhs.x, lhs.y - rhs.y};
+        }
         friend bool operator==(const Location& lhs, const Location& rhs){
             return (lhs.x == rhs.x) && (lhs.y == rhs.y);
         }

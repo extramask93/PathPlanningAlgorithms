@@ -78,6 +78,9 @@
 		<Unit filename="/home/damian/Planning/Utils_lib/MapException.h">
 			<Option target="Utils_lib"/>
 		</Unit>
+		<Unit filename="/home/damian/Planning/Utils_lib/MapIterator.h">
+			<Option target="Utils_lib"/>
+		</Unit>
 		<Unit filename="/home/damian/Planning/Utils_lib/Robot.cpp">
 			<Option target="Utils_lib"/>
 		</Unit>

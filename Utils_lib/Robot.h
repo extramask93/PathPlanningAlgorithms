@@ -17,6 +17,10 @@ namespace util {
                 {1,0} /*-*/
             };
         }
+        static std::vector<char> getMotionModelArrows() {
+             return std::vector<char> { '^', '<', 'v', '>' };
+        }
+
     };
 
 }

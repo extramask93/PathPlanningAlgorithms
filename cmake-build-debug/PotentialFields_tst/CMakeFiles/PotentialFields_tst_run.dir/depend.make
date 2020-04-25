@@ -7,6 +7,7 @@ PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/CatchMain.cpp.o: ../P
 PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/GridMapTests.cpp.o: ../Utils_lib/GridMap.h
 PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/GridMapTests.cpp.o: ../Utils_lib/Location.h
 PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/GridMapTests.cpp.o: ../Utils_lib/MapException.h
+PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/GridMapTests.cpp.o: ../Utils_lib/Robot.h
 PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/GridMapTests.cpp.o: ../PotentialFields_tst/GridMapTests.cpp
 PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/GridMapTests.cpp.o: ../PotentialFields_tst/catch.hpp
 
@@ -15,6 +16,10 @@ PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/LocationTests.cpp.o: 
 PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/LocationTests.cpp.o: ../PotentialFields_tst/catch.hpp
 
 PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/PlannerTests.cpp.o: ../PotentialFields_lib/PotentialFieldsPlanner.h
+PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/PlannerTests.cpp.o: ../Utils_lib/GridMap.h
+PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/PlannerTests.cpp.o: ../Utils_lib/Location.h
+PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/PlannerTests.cpp.o: ../Utils_lib/MapException.h
+PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/PlannerTests.cpp.o: ../Utils_lib/Robot.h
 PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/PlannerTests.cpp.o: ../PotentialFields_tst/PlannerTests.cpp
 PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/PlannerTests.cpp.o: ../PotentialFields_tst/catch.hpp
 PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/PlannerTests.cpp.o: ../PotentialFields_tst/matplotlibcpp.h

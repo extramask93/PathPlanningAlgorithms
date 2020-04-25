@@ -3,4 +3,8 @@
 
 CMakeFiles/PotentialFields_run.dir/main.cpp.o
  ../PotentialFields_lib/PotentialFieldsPlanner.h
+ ../Utils_lib/GridMap.h
+ ../Utils_lib/Location.h
+ ../Utils_lib/MapException.h
+ ../Utils_lib/Robot.h
  /home/damian/Planning/main.cpp

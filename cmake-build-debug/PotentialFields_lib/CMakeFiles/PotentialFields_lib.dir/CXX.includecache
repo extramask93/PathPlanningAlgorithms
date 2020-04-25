@@ -6,6 +6,40 @@
 
 #IncludeRegexTransform: 
 
+../Utils_lib/GridMap.h
+vector
+-
+cmath
+-
+Location.h
+-
+Robot.h
+-
+MapException.h
+-
+boost/optional.hpp
+-
+boost/format.hpp
+-
+iomanip
+-
+
+../Utils_lib/Location.h
+boost/format.hpp
+-
+
+../Utils_lib/MapException.h
+exception
+-
+string
+-
+
+../Utils_lib/Robot.h
+vector
+-
+Location.h
+-
+
 /home/damian/Planning/PotentialFields_lib/PotentialFieldsPlanner.cpp
 PotentialFieldsPlanner.h
 /home/damian/Planning/PotentialFields_lib/PotentialFieldsPlanner.h
@@ -20,5 +54,9 @@ iomanip
 vector
 -
 boost/optional.hpp
+-
+GridMap.h
+-
+Robot.h
 -
 

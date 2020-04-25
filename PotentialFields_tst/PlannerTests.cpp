@@ -22,8 +22,8 @@ std::vector<std::string> split (const std::string &s, char delim) {
 
     return result;
 }
-std::tuple<std::vector<bool>,int,int> loadMap() {
-    std::vector<bool> map;
+std::tuple<std::vector<uint8_t>,int,int> loadMap() {
+    std::vector<uint8_t> map;
     std::fstream file;
     std::string line;
     file.open("/home/damian/Planning/map.csv", std::fstream::in);
@@ -36,30 +36,22 @@ std::tuple<std::vector<bool>,int,int> loadMap() {
             if(height ==1) {
                 width++;
             }
-            bool value = false;
+            uint8_t value = false;
             std::stringstream (token) >> value;
             map.push_back(value);
         }
     }
     return std::make_tuple(map,width,height);
 }
-TEST_CASE("calculating attractive potentials") {
-    std::vector<bool> ogm {0, 0, 0, 0, 0,
-                           0, 0, 0, 0, 0,
-                           0, 0, 1, 1, 0,
-                           0, 0, 1, 1, 0,
-                           0, 0, 0, 0, 0, };
-    pf::PotentialFieldsPlanner planner(ogm, 5,5);
-}
+
 TEST_CASE( "One should be able to create planner with ogm supplied", "[Planner]" ) {
-    std::vector<bool> ogm;
+    std::vector<uint8_t> ogm;
     unsigned int width =3;
     unsigned int height =2;
     auto tu = loadMap();
     ogm = std::get<0>(tu);
     width = std::get<1>(tu);
     height = std::get<2>(tu);
-    pf::PotentialFieldsPlanner planner{ogm, width, height};
     plt::figure_size(width,height);
     std::cout<<width<<"x"<<height;
     std::vector<int> xv0;

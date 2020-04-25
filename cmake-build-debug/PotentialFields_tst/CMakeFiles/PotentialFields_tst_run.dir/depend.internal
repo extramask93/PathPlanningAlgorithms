@@ -8,6 +8,7 @@ PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/GridMapTests.cpp.o
  ../Utils_lib/GridMap.h
  ../Utils_lib/Location.h
  ../Utils_lib/MapException.h
+ ../Utils_lib/Robot.h
  /home/damian/Planning/PotentialFields_tst/GridMapTests.cpp
  /home/damian/Planning/PotentialFields_tst/catch.hpp
 PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/LocationTests.cpp.o
@@ -16,6 +17,10 @@ PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/LocationTests.cpp.o
  /home/damian/Planning/PotentialFields_tst/catch.hpp
 PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/PlannerTests.cpp.o
  ../PotentialFields_lib/PotentialFieldsPlanner.h
+ ../Utils_lib/GridMap.h
+ ../Utils_lib/Location.h
+ ../Utils_lib/MapException.h
+ ../Utils_lib/Robot.h
  /home/damian/Planning/PotentialFields_tst/PlannerTests.cpp
  /home/damian/Planning/PotentialFields_tst/catch.hpp
  /home/damian/Planning/PotentialFields_tst/matplotlibcpp.h

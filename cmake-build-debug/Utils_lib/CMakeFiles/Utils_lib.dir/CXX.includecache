@@ -16,6 +16,12 @@ exception
 string
 -
 
+../Utils_lib/Robot.h
+vector
+-
+Location.h
+-
+
 /home/damian/Planning/Utils_lib/GridMap.cpp
 GridMap.h
 /home/damian/Planning/Utils_lib/GridMap.h
@@ -27,20 +33,14 @@ cmath
 -
 Location.h
 -
+Robot.h
+-
 MapException.h
 -
 boost/optional.hpp
 -
 boost/format.hpp
 -
-
-/home/damian/Planning/Utils_lib/Robot.cpp
-Robot.h
-/home/damian/Planning/Utils_lib/Robot.h
-
-/home/damian/Planning/Utils_lib/Robot.h
-vector
--
-Location.h
+iomanip
 -
 

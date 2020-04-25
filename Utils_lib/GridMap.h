@@ -8,20 +8,23 @@
 #include <vector>
 #include <cmath>
 #include <Location.h>
+#include <Robot.h>
 #include <MapException.h>
 #include <boost/optional.hpp>
 #include <boost/format.hpp>
+#include <iomanip>
+
 namespace util {
     template<typename CELL_T>
     class GridMap {
     public:
         explicit GridMap(std::vector<CELL_T> ogm, unsigned width, unsigned height, double resolution = 1.0);
-
+        unsigned getCellWidth() const;
+        unsigned getCellHeight() const;
+        double getResolution() const;
         bool isWithinMapBounds(util::Location location) const;
         bool isFree(util::Location location) const noexcept(false);
-
         double distanceEuclidean(util::Location from, util::Location to) const noexcept(false);
-
         double distanceManhattan(util::Location from, util::Location to) const noexcept(false);
 
         std::vector<util::Location> findAllObstacles() const;
@@ -30,8 +33,11 @@ namespace util {
 
         util::Location indexToMap(unsigned index) const noexcept(false);
 
+        CELL_T& operator[](const util::Location &);
         unsigned mapToIndex(util::Location location) const noexcept(false);
-
+        void drawPath(std::ostream &out, std::vector<util::Location> path);
+        template<typename T>
+        friend std::ostream& operator<<(std::ostream &out, const util::GridMap<T> &gridMap);
     protected:
         void throwIfOutOfBounds(util::Location location) const;
     protected:
@@ -51,8 +57,8 @@ namespace util {
 
     template<typename CELL_T>
     bool GridMap<CELL_T>::isWithinMapBounds(util::Location location) const {
-        if (location.x < 0 || location.x > mapWidth_
-            || location.y < 0 || location.y > mapHeight_) {
+        if (location.x < 0 || static_cast<unsigned>(location.x) > mapWidth_
+            || location.y < 0 || static_cast<unsigned>(location.y) > mapHeight_) {
             return false;
         } else {
             return true;
@@ -128,6 +134,60 @@ namespace util {
             }
         }
         return closest;
+    }
+
+    template<typename CELL_T>
+    CELL_T& GridMap<CELL_T>::operator[](const util::Location &location) {
+        return ogm_[mapToIndex(location)];
+    }
+    template<typename T>
+    std::ostream &operator<<(std::ostream &out, const GridMap<T> &gridMap) {
+        out<<std::fixed<<std::setprecision(1);
+        for(uint index = 0; index < gridMap.ogm_.size(); index++) {
+            if(!(index % gridMap.mapWidth_)) {
+                out <<"\n";
+            }
+            out<<std::left<<std::setw(4)<<gridMap.ogm_[index]<<" | ";
+
+        }
+        return out;
+    }
+
+    template<typename CELL_T>
+    unsigned GridMap<CELL_T>::getCellWidth() const{
+        return mapWidth_;
+    }
+
+    template<typename CELL_T>
+    unsigned GridMap<CELL_T>::getCellHeight() const{
+        return mapHeight_;
+    }
+
+    template<typename CELL_T>
+    double GridMap<CELL_T>::getResolution() const{
+        return resolution_;
+    }
+
+    template<typename CELL_T>
+    void GridMap<CELL_T>::drawPath(std::ostream &out, std::vector<util::Location> path) {
+        out<<std::fixed<<std::setprecision(1);
+        auto motionModel = util::Robot::getMotionModel();
+        auto motionModelArrows = util::Robot::getMotionModelArrows();
+        for(uint index = 0; index < ogm_.size(); index++) {
+            if(!(index % mapWidth_)) {
+                out <<"\n";
+            }
+            auto iterator = std::find_if(path.begin(), path.end(), [&](const auto &location){ return this->indexToMap(index) == location;});
+            if(iterator != path.end() && (iterator+1) != path.end()) {
+                auto movementLoc =  *(iterator+1) - indexToMap(index);
+                auto iter2 = std::find_if(motionModel.begin(), motionModel.end(),
+                        [&](const auto &location){ return movementLoc == location;});
+                auto distance = std::distance(motionModel.begin(),iter2);
+                out << std::left << std::setw(4) << util::Robot::getMotionModelArrows()[distance]<< " | ";
+            } else {
+                out << std::left << std::setw(4) << ogm_[index] << " | ";
+            }
+        }
     }
 
 }
