@@ -1,0 +1,2 @@
+/usr/bin/ar qc libPotentialFields_lib.a  CMakeFiles/PotentialFields_lib.dir/PotentialFieldsPlanner.cpp.o
+/usr/bin/ranlib libPotentialFields_lib.a

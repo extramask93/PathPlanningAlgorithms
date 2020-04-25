@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../PotentialFields_lib/PotentialFieldsPlanner.h
+vector
+-
+boost/optional.hpp
+-
+
+/home/damian/Planning/main.cpp
+PotentialFieldsPlanner.h
+/home/damian/Planning/PotentialFieldsPlanner.h
+
