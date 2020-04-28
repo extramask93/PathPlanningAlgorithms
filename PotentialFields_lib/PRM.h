@@ -1,0 +1,14 @@
+//
+// Created by damian on 26.04.2020.
+//
+
+#ifndef POTENTIALFIELDSPROJECT_PRM_H
+#define POTENTIALFIELDSPROJECT_PRM_H
+
+
+class PRM {
+
+};
+
+
+#endif //POTENTIALFIELDSPROJECT_PRM_H

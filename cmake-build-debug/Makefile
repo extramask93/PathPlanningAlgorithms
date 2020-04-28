@@ -111,83 +111,69 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named PotentialFields_run
+# Target rules for targets named runner
 
 # Build rule for target.
-PotentialFields_run: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 PotentialFields_run
-.PHONY : PotentialFields_run
+runner: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 runner
+.PHONY : runner
 
 # fast build rule for target.
-PotentialFields_run/fast:
-	$(MAKE) -f CMakeFiles/PotentialFields_run.dir/build.make CMakeFiles/PotentialFields_run.dir/build
-.PHONY : PotentialFields_run/fast
+runner/fast:
+	$(MAKE) -f src/CMakeFiles/runner.dir/build.make src/CMakeFiles/runner.dir/build
+.PHONY : runner/fast
 
 #=============================================================================
-# Target rules for targets named PotentialFields_lib
+# Target rules for targets named potentialfields
 
 # Build rule for target.
-PotentialFields_lib: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 PotentialFields_lib
-.PHONY : PotentialFields_lib
+potentialfields: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 potentialfields
+.PHONY : potentialfields
 
 # fast build rule for target.
-PotentialFields_lib/fast:
-	$(MAKE) -f PotentialFields_lib/CMakeFiles/PotentialFields_lib.dir/build.make PotentialFields_lib/CMakeFiles/PotentialFields_lib.dir/build
-.PHONY : PotentialFields_lib/fast
+potentialfields/fast:
+	$(MAKE) -f src/potentialfields/CMakeFiles/potentialfields.dir/build.make src/potentialfields/CMakeFiles/potentialfields.dir/build
+.PHONY : potentialfields/fast
 
 #=============================================================================
-# Target rules for targets named Utils_lib
+# Target rules for targets named prm
 
 # Build rule for target.
-Utils_lib: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 Utils_lib
-.PHONY : Utils_lib
+prm: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 prm
+.PHONY : prm
 
 # fast build rule for target.
-Utils_lib/fast:
-	$(MAKE) -f Utils_lib/CMakeFiles/Utils_lib.dir/build.make Utils_lib/CMakeFiles/Utils_lib.dir/build
-.PHONY : Utils_lib/fast
+prm/fast:
+	$(MAKE) -f src/prm/CMakeFiles/prm.dir/build.make src/prm/CMakeFiles/prm.dir/build
+.PHONY : prm/fast
 
 #=============================================================================
-# Target rules for targets named PotentialFields_tst_run
+# Target rules for targets named utils
 
 # Build rule for target.
-PotentialFields_tst_run: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 PotentialFields_tst_run
-.PHONY : PotentialFields_tst_run
+utils: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 utils
+.PHONY : utils
 
 # fast build rule for target.
-PotentialFields_tst_run/fast:
-	$(MAKE) -f PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/build.make PotentialFields_tst/CMakeFiles/PotentialFields_tst_run.dir/build
-.PHONY : PotentialFields_tst_run/fast
+utils/fast:
+	$(MAKE) -f src/utils/CMakeFiles/utils.dir/build.make src/utils/CMakeFiles/utils.dir/build
+.PHONY : utils/fast
 
-main.o: main.cpp.o
+#=============================================================================
+# Target rules for targets named planningtests
 
-.PHONY : main.o
+# Build rule for target.
+planningtests: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 planningtests
+.PHONY : planningtests
 
-# target to build an object file
-main.cpp.o:
-	$(MAKE) -f CMakeFiles/PotentialFields_run.dir/build.make CMakeFiles/PotentialFields_run.dir/main.cpp.o
-.PHONY : main.cpp.o
-
-main.i: main.cpp.i
-
-.PHONY : main.i
-
-# target to preprocess a source file
-main.cpp.i:
-	$(MAKE) -f CMakeFiles/PotentialFields_run.dir/build.make CMakeFiles/PotentialFields_run.dir/main.cpp.i
-.PHONY : main.cpp.i
-
-main.s: main.cpp.s
-
-.PHONY : main.s
-
-# target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) -f CMakeFiles/PotentialFields_run.dir/build.make CMakeFiles/PotentialFields_run.dir/main.cpp.s
-.PHONY : main.cpp.s
+# fast build rule for target.
+planningtests/fast:
+	$(MAKE) -f test/CMakeFiles/planningtests.dir/build.make test/CMakeFiles/planningtests.dir/build
+.PHONY : planningtests/fast
 
 # Help Target
 help:
@@ -197,13 +183,11 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... PotentialFields_run"
-	@echo "... PotentialFields_lib"
-	@echo "... Utils_lib"
-	@echo "... PotentialFields_tst_run"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
+	@echo "... runner"
+	@echo "... potentialfields"
+	@echo "... prm"
+	@echo "... utils"
+	@echo "... planningtests"
 .PHONY : help
 
 

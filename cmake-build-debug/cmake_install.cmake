@@ -38,18 +38,11 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  # Include the install script for the subdirectory.
-  include("/home/damian/Planning/cmake-build-debug/PotentialFields_lib/cmake_install.cmake")
-endif()
+  # Include the install script for each subdirectory.
+  include("/home/damian/Planning/cmake-build-debug/src/cmake_install.cmake")
+  include("/home/damian/Planning/cmake-build-debug/test/cmake_install.cmake")
+  include("/home/damian/Planning/cmake-build-debug/external/cmake_install.cmake")
 
-if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  # Include the install script for the subdirectory.
-  include("/home/damian/Planning/cmake-build-debug/Utils_lib/cmake_install.cmake")
-endif()
-
-if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  # Include the install script for the subdirectory.
-  include("/home/damian/Planning/cmake-build-debug/PotentialFields_tst/cmake_install.cmake")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
