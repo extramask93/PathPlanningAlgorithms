@@ -5,6 +5,7 @@
 #ifndef POTENTIALFIELDSPROJECT_PRM_H
 #define POTENTIALFIELDSPROJECT_PRM_H
 #include "GridMap.h"
+#include "nabo/nabo.h"
 #include <Point.h>
 #include <Node.h>
 #include <queue>
@@ -15,7 +16,6 @@ namespace prm {
     public:
 
         Prm(const util::GridMap<int> &map, unsigned int nrOfSamples);
-
         std::vector<std::vector<int>> generateRoadMap(unsigned nrOfSamples);
         std::vector<util::Point> generateSamples(unsigned nrOfSamples);
         std::vector<util::Point> makePlan(const util::Point &start, const util::Point &goal);
@@ -25,7 +25,7 @@ namespace prm {
         bool isCollision(const util::Point &from, const util::Point &to) const;
     private:
         static constexpr double MAX_EDGE_LENGTH_ = 100;
-        static constexpr int MAX_NR_OF_EDGES_PER_POINT = 20;
+        static constexpr int MAX_NR_OF_EDGES_PER_POINT = 5;
         unsigned nrOfSamples_;
         util::GridMap<int> ogm_;
         util::Point start_;

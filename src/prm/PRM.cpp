@@ -3,6 +3,7 @@
 //
 
 #include <random>
+#include <iostream>
 #include "PRM.h"
 
 prm::Prm::Prm(const util::GridMap<int> &map, unsigned nrOfSamples) : ogm_(map), nrOfSamples_(nrOfSamples){
@@ -27,27 +28,43 @@ std::vector<util::Point> prm::Prm::generateSamples(unsigned int nrOfSamples) {
 }
 
 std::vector<std::vector<int>> prm::Prm::generateRoadMap(unsigned nrOfSamples) {
+
+    using namespace Nabo;
+    using namespace Eigen;;
     auto samples = generateSamples(nrOfSamples);
     samples.push_back(start_);
     samples.push_back(goal_);
+    // space for samples in 2D
+    MatrixXf M = MatrixXf(2, samples.size());
+    for(int i = 0; i< samples.size(); i++) {
+        M(0,i) = samples[i].x;
+        M(1,i) = samples[i].y;
+    }
+    NNSearchF* nns = NNSearchF::createKDTreeLinearHeap(M);
+    // look for the 5 nearest neighbour of a the single-point query
+    VectorXi indices;
+    VectorXf dists;
+    indices.resize(samples.size()-1);
+    dists.resize(samples.size()-1);
     std::vector<std::vector<int>> edges(samples.size());
     for(int sampleIndex =0; sampleIndex < samples.size(); sampleIndex++) {
         /*here should be connecting via edges to the closes neighbors*/
-        auto samplesWork = samples;
-        /*std::sort(samplesWork.begin(),samplesWork.end(), [&](const auto &a, const auto &b) {
-            ogm_.distanceEuclidean(samples[sampleIndex], a) < ogm_.distanceEuclidean(samples[sampleIndex],b);
-        });*/
-        for(int neighborIndex = 0; neighborIndex < samples.size(); neighborIndex++) {
-            if(sampleIndex == neighborIndex) {
+        // = M.row(sampleIndex);
+        VectorXf q = VectorXf(2,1);
+        q(0,0) = samples[sampleIndex].x;
+        q(1,0) = samples[sampleIndex].y;
+        nns->knn(q, indices, dists, samples.size()-1);
+        for(int neighborIndex = 0; neighborIndex < samples.size()-1; neighborIndex++) {
+            if(sampleIndex == indices[neighborIndex]) {
                 continue;
             }
-            if(isCollision(samples[sampleIndex],samples[neighborIndex])) {
+            if(isCollision(samples[sampleIndex],samples[indices[neighborIndex]])) {
                 continue;
             }
             if(edges[sampleIndex].size() > MAX_NR_OF_EDGES_PER_POINT) {
                 break;
             }
-            edges[sampleIndex].push_back(neighborIndex);
+            edges[sampleIndex].push_back(indices[neighborIndex]);
         }
     }
     samples_ = samples;
@@ -137,3 +154,5 @@ std::vector<util::Point> prm::Prm::makePlan(const util::Point &start, const util
     }
     return path;
 }
+
+

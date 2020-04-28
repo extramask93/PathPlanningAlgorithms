@@ -9,4 +9,15 @@ target_include_directories(prm
         PUBLIC
         ${CMAKE_CURRENT_LIST_DIR}
         )
-target_link_libraries(prm PRIVATE utils)
+#external dependencies search and include
+find_package(libnabo REQUIRED)
+include_directories(${libnabo_INCLUDE_DIRS})
+
+find_package (Eigen3 REQUIRED NO_MODULE)
+include_directories(${EIGEN3_INCLUDE_DIRS})
+#---
+target_link_libraries(prm
+        PRIVATE
+            utils
+            ${libnabo_LIBRARIES}
+        )
