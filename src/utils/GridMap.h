@@ -38,6 +38,8 @@ namespace util {
         /*World coordinate interface*/
         double getWorldWidth() const;
         double getWorldHeight() const;
+        double getOriginX() const;
+        double getOriginY() const;
         util::Location worldToMap(const util::Point &point) const noexcept(false);
         double worldDistanceEuclidean(const util::Point &from, const util::Point &to) const;
         double worldDistanceManhattan(const util::Point &from, const util::Point &to) const;
@@ -230,6 +232,16 @@ namespace util {
         double distanceX= std::pow(from.x - to.x, 2);
         double distanceY= std::pow(from.y - to.y, 2);
         return std::sqrt(distanceX + distanceY);
+    }
+
+    template<typename CELL_T>
+    double GridMap<CELL_T>::getOriginY() const {
+        return origin_.y;
+    }
+
+    template<typename CELL_T>
+    double GridMap<CELL_T>::getOriginX() const{
+        return origin_.x;
     }
 
 }

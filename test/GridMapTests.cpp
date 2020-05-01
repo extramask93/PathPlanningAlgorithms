@@ -126,3 +126,16 @@ TEST_CASE( "Using operator [] return correct value", "[Util,GridMap]" ) {
     REQUIRE(map[{0,0}] == 0);
     REQUIRE(map[{6,6}] == 1);
 }
+TEST_CASE( "Getting origin x and y", "[Util,GridMap]" ) {
+
+    std::vector<uint8_t> ogm {0, 0, 0, 0, 0,0,0,
+                              0, 0, 0, 0, 0,0,0,
+                              0, 0, 0, 0, 0,0,0,
+                              0, 0, 0, 0, 0,0,0,
+                              0, 0, 0, 0, 0,0,0,
+                              0, 0, 0, 0, 0,0,0,
+                              0, 0, 0, 0, 0,0,1};
+    util::GridMap<uint8_t> map(ogm,7,7,2);
+    REQUIRE(map.getOriginX() == 0);
+    REQUIRE(map.getOriginY() == 0);
+}
