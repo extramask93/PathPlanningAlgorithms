@@ -6,7 +6,7 @@
 #include <GridMap.h>
 #include <Robot.h>
 #include <iostream>
-#include "rrtstar.h"
+#include "RrtPlanner.h"
 #include "matplotlibcpp.h"
 int  main(int , char **) {
 
@@ -19,7 +19,7 @@ int  main(int , char **) {
                            0, 0, 0, 0, 0,0,0,
                            0, 0, 0, 0, 0,0,0};
     util::GridMap<int> map(ogm, 7,7,1.0);
-    auto rrtplanner = rrt::RrtStar(map);
+    auto rrtplanner = rrt::RrtPlanner(map);
     auto plan = rrtplanner.makePlan({0,0},{6,6});
     auto obstacles = map.findAllObstacles();
     std::vector<double> xplan;
