@@ -20,7 +20,7 @@ template<typename CELL_T>
 class GridMap
 {
 public:
-  explicit GridMap(std::vector<CELL_T> ogm, unsigned width, unsigned height, double resolution = 1.0);
+  explicit GridMap(const std::vector<CELL_T> &ogm, unsigned width, unsigned height, double resolution = 1.0);
   unsigned getCellWidth() const;
   unsigned getCellHeight() const;
   double getResolution() const;
@@ -39,6 +39,7 @@ public:
   friend std::ostream &operator<<(std::ostream &out, const util::GridMap<T> &gridMap);
   /*World coordinate interface*/
   double getWorldWidth() const;
+  util::Point mapToWorld(const util::Location &location) const;
   double getWorldHeight() const;
   double getOriginX() const;
   double getOriginY() const;
@@ -58,7 +59,7 @@ protected:
 };
 
 template<typename CELL_T>
-GridMap<CELL_T>::GridMap(std::vector<CELL_T> ogm, unsigned int width, unsigned int height, double resolution)
+GridMap<CELL_T>::GridMap(const std::vector<CELL_T> &ogm, unsigned int width, unsigned int height, double resolution)
 {
   ogm_ = ogm;
   mapWidth_ = width;
@@ -270,6 +271,14 @@ template<typename CELL_T>
 const CELL_T &GridMap<CELL_T>::operator[](const Location &location) const
 {
   return ogm_[mapToIndex(location)];
+}
+template<typename CELL_T>
+util::Point GridMap<CELL_T>::mapToWorld(const util::Location &location) const
+{
+    util::Point p;
+    p.x = origin_.x + (location.x + 0.5) * resolution_;
+    p.y = origin_.y + (location.y + 0.5) * resolution_;
+    return p;
 }
 
 }// namespace util

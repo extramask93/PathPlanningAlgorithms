@@ -9,7 +9,7 @@
 namespace util {
     class MapException : virtual public std::exception {
     public:
-        explicit MapException(std::string message) : std::exception(), message_(message) {}
+        explicit MapException(const std::string &message) : std::exception(), message_(message) {}
 
         virtual const char *what() const noexcept {
             return message_.c_str();
@@ -23,7 +23,7 @@ namespace util {
 
     class OutOfBoundsException : public MapException {
     public:
-        explicit OutOfBoundsException(std::string message) : MapException(message) {}
+        explicit OutOfBoundsException(const std::string &message) : MapException(message) {}
         virtual ~OutOfBoundsException() {}
     };
 }

@@ -8,6 +8,7 @@
 #include <iostream>
 #include "RrtPlanner.h"
 #include "matplotlibcpp.h"
+#include "AStar.h"
 int  main(int , char **) {
 
     namespace plt = matplotlibcpp;
@@ -19,7 +20,7 @@ int  main(int , char **) {
                            0, 0, 0, 0, 0,0,0,
                            0, 0, 0, 0, 0,0,0};
     util::GridMap<int> map(ogm, 7,7,1.0);
-    auto rrtplanner = rrt::RrtPlanner(map);
+    auto rrtplanner = astar::AStar(map);
     auto plan = rrtplanner.makePlan({0,0},{6,6});
     auto obstacles = map.findAllObstacles();
     std::vector<double> xplan;

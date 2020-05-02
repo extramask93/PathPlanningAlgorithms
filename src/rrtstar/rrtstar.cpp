@@ -25,7 +25,6 @@ RrtStar::RrtStar(const util::GridMap<int> &obstacleMap)
 std::vector<util::Point> RrtStar::makePlan(const util::Point &start,
   const util::Point &goal)
 {
-  auto plan = std::vector<util::Point>();
   current_iterations_ = 0;
   vertex_list_.clear();
   util::Vertex startVertex(start);
@@ -33,7 +32,7 @@ std::vector<util::Point> RrtStar::makePlan(const util::Point &start,
   start_ = start;
   goal_ = goal;
   int goal_index = RrtStar::findPath(startVertex, goalVertex);
-  plan = RrtStar::buildPlan(goal_index);
+  auto plan = RrtStar::buildPlan(goal_index);
   return plan;
 }
 
@@ -149,11 +148,10 @@ const util::Vertex &RrtStar::getClosestVertex(const util::Vertex &newVertex)
 {
 
   double closestDistance = std::numeric_limits<double>::infinity();
-  double distanceToNewVertex = std::numeric_limits<double>::infinity();
   util::Vertex closestVertex = vertex_list_.at(0);
 
   for (util::Vertex &vertex : vertex_list_) {
-    distanceToNewVertex = getDistance(vertex.getLocation(), newVertex.getLocation());
+    double distanceToNewVertex = getDistance(vertex.getLocation(), newVertex.getLocation());
 
     if (distanceToNewVertex < closestDistance) {
       closestDistance = distanceToNewVertex;
