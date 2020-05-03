@@ -109,18 +109,18 @@ std::vector<util::Point> prm::Prm::makePlan(const util::Point &start, const util
     start_ = start;
     goal_ = goal;
     auto roadMap = generateRoadMap(nrOfSamples_);
-    auto startNode = util::Node(roadMap.size()-2,start.x, start.y, 0.0, -1);
-    auto goalNode = util::Node(roadMap.size()-1, goal.x, goal.y, 0.0, -1);
+    auto startNode = util::Node<double>(roadMap.size()-2,start.x, start.y, 0.0, -1);
+    auto goalNode = util::Node<double>(roadMap.size()-1, goal.x, goal.y, 0.0, -1);
     openList_.clear();
     closedList_.clear();
     openList_.insert(std::make_pair(startNode.id, startNode));
     while(!openList_.empty()) {
-        util::Node currentNode = std::min_element(openList_.begin(),openList_.end(),
+        util::Node<double> currentNode = std::min_element(openList_.begin(),openList_.end(),
                 [](const auto &a, const auto &b) { return a.second.cost < b.second.cost;})->second;
         int currentID = currentNode.id;
         if(currentID == roadMap.size()-1) {
             /**goal**/
-            goalNode = util::Node(currentID,goal.x, goal.y, currentNode.cost, currentNode.parent);
+            goalNode = util::Node<double>(currentID,goal.x, goal.y, currentNode.cost, currentNode.parent);
         }
         openList_.erase(currentID);
         closedList_.insert(std::make_pair(currentID, currentNode));
@@ -128,7 +128,7 @@ std::vector<util::Point> prm::Prm::makePlan(const util::Point &start, const util
         for(int i = 0; i < roadMap[currentID].size(); i++) {
             int nextID = roadMap[currentID][i];
             double distance = ogm_.worldDistanceEuclidean(samples_[currentID], samples_[nextID]);
-            util::Node node(nextID, samples_[nextID].x, samples_[nextID].y, distance, currentID);
+            util::Node<double> node(nextID, samples_[nextID].x, samples_[nextID].y, distance, currentID);
             if(closedList_.count(nextID) > 0) {
                 continue;
             }

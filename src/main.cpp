@@ -7,12 +7,13 @@
 #include <Robot.h>
 #include <iostream>
 #include "RrtPlanner.h"
+#include "AntColony.h"
 #include "matplotlibcpp.h"
 #include "AStar.h"
 int  main(int , char **) {
 
     namespace plt = matplotlibcpp;
-    std::vector<int> ogm {0, 0, 0, 0, 0,0,0,
+    std::vector<int> ogm { 0, 0, 0, 0, 0,0,0,
                            0, 0, 0, 0, 0,0,0,
                            0, 0, 0, 0, 0,0,0,
                            0, 0, 1, 1, 0,0,0,
@@ -20,7 +21,7 @@ int  main(int , char **) {
                            0, 0, 0, 0, 0,0,0,
                            0, 0, 0, 0, 0,0,0};
     util::GridMap<int> map(ogm, 7,7,1.0);
-    auto rrtplanner = astar::AStar(map);
+    auto rrtplanner = ants::AntColony(map);
     auto plan = rrtplanner.makePlan({0,0},{6,6});
     auto obstacles = map.findAllObstacles();
     std::vector<double> xplan;

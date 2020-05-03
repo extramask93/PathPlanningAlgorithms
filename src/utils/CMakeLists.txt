@@ -13,6 +13,7 @@ target_sources(utils
         ${CMAKE_CURRENT_LIST_DIR}/RoadPoint.h
         ${CMAKE_CURRENT_LIST_DIR}/Robot.h
         ${CMAKE_CURRENT_LIST_DIR}/Vertex.h
+        ${CMAKE_CURRENT_LIST_DIR}/Edge.h
         )
 target_include_directories(utils
         PUBLIC

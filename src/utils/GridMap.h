@@ -71,8 +71,8 @@ GridMap<CELL_T>::GridMap(const std::vector<CELL_T> &ogm, unsigned int width, uns
 template<typename CELL_T>
 bool GridMap<CELL_T>::isWithinMapBounds(util::Location location) const
 {
-  if (location.x < 0 || static_cast<unsigned>(location.x) > mapWidth_
-      || location.y < 0 || static_cast<unsigned>(location.y) > mapHeight_) {
+  if (location.x < 0 || static_cast<unsigned>(location.x) >= mapWidth_
+      || location.y < 0 || static_cast<unsigned>(location.y) >= mapHeight_) {
     return false;
   } else {
     return true;

@@ -30,8 +30,8 @@ namespace prm {
         util::GridMap<int> ogm_;
         util::Point start_;
         util::Point goal_;
-        std::map<int, util::Node> openList_;
-        std::map<int, util::Node> closedList_;
+        std::map<int, util::Node<double>> openList_;
+        std::map<int, util::Node<double>> closedList_;
     };
 }
 
