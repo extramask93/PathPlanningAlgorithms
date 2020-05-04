@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
 project(Planning LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -12,6 +12,9 @@ add_subdirectory(external)
 add_subdirectory(src)
 add_subdirectory(test)
 include(cmake/StaticAnalyzers.cmake)
+include(cmake/Doxygen.cmake)
+enable_doxygen()
+
 #add run files
 #set(SOURCE_FILES main.cpp)
 #add_executable(PotentialFields_run ${SOURCE_FILES})
