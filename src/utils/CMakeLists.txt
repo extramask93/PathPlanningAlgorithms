@@ -1,11 +1,13 @@
 add_library(utils "")
 
-#find_package(Python2 COMPONENTS Development NumPy)
-#include_directories(utils PRIVATE ${Python2_INCLUDE_DIRS} ${Python2_NumPy_INCLUDE_DIRS})
-#target_link_libraries(utils
-#        PRIVATE
-#        Python2::Python Python2::NumPy
-#        )
+find_package(Python3 COMPONENTS Development NumPy)
+include_directories(utils PUBLIC ${Python3_INCLUDE_DIRS} ${Python3_NumPy_INCLUDE_DIRS})
+message(${Python3_INCLUDE_DIRS})
+message(${Python3_NumPy_INCLUDE_DIRS})
+target_link_libraries(utils
+        PUBLIC
+        Python3::Python Python3::NumPy
+        )
 
 target_sources(utils
         PRIVATE
@@ -26,6 +28,7 @@ target_sources(utils
         ${CMAKE_CURRENT_LIST_DIR}/Edge.h
         ${CMAKE_CURRENT_LIST_DIR}/Benchmarker.h
         ${CMAKE_CURRENT_LIST_DIR}/MapLoader.h
+        ${CMAKE_CURRENT_LIST_DIR}/matplotlibcpp.h
         )
 target_include_directories(utils
         PUBLIC

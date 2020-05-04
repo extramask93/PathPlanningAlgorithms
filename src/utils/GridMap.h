@@ -14,7 +14,7 @@
 #include <boost/format.hpp>
 #include <iomanip>
 #include "Point.h"
-
+#include "matplotlibcpp.h"
 namespace util {
 template<typename CELL_T>
 class GridMap
@@ -35,6 +35,7 @@ public:
   const CELL_T &operator[](const util::Location &) const;
   unsigned mapToIndex(util::Location location) const noexcept(false);
   void plotMap();
+  void plotPathOnMap(const std::vector<util::Point> &path);
   void drawPath(std::ostream &out, std::vector<util::Location> path);
   template<typename T>
   friend std::ostream &operator<<(std::ostream &out, const util::GridMap<T> &gridMap);
@@ -285,8 +286,30 @@ template<typename CELL_T>
 void GridMap<CELL_T>::plotMap()
 {
 
-    //namespace plt = matplotlibcpp;
-    //plt::imshow(ogm_.data(),getCellWidth(),getCellHeight(),1);
+    namespace plt = matplotlibcpp;
+    plt::imshow(ogm_.data(),getCellWidth(),getCellHeight(),1);
+    plt::show();
+}
+template<typename CELL_T>
+void GridMap<CELL_T>::plotPathOnMap(const std::vector<util::Point> &plan)
+{
+    namespace plt = matplotlibcpp;
+    std::vector<double> xplan;
+    std::vector<double> yplan;
+    for(const auto &item : plan) {
+        xplan.push_back(item.x);
+        yplan.push_back(item.y);
+    }
+    plt::plot(xplan,yplan);
+    if(!xplan.empty()) {
+        std::vector<double> startx{ *xplan.begin() };
+        std::vector<double> starty{ *yplan.begin() };
+        std::vector<double> goalx{ *xplan.rbegin() };
+        std::vector<double> goaly{ *yplan.rbegin() };
+        plt::plot(startx, starty, "ro");
+        plt::plot(goalx, goaly, "rx");
+    }
+    plotMap();
 }
 
 }// namespace util
