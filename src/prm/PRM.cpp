@@ -6,7 +6,7 @@
 #include <iostream>
 #include "PRM.h"
 
-prm::Prm::Prm(const util::GridMap<int> &map, unsigned nrOfSamples) : ogm_(map), nrOfSamples_(nrOfSamples){
+prm::Prm::Prm(const util::GridMap<unsigned char> &map, unsigned nrOfSamples) : ogm_(map), nrOfSamples_(nrOfSamples){
 
 }
 

@@ -12,7 +12,7 @@ namespace rrt {
 class RrtPlanner
 {
 public:
-  RrtPlanner(const util::GridMap<int> &obstacleMap);
+  explicit RrtPlanner(const util::GridMap<unsigned char> &obstacleMap);
   std::vector<util::Point> makePlan(const util::Point &start, const util::Point &goal);
   void setMaxExtendDistance(double distance);
   void setMaxNrOfIterations(unsigned iterationNr);
@@ -27,14 +27,14 @@ protected:
   int makeGraph(const util::Point &start, const util::Point &goal);
   std::vector<util::Point> buildPlan(int goalIndex) const;
 private:
-  util::GridMap<int> obstacleMap_;
+  util::GridMap<unsigned char> obstacleMap_;
   std::vector<util::Vertex> vertexList_;
   util::Vertex goalVertex_;
   util::Vertex startVertex_;
   double goalRadius_;
   unsigned maxNrOfIterations_;
   double maxExtendDistance_;
-  static constexpr unsigned OBSTACLE = 1;
+  static constexpr unsigned OBSTACLE = 0;
 };
 }// namespace rrt
 

@@ -8,7 +8,7 @@
 #include "AntColony.h"
 namespace ants {
 
-AntColony::AntColony(const util::GridMap<int> &obstacleMap) : obstacleMap_(obstacleMap)
+AntColony::AntColony(const util::GridMap<unsigned char> &obstacleMap) : obstacleMap_(obstacleMap)
 {
 }
 std::vector<util::Point> ants::AntColony::makePlan(const util::Point &start, const util::Point &goal)
@@ -116,7 +116,7 @@ void AntColony::deterioratePheromones()
 
 bool AntColony::isObstacle(const util::Location &location) const
 {
-    return obstacleMap_[location] == 1;
+    return obstacleMap_[location] == 0;
 }
 
 }// namespace ants

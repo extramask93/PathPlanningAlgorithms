@@ -34,6 +34,7 @@ public:
   CELL_T &operator[](const util::Location &);
   const CELL_T &operator[](const util::Location &) const;
   unsigned mapToIndex(util::Location location) const noexcept(false);
+  void plotMap();
   void drawPath(std::ostream &out, std::vector<util::Location> path);
   template<typename T>
   friend std::ostream &operator<<(std::ostream &out, const util::GridMap<T> &gridMap);
@@ -82,7 +83,7 @@ template<typename CELL_T>
 bool GridMap<CELL_T>::isFree(util::Location location) const noexcept(false)
 {
   throwIfOutOfBounds(location);
-  return ogm_[mapToIndex(location)] == 0;
+  return ogm_[mapToIndex(location)] == 1;
 }
 template<typename CELL_T>
 unsigned GridMap<CELL_T>::mapToIndex(util::Location location) const noexcept(false)
@@ -279,6 +280,13 @@ util::Point GridMap<CELL_T>::mapToWorld(const util::Location &location) const
     p.x = origin_.x + (location.x + 0.5) * resolution_;
     p.y = origin_.y + (location.y + 0.5) * resolution_;
     return p;
+}
+template<typename CELL_T>
+void GridMap<CELL_T>::plotMap()
+{
+
+    //namespace plt = matplotlibcpp;
+    //plt::imshow(ogm_.data(),getCellWidth(),getCellHeight(),1);
 }
 
 }// namespace util

@@ -11,49 +11,19 @@
 #include <algorithm>
 #include <tuple>
 #include <PRM.h>
+#include <MapLoader.h>
 
 namespace plt = matplotlibcpp;
-std::vector<std::string> split (const std::string &s, char delim) {
-    std::vector<std::string> result;
-    std::stringstream ss (s);
-    std::string item;
 
-    while (std::getline (ss, item, delim)) {
-        result.push_back (item);
-    }
-
-    return result;
-}
-std::tuple<std::vector<uint8_t>,int,int> loadMap() {
-    std::vector<uint8_t> map;
-    std::fstream file;
-    std::string line;
-    file.open("/home/damian/Planning/map.csv", std::fstream::in);
-    int width = 0;
-    int height = 0;
-    while(std::getline(file,line,'\n')) {
-        height++;
-        auto tokens = split(line,',');
-        for(auto &token : tokens) {
-            if(height ==1) {
-                width++;
-            }
-            uint8_t value = false;
-            std::stringstream (token) >> value;
-            map.push_back(value);
-        }
-    }
-    return std::make_tuple(map,width,height);
-}
 TEST_CASE( "One should be able to create prm planner with ogm supplied", "[Planner, PRM]" ) {
-    std::vector<int> ogm {0, 0, 0, 0, 0,0,0,
+    std::vector<unsigned char> ogm {0, 0, 0, 0, 0,0,0,
                           0, 0, 0, 0, 0,0,0,
                           0, 0, 0, 0, 0,0,0,
                           0, 0, 1, 1, 0,0,0,
                           0, 0, 1, 1, 0,0,0,
                           0, 0, 0, 0, 0,0,0,
                           0, 0, 0, 0, 0,0,0};
-    util::GridMap<int> map(ogm, 7,7,1.0);
+    util::GridMap<unsigned char> map(ogm, 7,7,1.0);
     prm::Prm prmPlanner(map,24);
     auto plan = prmPlanner.makePlan({0,0},{6,6});
     auto samples = prmPlanner.samples_;
@@ -82,10 +52,10 @@ TEST_CASE( "One should be able to create prm planner with ogm supplied", "[Plann
     plt::show();
 }
 TEST_CASE( "One should be able to create planner with ogm supplied", "[Planner]" ) {
-    std::vector<uint8_t> ogm;
+    std::vector<int> ogm;
     unsigned int width =3;
     unsigned int height =2;
-    auto tu = loadMap();
+    auto tu = util::MapLoader::loadMap("/home/damian/Planning/map.csv");
     ogm = std::get<0>(tu);
     width = std::get<1>(tu);
     height = std::get<2>(tu);

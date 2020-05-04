@@ -14,7 +14,7 @@ class AStar
     enum class HeuristicType { EUCLID,
         MANHATTAN,
         NO_HEURISTIC };
-    explicit AStar(const util::GridMap<int> &map, HeuristicType heuristic = HeuristicType::EUCLID);
+    explicit AStar(const util::GridMap<unsigned char> &map, HeuristicType heuristic = HeuristicType::EUCLID);
     std::vector<util::Point> makePlan(const util::Point &start, const util::Point &goal);
     void setHeuristic(AStar::HeuristicType heuristic);
     HeuristicType getHeuristic() const;
@@ -26,7 +26,7 @@ class AStar
     double getHeuristicCost(int currentIndex, int goalCell) const;
 
   private:
-    util::GridMap<int> obstacleMap_;
+    util::GridMap<unsigned char> obstacleMap_;
     HeuristicType currentHeuristic_;
     int startIndex_;
     int goalIndex_;

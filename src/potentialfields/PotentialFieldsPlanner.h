@@ -12,13 +12,13 @@
 namespace pf {
     class PotentialFieldsPlanner {
     public:
-        PotentialFieldsPlanner(const util::GridMap<int> &ogm);
-        std::vector<util::Location> makePlan(const util::Location &start, const util::Location &goal, const util::Robot &robotModel);
+        explicit PotentialFieldsPlanner(const util::GridMap<unsigned char> &ogm);
+        std::vector<util::Point> makePlan(const util::Point &start, const util::Point &goal);
         double calculateAttractivePotential(const util::Location &currentLocation, const util::Location &goalIndex) const;
         double calculateRepulsivePotential(const util::Location &currentLocation) const;
         void calculatePotentialField(const util::Location &location);
     private:
-        util::GridMap<int> ogm_;
+        util::GridMap<unsigned char> ogm_;
         util::GridMap<double> potentialMap_;
         util::Location goal_;
         util::Location start_;

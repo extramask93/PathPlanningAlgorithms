@@ -17,7 +17,7 @@ class AntColony
 {
     using IDPair = std::pair<unsigned ,unsigned >;
   public:
-    AntColony(const util::GridMap<int> &obstacleMap);
+    explicit AntColony(const util::GridMap<unsigned char> &obstacleMap);
     std::vector<util::Point> makePlan(const util::Point &start, const util::Point &goal);
   private:
     void initializePheromonesAtEdges();
@@ -25,11 +25,11 @@ class AntColony
     void deterioratePheromones();
     bool isObstacle(const util::Location &location) const;
   private:
-    util::GridMap<int> obstacleMap_;
+    util::GridMap<unsigned char> obstacleMap_;
     std::vector<util::Node<int>> nodes_;
     util::Node<int> startNode_;
     util::Node<int> goalNode_;
-    std::size_t numOfAnts_ = 100;
+    std::size_t numOfAnts_ = 10;
     std::vector<std::vector<util::Node<int>>> paths_;
     double alpha_ =1.0;
     double beta_ =1.0;

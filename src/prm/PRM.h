@@ -15,7 +15,7 @@ namespace prm {
     class Prm {
     public:
 
-        Prm(const util::GridMap<int> &map, unsigned int nrOfSamples);
+        Prm(const util::GridMap<unsigned char> &map, unsigned int nrOfSamples);
         std::vector<std::vector<int>> generateRoadMap(unsigned nrOfSamples);
         std::vector<util::Point> generateSamples(unsigned nrOfSamples);
         std::vector<util::Point> makePlan(const util::Point &start, const util::Point &goal);
@@ -27,7 +27,7 @@ namespace prm {
         static constexpr double MAX_EDGE_LENGTH_ = 100;
         static constexpr int MAX_NR_OF_EDGES_PER_POINT = 5;
         unsigned nrOfSamples_;
-        util::GridMap<int> ogm_;
+        util::GridMap<unsigned char> ogm_;
         util::Point start_;
         util::Point goal_;
         std::map<int, util::Node<double>> openList_;

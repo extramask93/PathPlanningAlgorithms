@@ -4,7 +4,7 @@
 #include <random>
 #include <deque>
 #include "rrtstar.h"
-#define OBSTACLE true
+#define OBSTACLE false
 #define FREE false
 #define MAX_DISTANCE_TRESHOLD 2.0
 #define MAX_EXTEND_DISTANCE 1.0
@@ -12,8 +12,8 @@
 namespace rrt {
 using namespace std;
 using namespace std::chrono;
-RrtStar::RrtStar(const util::GridMap<int> &obstacleMap)
-  : obstacleMap_(obstacleMap)
+RrtStar::RrtStar(const util::GridMap<unsigned char> &costmap)
+  : obstacleMap_(costmap)
 {
   max_extend_distance_ = obstacleMap_.getResolution() * 3;
   max_distance_threshold_ = max_extend_distance_ * 1.1;

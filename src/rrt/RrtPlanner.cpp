@@ -44,7 +44,7 @@ util::Vertex rrt::RrtPlanner::getRandomVertex() const
     return util::Vertex{ util::Point(xDistribution(randomGenerator), yDistribution(randomGenerator)), util::Vertex::NO_ID, util::Vertex::NO_PARENT };
 }
 
-rrt::RrtPlanner::RrtPlanner(const util::GridMap<int> &obstacleMap) : goalVertex_(util::Point{ 0, 0 }),
+rrt::RrtPlanner::RrtPlanner(const util::GridMap<unsigned char> &obstacleMap) : goalVertex_(util::Point{ 0, 0 }),
                                                                      startVertex_(util::Point{ 0, 0 }),
                                                                      obstacleMap_(obstacleMap)
 {

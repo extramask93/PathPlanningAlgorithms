@@ -24,7 +24,7 @@ namespace rrt
     class RrtStar
     {
     public:
-        RrtStar(const util::GridMap<int> &costmap);
+        explicit RrtStar(const util::GridMap<unsigned char> &costmap);
         std::vector<util::Point> makePlan(const util::Point& start,
                       const util::Point& goal);
         std::vector<util::Point>
@@ -47,9 +47,9 @@ namespace rrt
         bool isOnCollisionPath(const util::Vertex &vertex);
         bool reachedGoal(const util::Vertex &new_vertex);
     private:
-        util::GridMap<int> obstacleMap_;
+        util::GridMap<unsigned char> obstacleMap_;
         std::vector<util::Vertex> vertex_list_;
-        int max_iterations_ = 1000;
+        int max_iterations_ = 100000;
         double max_extend_distance_ = 8.0;
         double max_distance_threshold_ = 8.0;
         int current_iterations_ = 0;

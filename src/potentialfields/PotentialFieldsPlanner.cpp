@@ -5,7 +5,7 @@
 #include "PotentialFieldsPlanner.h"
 
 namespace pf {
-PotentialFieldsPlanner::PotentialFieldsPlanner(const util::GridMap<int> &ogm) : ogm_(ogm),
+PotentialFieldsPlanner::PotentialFieldsPlanner(const util::GridMap<unsigned char> &ogm) : ogm_(ogm),
                                                                                 potentialMap_(std::vector<double>(ogm_.getCellWidth() * ogm_.getCellHeight()), ogm_.getCellWidth(), ogm_.getCellHeight())
 {
 }
@@ -45,15 +45,18 @@ void PotentialFieldsPlanner::calculatePotentialField(const util::Location &goal)
     }
 }
 
-std::vector<util::Location> PotentialFieldsPlanner::makePlan(const util::Location &start, const util::Location &goal, const util::Robot &robot)
+std::vector<util::Point> PotentialFieldsPlanner::makePlan(const util::Point &startP, const util::Point &goalP)
 {
+    util::Location start = ogm_.worldToMap(startP);
+    util::Location goal = ogm_.worldToMap(goalP);
+
     calculatePotentialField(goal);
     start_ = start;
     goal_ = goal;
-    std::vector<util::Location> path;
-    path.push_back(start);
+    std::vector<util::Point> path;
+    path.push_back(startP);
     auto distanceToGoal = ogm_.distanceEuclidean(start, goal);
-    auto motions = robot.getMotionModel();
+    auto motions = util::Robot::getMotionModel();
     auto currentLocation = start;
     while (distanceToGoal >= ogm_.getResolution()) {
         auto minPotential = std::numeric_limits<double>::infinity();
@@ -73,9 +76,10 @@ std::vector<util::Location> PotentialFieldsPlanner::makePlan(const util::Locatio
         }
         currentLocation = minLocation;
         distanceToGoal = ogm_.distanceEuclidean(minLocation, goal);
-        path.push_back(minLocation);
+        path.push_back(ogm_.mapToWorld(minLocation));
     }
-    path.push_back(goal);
+    path.push_back(goalP);
+
     return path;
 }
 

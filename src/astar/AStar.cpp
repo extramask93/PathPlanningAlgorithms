@@ -16,7 +16,7 @@ struct Node
     double cost;
     int index;
 };
-AStar::AStar(const util::GridMap<int> &map, HeuristicType heuristic) : obstacleMap_(map), currentHeuristic_(heuristic),
+AStar::AStar(const util::GridMap<unsigned char> &map, HeuristicType heuristic) : obstacleMap_(map), currentHeuristic_(heuristic),
                                                                        goalIndex_(-1),startIndex_(-1)
 {
 }
@@ -101,6 +101,6 @@ AStar::HeuristicType AStar::getHeuristic() const
 }
 bool AStar::isObstacle(const util::Location &location) const
 {
-    return obstacleMap_[location] == 1;
+    return obstacleMap_[location] == 0;
 }
 }// namespace astar

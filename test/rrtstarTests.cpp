@@ -6,14 +6,14 @@
 #include "matplotlibcpp.h"
 namespace plt = matplotlibcpp;
 TEST_CASE( "One should be able to create rrt star planner with ogm supplied", "[Planner, RRTStar]" ) {
-std::vector<int> ogm {0, 0, 0, 0, 0,0,0,
+std::vector<unsigned char> ogm {0, 0, 0, 0, 0,0,0,
                       0, 0, 0, 0, 0,0,0,
                       0, 0, 0, 0, 0,0,0,
                       0, 0, 1, 1, 0,0,0,
                       0, 0, 1, 1, 0,0,0,
                       0, 0, 0, 0, 0,0,0,
                       0, 0, 0, 0, 0,0,0};
-util::GridMap<int> map(ogm, 7,7,1.0);
+util::GridMap<unsigned char> map(ogm, 7,7,1.0);
 auto rrtplanner = rrt::RrtStar(map);
 auto plan = rrtplanner.makePlan({0,0},{6,6});
 auto obstacles = map.findAllObstacles();
