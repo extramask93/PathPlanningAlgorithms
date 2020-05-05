@@ -5,3 +5,6 @@
 #include "Robot.h"
 
 
+namespace util {
+    Robot::MovementType Robot::movementType = Robot::MovementType::MANHATTAN;
+}

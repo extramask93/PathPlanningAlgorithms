@@ -287,7 +287,7 @@ void GridMap<CELL_T>::plotMap()
 {
 
     namespace plt = matplotlibcpp;
-    plt::imshow(ogm_.data(),getCellWidth(),getCellHeight(),1);
+    plt::imshow((unsigned char*)ogm_.data(),(int)getCellWidth(),(int)getCellHeight(),1);
     plt::show();
 }
 template<typename CELL_T>

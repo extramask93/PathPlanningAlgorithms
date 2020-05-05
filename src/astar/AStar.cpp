@@ -51,11 +51,13 @@ std::vector<util::Point> AStar::makePlan(const util::Point &start, const util::P
     }
     std::vector<util::Point> bestPath;
     currentNode.index = goalIndex_;
+    bestPath.push_back(goal);
     while (currentNode.index != startIndex_) {
         auto loc = obstacleMap_.indexToMap(cameFrom[currentNode.index]);
         bestPath.push_back(obstacleMap_.mapToWorld(loc));
         currentNode.index = cameFrom[currentNode.index];
     }
+    bestPath.push_back(start);
     reverse(bestPath.begin(), bestPath.end());
     return bestPath;
 }

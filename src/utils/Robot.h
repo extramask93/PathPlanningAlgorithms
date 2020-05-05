@@ -10,22 +10,38 @@ namespace util {
 class Robot
 {
 public:
+  enum class MovementType {
+      MANHATTAN, EUCLIDEAN
+  };
   static std::vector<util::Location> getMotionModel()
   {
-    return std::vector<util::Location>{
-      { 0, -1 }, /*|*/
+      if(movementType == MovementType::EUCLIDEAN) {
+          return std::vector<util::Location>{
+              { 0, -1 }, /*|*/
 
-      { -1, 0 }, /*-*/
-      { 0, 1 }, /*|*/
-      { 1, 0 }/*-
-        {-1, -1},
-          {1, 1},{-1, 1},{1, -1}*/
-    };
+              { -1, 0 }, /*-*/
+              { 0, 1 }, /*|*/
+              { 1, 0 }
+          };
+      } else {
+          return std::vector<util::Location>{
+              { 0, -1 }, /*|*/
+
+              { -1, 0 }, /*-*/
+              { 0, 1 }, /*|*/
+              { 1, 0 },
+              {-1, -1},
+              {1, 1},
+              {-1, 1},
+              {1, -1}
+          };
+      }
   }
   static std::vector<char> getMotionModelArrows()
   {
     return std::vector<char>{ '^', '<', 'v', '>' };
   }
+  static MovementType movementType;
 };
 
 }// namespace util

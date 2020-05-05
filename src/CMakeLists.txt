@@ -7,6 +7,7 @@ add_subdirectory(rrtstar)
 add_subdirectory(rrt)
 add_subdirectory(astar)
 add_subdirectory(ants)
+add_subdirectory(depthfirst)
 
 
 target_link_libraries(runner
@@ -18,4 +19,5 @@ target_link_libraries(runner
         rrt
         astar
         ants
+        depthfirst
         )

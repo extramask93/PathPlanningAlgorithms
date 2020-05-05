@@ -6,6 +6,7 @@
 #include <GridMap.h>
 #include <Robot.h>
 #include <iostream>
+#include <DepthFirst.h>
 #include "RrtPlanner.h"
 #include "AntColony.h"
 #include "AStar.h"
@@ -14,17 +15,21 @@
 int  main(int , char **)
 {
 
-    std::vector<unsigned char> ogm{
+    auto temp = util::MapLoader::loadMap("map2.csv");
+    util::Robot::movementType = util::Robot::MovementType::EUCLIDEAN;
+    util::GridMap<unsigned char> map(std::get<0>(temp), std::get<1>(temp), std::get<2>(temp), 1.0);
+    auto aStarPlanner = df::DepthFirst(map);
+    std::vector<util::Point> plan;
+    plan = aStarPlanner.makePlan({ 0, 0 },util::Point{ map.getCellWidth() - 1 * 1.0, map.getCellHeight() - 1 * 1.0 });
+    /*std::vector<unsigned char> ogm{
         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
     };
-    auto temp = util::MapLoader::loadMap("map2.csv");
     util::GridMap<unsigned char> map(ogm, 7, 7);//(std::get<0>(temp), std::get<1>(temp),std::get<2>(temp),1.0);
-    auto rrtplanner = astar::AStar(map);
+    auto rrtplanner = df::DepthFirst(map);
     std::vector<util::Point> plan;
     {
-        util::Benchmarker bench(plan, util::Point(0, 0), util::Point(6, 6));
         plan = rrtplanner.makePlan({ 0, 0 }, util::Point{ map.getCellWidth() - 1 * 1.0, map.getCellHeight() - 1 * 1.0 });
-    }
+    }*/
     map.plotPathOnMap(plan);
 return 0;
 }
