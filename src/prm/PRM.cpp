@@ -35,12 +35,12 @@ std::vector<std::vector<int>> prm::Prm::generateRoadMap(unsigned nrOfSamples) {
     samples.push_back(start_);
     samples.push_back(goal_);
     // space for samples in 2D
-    MatrixXf M = MatrixXf(2, samples.size());
+    M_ = MatrixXf(2, samples.size());
     for(int i = 0; i< samples.size(); i++) {
-        M(0,i) = samples[i].x;
-        M(1,i) = samples[i].y;
+        M_(0,i) = samples[i].x;
+        M_(1,i) = samples[i].y;
     }
-    NNSearchF* nns = NNSearchF::createKDTreeLinearHeap(M);
+    nns_ = NNSearchF::createKDTreeLinearHeap(M_);
     // look for the 5 nearest neighbour of a the single-point query
     VectorXi indices;
     VectorXf dists;
@@ -53,11 +53,8 @@ std::vector<std::vector<int>> prm::Prm::generateRoadMap(unsigned nrOfSamples) {
         VectorXf q = VectorXf(2,1);
         q(0,0) = samples[sampleIndex].x;
         q(1,0) = samples[sampleIndex].y;
-        nns->knn(q, indices, dists, samples.size()-1);
+        nns_->knn(q, indices, dists, samples.size()-1,0,NNSearchF::SORT_RESULTS);
         for(int neighborIndex = 0; neighborIndex < samples.size()-1; neighborIndex++) {
-            if(sampleIndex == indices[neighborIndex]) {
-                continue;
-            }
             if(isCollision(samples[sampleIndex],samples[indices[neighborIndex]])) {
                 continue;
             }
@@ -68,6 +65,7 @@ std::vector<std::vector<int>> prm::Prm::generateRoadMap(unsigned nrOfSamples) {
         }
     }
     samples_ = samples;
+    edges_ = edges;
     return edges;
 }
 
@@ -108,7 +106,9 @@ bool prm::Prm::isCollision(const util::Point &from, const util::Point &to) const
 std::vector<util::Point> prm::Prm::makePlan(const util::Point &start, const util::Point &goal) {
     start_ = start;
     goal_ = goal;
-    auto roadMap = generateRoadMap(nrOfSamples_);
+    generateRoadMap(nrOfSamples_);
+    //addToRoadmap(start,goal);
+    auto roadMap = edges_;
     auto startNode = util::Node<double>(roadMap.size()-2,start.x, start.y, 0.0, -1);
     auto goalNode = util::Node<double>(roadMap.size()-1, goal.x, goal.y, 0.0, -1);
     openList_.clear();
@@ -154,5 +154,38 @@ std::vector<util::Point> prm::Prm::makePlan(const util::Point &start, const util
     }
     return path;
 }
+void prm::Prm::addToRoadmap(const util::Point &start, const util::Point &goal)
+{
+    using namespace Nabo;
+    using namespace Eigen;;
+    // space for samples in 2D
+    std::vector<util::Point> samples{start,goal};
 
-
+    if(edges_.size() > samples_.size()) {
+        edges_.erase(edges_.end());
+        edges_.erase(edges_.end());
+    }
+    edges_.push_back(std::vector<int>{});
+    edges_.push_back(std::vector<int>{});
+    for(int sampleIndex =0; sampleIndex < samples.size(); sampleIndex++) {
+        /*here should be connecting via edges to the closes neighbors*/
+        VectorXf q = VectorXf(2,1);
+        q(0,0) = samples[sampleIndex].x;
+        q(1,0) = samples[sampleIndex].y;
+        VectorXi indices;
+        VectorXf dists;
+        indices.resize(samples_.size());
+        dists.resize(samples_.size());
+        nns_->knn(q, indices, dists, samples_.size()-1,0 ,NNSearchF::SORT_RESULTS);
+        for(int neighborIndex = 0; neighborIndex < indices.size(); neighborIndex++) {
+            if(isCollision(samples[sampleIndex],samples_[indices[neighborIndex]])) {
+                continue;
+            }
+            auto idx = edges_.size()-samples.size() + sampleIndex;
+            if(edges_[idx].size() > MAX_NR_OF_EDGES_PER_POINT) {
+                break;
+            }
+            edges_[idx].push_back(indices[neighborIndex]);
+        }
+    }
+}

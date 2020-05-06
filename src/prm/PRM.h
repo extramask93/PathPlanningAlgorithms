@@ -22,14 +22,18 @@ namespace prm {
         std::vector<util::Point> samples_;
     private:
         std::vector<util::Point> nearestNeighbors(util::Point point ,std::vector<util::Point> samples, int nNeighbors);
+        void addToRoadmap(const util::Point &start, const util::Point &goal);
         bool isCollision(const util::Point &from, const util::Point &to) const;
     private:
         static constexpr double MAX_EDGE_LENGTH_ = 100;
-        static constexpr int MAX_NR_OF_EDGES_PER_POINT = 5;
+        static constexpr int MAX_NR_OF_EDGES_PER_POINT = 15; //Lavalle, planning algorithms
         unsigned nrOfSamples_;
         util::GridMap<unsigned char> ogm_;
         util::Point start_;
         util::Point goal_;
+        Nabo::NNSearchF *nns_ = nullptr;
+        Eigen::MatrixXf M_;
+        std::vector<std::vector<int>> edges_;
         std::map<int, util::Node<double>> openList_;
         std::map<int, util::Node<double>> closedList_;
     };

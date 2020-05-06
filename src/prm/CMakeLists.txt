@@ -21,3 +21,4 @@ target_link_libraries(prm
             utils
             ${libnabo_LIBRARIES}
         )
+
