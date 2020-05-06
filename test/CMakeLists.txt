@@ -7,4 +7,5 @@ target_link_libraries(planningtests
             prm
             rrtstar
             astar
+            depthfirst
         )

@@ -19,6 +19,7 @@ public:
 
 protected:
   util::Vertex getRandomVertex() const;
+  double getRandomExtendDistance() const;
   bool isObstacle(const util::Point &point) const;
   bool reachedGoal(const util::Vertex &vertex) const;
   bool isOnCollisionPath(const util::Vertex &vertex) const;

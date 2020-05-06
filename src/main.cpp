@@ -8,6 +8,7 @@
 #include <iostream>
 #include <DepthFirst.h>
 #include "RrtPlanner.h"
+#include "rrtstar.h"
 #include "AntColony.h"
 #include "AStar.h"
 #include "Benchmarker.h"
@@ -18,7 +19,7 @@ int  main(int , char **)
     auto temp = util::MapLoader::loadMap("map2.csv");
     util::Robot::movementType = util::Robot::MovementType::EUCLIDEAN;
     util::GridMap<unsigned char> map(std::get<0>(temp), std::get<1>(temp), std::get<2>(temp), 1.0);
-    auto aStarPlanner = df::DepthFirst(map);
+    auto aStarPlanner = rrt::RrtStar(map);
     std::vector<util::Point> plan;
     plan = aStarPlanner.makePlan({ 0, 0 },util::Point{ map.getCellWidth() - 1 * 1.0, map.getCellHeight() - 1 * 1.0 });
     /*std::vector<unsigned char> ogm{

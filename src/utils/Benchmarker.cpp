@@ -8,6 +8,7 @@
 #include <iomanip>
 #include <cmath>
 #include <fstream>
+#include <numeric>
 namespace util {
 
 void Benchmarker::start()
@@ -43,5 +44,14 @@ void Benchmarker::save(const std::string &file)
     for(const auto &result: results_) {
         saveFile << result<<'\n';
     }
+}
+void Benchmarker::printAverages()
+{
+    double sumOfPaths =
+        std::accumulate(results_.begin(),results_.end(),0.0, [](const auto &a, const auto &b){return a + b.pathLength;});
+    double sumOfTimes =
+        std::accumulate(results_.begin(),results_.end(),0.0, [](const auto &a, const auto &b){return a + b.cputimems;});
+    std::cout<<"Average path length = "<< sumOfPaths/results_.size()<<" m\n";
+    std::cout<<"Average time = "<< sumOfTimes/results_.size()<<" ms\n";
 }
 }// namespace util

@@ -32,6 +32,7 @@ namespace rrt
         int findPath(const util::Vertex& start,const util::Vertex& goal);
 
     private:
+        double getRandomExtendDistance() const;
         double getDistance(util::Point start_point, util::Point end_point);
         double getDistance(util::Vertex startVertex, util::Vertex endVertex);
         const util::Vertex& getClosestVertex(const util::Vertex &vertex);
@@ -50,6 +51,7 @@ namespace rrt
         util::GridMap<unsigned char> obstacleMap_;
         std::vector<util::Vertex> vertex_list_;
         int max_iterations_ = 100000;
+        double gamma_ = 1.0;
         double max_extend_distance_ = 8.0;
         double max_distance_threshold_ = 8.0;
         int current_iterations_ = 0;

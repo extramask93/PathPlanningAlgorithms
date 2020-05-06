@@ -28,6 +28,7 @@ class Benchmarker
     Benchmarker() = default;
     void start();
     BenchmarkResult stop(const std::vector<util::Point> &path_);
+    void printAverages();
     void save(const std::string &fileLoc);
 
   private:

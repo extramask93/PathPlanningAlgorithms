@@ -36,11 +36,17 @@ int rrt::RrtPlanner::makeGraph(const util::Point &start, const util::Point &goal
 util::Vertex rrt::RrtPlanner::getRandomVertex() const
 {
     static std::mt19937 randomGenerator(std::random_device{}());
+    static unsigned callCounter=0;
     using Distribution = std::uniform_real_distribution<double>;
     static Distribution xDistribution(obstacleMap_.getOriginX(),
         obstacleMap_.getOriginX() + obstacleMap_.getWorldWidth());
     static Distribution yDistribution(obstacleMap_.getOriginY(),
         obstacleMap_.getOriginY() + obstacleMap_.getWorldHeight());
+    // roll goal with 5%-10% probability -> https://www.cs.cmu.edu/~motionplanning/lecture/lec20.pdf
+    if(callCounter % 10) {
+        callCounter++;
+        return util::Vertex(goalVertex_.getLocation(),util::Vertex::NO_ID, util::Vertex::NO_PARENT);
+    }
     return util::Vertex{ util::Point(xDistribution(randomGenerator), yDistribution(randomGenerator)), util::Vertex::NO_ID, util::Vertex::NO_PARENT };
 }
 
@@ -48,8 +54,8 @@ rrt::RrtPlanner::RrtPlanner(const util::GridMap<unsigned char> &obstacleMap) : g
                                                                      startVertex_(util::Point{ 0, 0 }),
                                                                      obstacleMap_(obstacleMap)
 {
-    maxNrOfIterations_ = 1000;
-    maxExtendDistance_ = obstacleMap.getResolution() * 3;
+    maxNrOfIterations_ = 100000;
+    maxExtendDistance_ = obstacleMap.getCellWidth() * obstacleMap.getResolution() * 0.1;
     goalRadius_ = 1.0;
 }
 
@@ -62,8 +68,9 @@ util::Vertex rrt::RrtPlanner::steer(const util::Vertex &from, const util::Vertex
     // get the angle between the random point and our closest point (in rads)
 
     double distanceBetweenNodes = obstacleMap_.worldDistanceEuclidean(from.getLocation(), to.getLocation());
-    if (distanceBetweenNodes > maxExtendDistance_) {
-        distanceBetweenNodes = maxExtendDistance_;
+    double maxExtend = getRandomExtendDistance();
+    if (distanceBetweenNodes > maxExtend/*maxExtendDistance_*/) {
+        distanceBetweenNodes = maxExtend/*maxExtendDistance_*/;
     }
 
     util::Vertex newVertex(from.getLocation(), vertexList_.size(), from.getIndex());
@@ -170,4 +177,12 @@ std::vector<util::Point> rrt::RrtPlanner::makePlan(const util::Point &start, con
     auto goalIndex = makeGraph(start, goal);
     auto plan = buildPlan(goalIndex);
     return plan;
+}
+double rrt::RrtPlanner::getRandomExtendDistance() const
+{
+    static std::mt19937 randomGenerator(std::random_device{}());
+    using Distribution = std::uniform_real_distribution<double>;
+    static Distribution distribution(obstacleMap_.getResolution(),
+                                      obstacleMap_.getCellWidth() * obstacleMap_.getResolution() * 0.1);
+    return distribution(randomGenerator);
 }
