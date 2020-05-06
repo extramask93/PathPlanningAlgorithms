@@ -7,7 +7,7 @@
 #include "PRM.h"
 
 prm::Prm::Prm(const util::GridMap<unsigned char> &map, unsigned nrOfSamples) : ogm_(map), nrOfSamples_(nrOfSamples){
-
+    generateRoadMap(nrOfSamples_);
 }
 
 std::vector<util::Point> prm::Prm::generateSamples(unsigned int nrOfSamples) {
@@ -32,8 +32,8 @@ std::vector<std::vector<int>> prm::Prm::generateRoadMap(unsigned nrOfSamples) {
     using namespace Nabo;
     using namespace Eigen;;
     auto samples = generateSamples(nrOfSamples);
-    samples.push_back(start_);
-    samples.push_back(goal_);
+    //samples.push_back(start_);
+    //samples.push_back(goal_);
     // space for samples in 2D
     M_ = MatrixXf(2, samples.size());
     for(int i = 0; i< samples.size(); i++) {
@@ -106,8 +106,7 @@ bool prm::Prm::isCollision(const util::Point &from, const util::Point &to) const
 std::vector<util::Point> prm::Prm::makePlan(const util::Point &start, const util::Point &goal) {
     start_ = start;
     goal_ = goal;
-    generateRoadMap(nrOfSamples_);
-    //addToRoadmap(start,goal);
+    addToRoadmap(start,goal);
     auto roadMap = edges_;
     auto startNode = util::Node<double>(roadMap.size()-2,start.x, start.y, 0.0, -1);
     auto goalNode = util::Node<double>(roadMap.size()-1, goal.x, goal.y, 0.0, -1);
@@ -159,7 +158,9 @@ void prm::Prm::addToRoadmap(const util::Point &start, const util::Point &goal)
     using namespace Nabo;
     using namespace Eigen;;
     // space for samples in 2D
-    std::vector<util::Point> samples{start,goal};
+    std::vector<util::Point> samples;
+    samples.push_back(start);
+    samples.push_back(goal);
 
     if(edges_.size() > samples_.size()) {
         edges_.erase(edges_.end());
@@ -185,6 +186,7 @@ void prm::Prm::addToRoadmap(const util::Point &start, const util::Point &goal)
             if(edges_[idx].size() > MAX_NR_OF_EDGES_PER_POINT) {
                 break;
             }
+            edges_[indices[neighborIndex]].push_back(idx);
             edges_[idx].push_back(indices[neighborIndex]);
         }
     }
