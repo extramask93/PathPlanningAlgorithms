@@ -36,7 +36,7 @@ std::vector<util::Point> RrtStar::makePlan(const util::Point &start,
 
 util::Vertex RrtStar::getRandomVertex()
 {
-    static std::mt19937 randomGenerator(std::random_device{}());
+    static std::mt19937 randomGenerator(10/*std::random_device{}()*/);
     static unsigned callCounter = 0;
     using Distribution = std::uniform_real_distribution<double>;
     static Distribution xDistribution(obstacleMap_.getOriginX(),
@@ -115,12 +115,23 @@ int RrtStar::findPath(const util::Vertex &start, const util::Vertex &goal)
         chooseNewParent(newVertex, nearVerticesIndices, nearDistances);
         vertex_list_.push_back(newVertex);
         rewire(newVertex, nearVerticesIndices, nearDistances);
-        if (reachedGoal(newVertex)) {
+        if (!runTillMaxIterations_ && reachedGoal(newVertex)) {
+
             util::Vertex goalVertex{ goal.getLocation(), static_cast<int>(vertex_list_.size()), newVertex.getIndex() };
             vertex_list_.push_back(goalVertex);
             goal_index = goalVertex.getIndex();
             break;
         }
+        current_iterations_++;
+    }
+    if(runTillMaxIterations_) {
+        auto closestVertex = getClosestVertex(goal);
+        auto goalVertex = goal;
+        goalVertex.setParentIndex(closestVertex.getIndex());
+        goalVertex.setIndex(vertex_list_.size());
+        vertex_list_.push_back(goalVertex);
+        goal_index = goalVertex.getIndex();
+        //find best node to connect to the goal
     }
     return goal_index;
 }
@@ -128,6 +139,8 @@ int RrtStar::findPath(const util::Vertex &start, const util::Vertex &goal)
 void RrtStar::chooseNewParent(util::Vertex &newVertex, const std::vector<std::size_t> &nearVertcesIndxes, const std::vector<double> &nearVerticesDistances)
 {
     if(nearVertcesIndxes.empty()) {
+        auto parent = vertex_list_[newVertex.getParentIndex()];
+        newVertex.setCost(parent.getCost() + getDistance(newVertex,parent));
         return;
     }
     auto iteratorToMinDistance = std::min_element(nearVerticesDistances.begin(), nearVerticesDistances.end());
@@ -135,6 +148,7 @@ void RrtStar::chooseNewParent(util::Vertex &newVertex, const std::vector<std::si
     assert(("Near vertex was not found, probably extending farther than parent search distance", nearVertcesIndxes.size() > indexOfMinDistance));
     std::size_t indexOfClosestvertex = nearVertcesIndxes.at(indexOfMinDistance);
     util::Vertex &closestVertex = vertex_list_.at(indexOfClosestvertex);
+    newVertex.setCost(closestVertex.getCost() + nearVerticesDistances[indexOfClosestvertex]);
     newVertex.setParentIndex(closestVertex.getIndex());
 }
 std::pair<std::vector<std::size_t>, std::vector<double>>
@@ -145,7 +159,8 @@ std::pair<std::vector<std::size_t>, std::vector<double>>
     //double gamma = 2 * (1 - 1 / 2); //or bigger
     //n is nr of nodes Algorithmic Foundations of Robotics XI
     double n = vertex_list_.size();
-    double radius = gamma_ *std::pow((std::log(n) / n),1/2);
+    double intermediate = std::pow(std::log(n) / n,0.5);
+    double radius = gamma_ * intermediate;
     std::vector<std::size_t> nearVerticesIndexes{};
     std::vector<double> nearVerticesDistances{};
     for (const util::Vertex &vertex : vertex_list_) {
@@ -213,7 +228,8 @@ void RrtStar::rewire(const util::Vertex &new_vertex, const std::vector<std::size
         util::Vertex &vertexInConsideration = vertex_list_.at(indexOfVertexInConsideration);
         bool isCostSmallerViaNewNode =
             vertexInConsideration.getCost() > (new_vertex.getCost() + distanceToVertexInConsideration);
-        if (isCostSmallerViaNewNode) {
+        bool colision = isCollision(new_vertex, vertexInConsideration);
+        if (isCostSmallerViaNewNode && !colision) {
             vertexInConsideration.setParentIndex(new_vertex.getIndex());
             vertexInConsideration.setCost(distanceToVertexInConsideration + new_vertex.getCost());
         }
@@ -267,11 +283,45 @@ std::vector<util::Point>
 }
 double RrtStar::getRandomExtendDistance() const
 {
-    static std::mt19937 randomGenerator(std::random_device{}());
+    static std::mt19937 randomGenerator(10/*std::random_device{}()*/);
     using Distribution = std::uniform_real_distribution<double>;
     static Distribution distribution(obstacleMap_.getResolution(),
                                      obstacleMap_.getCellWidth() * obstacleMap_.getResolution() * 0.1);
     return distribution(randomGenerator);
+}
+void RrtStar::setGamma(double gamma)
+{
+    gamma_ = gamma;
+}
+void RrtStar::setRunToMaxIterations(bool setting)
+{
+    runTillMaxIterations_ = setting;
+}
+util::Vertex RrtStar::searchBestGoalNode()
+{
+    return util::Vertex(util::Point());
+}
+bool RrtStar::isCollision(const util::Vertex &from, const util::Vertex &to)
+{
+
+    double xFrom = from.getLocation().x;
+    double yFrom = from.getLocation().y;
+    double xTo = to.getLocation().x;
+    double yTo = to.getLocation().y;
+
+    // get the angle between the random point and our closest point (in rads)
+
+    double distanceBetweenNodes = getDistance(from, to);
+    double angleBetweenNodes = atan2(yTo - yFrom, xTo - xFrom);
+    int maxNumberOfExpandSteps = floor(distanceBetweenNodes / obstacleMap_.getResolution());
+    for (int i = 0; i < maxNumberOfExpandSteps; i++) {
+        double xIncrement = from.getX() + obstacleMap_.getResolution() * cos(angleBetweenNodes)*i;
+        double yIncrement = from.getY()+ obstacleMap_.getResolution() * sin(angleBetweenNodes)*i;
+        if (isObstacle(util::Vertex{ util::Point{ xIncrement, yIncrement } })) {
+            return true;
+        }
+    }
+    return false;
 }
 
 };// namespace rrt

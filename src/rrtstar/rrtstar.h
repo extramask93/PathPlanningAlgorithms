@@ -30,7 +30,8 @@ namespace rrt
         std::vector<util::Point>
         buildPlan(int goal_index);
         int findPath(const util::Vertex& start,const util::Vertex& goal);
-
+        void setGamma(double gamma);
+        void setRunToMaxIterations(bool setting);
     private:
         double getRandomExtendDistance() const;
         double getDistance(util::Point start_point, util::Point end_point);
@@ -46,11 +47,14 @@ namespace rrt
                     const std::vector<double> &distances);
         bool isObstacle(const util::Vertex &vertex);
         bool isOnCollisionPath(const util::Vertex &vertex);
+        bool isCollision(const util::Vertex &from, const util::Vertex &to);
         bool reachedGoal(const util::Vertex &new_vertex);
+        util::Vertex searchBestGoalNode();
     private:
         util::GridMap<unsigned char> obstacleMap_;
         std::vector<util::Vertex> vertex_list_;
-        int max_iterations_ = 100000;
+        int max_iterations_ = 2000;
+        bool runTillMaxIterations_ = false;
         double gamma_ = 1.0;
         double max_extend_distance_ = 8.0;
         double max_distance_threshold_ = 8.0;

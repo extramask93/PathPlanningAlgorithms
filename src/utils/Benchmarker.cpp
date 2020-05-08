@@ -45,6 +45,23 @@ void Benchmarker::save(const std::string &file)
         saveFile << result<<'\n';
     }
 }
+
+void Benchmarker::save(int nr, const std::string &file)
+{
+    static bool printTitle = true;
+    double sumOfPaths =
+        std::accumulate(results_.begin(),results_.end(),0.0, [](const auto &a, const auto &b){return a + b.pathLength;});
+    double sumOfTimes =
+        std::accumulate(results_.begin(),results_.end(),0.0, [](const auto &a, const auto &b){return a + b.cputimems;});
+    auto avergaePath =  sumOfPaths/results_.size();
+    auto averageTimes = sumOfTimes/results_.size();
+
+    std::ofstream saveFile(file, std::ios::app);
+    if(!saveFile.is_open()) {
+        throw std::runtime_error("Cant open file: " + file);
+    }
+    saveFile<<nr<<" "<<avergaePath<<" "<<averageTimes<<"\n";
+}
 void Benchmarker::printAverages()
 {
     double sumOfPaths =

@@ -288,6 +288,15 @@ void GridMap<CELL_T>::plotMap()
 
     namespace plt = matplotlibcpp;
     plt::imshow((unsigned char*)ogm_.data(),(int)getCellWidth(),(int)getCellHeight(),1);
+
+    /*(3,4),(11,11),(22,11),(33,11)
+        (11,30),(22,30), (33,30),(37,38)*/
+    std::vector<double> x{2};
+    std::vector<double> y{3};
+    plt::plot(x,y,"go");
+    x = std::vector<double>{11,22,33,11,22,33,37};
+    y = std::vector<double>{11,11,11,30,30,30,37};
+    plt::plot(x,y,"rx");
     plt::show();
 }
 template<typename CELL_T>

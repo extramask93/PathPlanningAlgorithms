@@ -1,4 +1,5 @@
-set(SOURCE_FILES CatchMain.cpp PlannerTests.cpp LocationTests.cpp GridMapTests.cpp rrtstarTests.cpp GridPlannersTests.cpp)
+set(SOURCE_FILES CatchMain.cpp PlannerTests.cpp LocationTests.cpp GridMapTests.cpp rrtstarTests.cpp GridPlannersTests.cpp
+        SamplingMethodsTests.cpp)
 add_executable(planningtests ${SOURCE_FILES})
 target_link_libraries(planningtests
         PRIVATE
@@ -6,6 +7,7 @@ target_link_libraries(planningtests
             potentialfields
             prm
             rrtstar
+            rrt
             astar
             depthfirst
         )

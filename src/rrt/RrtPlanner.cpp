@@ -54,7 +54,7 @@ rrt::RrtPlanner::RrtPlanner(const util::GridMap<unsigned char> &obstacleMap) : g
                                                                      startVertex_(util::Point{ 0, 0 }),
                                                                      obstacleMap_(obstacleMap)
 {
-    maxNrOfIterations_ = 100000;
+    maxNrOfIterations_ = 5000;
     maxExtendDistance_ = obstacleMap.getCellWidth() * obstacleMap.getResolution() * 0.1;
     goalRadius_ = 1.0;
 }

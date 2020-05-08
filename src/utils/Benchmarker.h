@@ -30,6 +30,7 @@ class Benchmarker
     BenchmarkResult stop(const std::vector<util::Point> &path_);
     void printAverages();
     void save(const std::string &fileLoc);
+    void save(int nr, const std::string &file);
 
   private:
     std::clock_t startClock_;
