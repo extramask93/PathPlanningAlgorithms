@@ -1,122 +1,168 @@
-//
-// Created by damian on 02.05.2020.
-//
 
-#include <numeric>
+
 #include <random>
-#include <iostream>
 #include "AntColony.h"
-namespace ants {
 
-AntColony::AntColony(const util::GridMap<unsigned char> &obstacleMap) : obstacleMap_(obstacleMap)
+Ant::Ant(Node start, int id)
 {
+    this->id_ = id;
+    this->current_node_ = start;
+    this->previous_node_ = Node(-1, -1);
 }
-std::vector<util::Point> ants::AntColony::makePlan(const util::Point &start, const util::Point &goal)
+
+AntColony::AntColony(int n_ants, double alpha, double beta, double evap_rate, int iterations, double Q) :
+
+                                                                                                          grid_(util::GridMap(std::vector<unsigned char>{}, 0, 0))
 {
-    auto startLocation = obstacleMap_.worldToMap(start);
-    auto goalLocation = obstacleMap_.worldToMap(goal);
-    std::vector<util::Node<int>> lastBestPath{};
-    initializePheromonesAtEdges();
+    this->n_ants_ = n_ants;
+    this->alpha_ = alpha;
+    this->beta_ = beta;
+    this->evap_rate_ = evap_rate;
+    this->iterations_ = iterations;
+    this->ants_ = std::vector<Ant>(n_ants_);
+    this->Q_ = Q;
+}
 
-    startNode_ = nodes_[obstacleMap_.mapToIndex(startLocation)];
-    goalNode_ = nodes_[obstacleMap_.mapToIndex(goalLocation)];
-
-    for (std::size_t iterNr = 0; iterNr < maxIterations_; iterNr++) {
-        for (std::size_t antNrk = 0; antNrk < numOfAnts_; antNrk++) {
-            /*all ants start in the anthill*/
-            Ant ant{ startNode_, goalNode_ };
-            while (!ant.foundGoal()) {
-                auto newNode = selectNewNode(ant.getCurrentNode());
-                ant.moveTo(newNode);
-                ant.checkIfGoalReached();
-            }
-            ant.removeLoop();
-            paths_.push_back(ant.getPath());
+void AntColony::RemoveLoop(Ant &ant)
+{
+    for (auto it = ant.path_.begin(); it != ant.path_.end(); ++it) {
+        if (*it == ant.current_node_) {
+            ant.steps_ = ant.path_.end() - it;
+            ant.path_.erase(it, ant.path_.end());
+            break;
         }
-        deterioratePheromones();
-        lastBestPath = paths_[0];
-        paths_.clear();
-        std::cout<<"Iteration: "<<iterNr<<"length of the path: "<<lastBestPath.size()<<"\n";
-        //break;
-        }
-        std::vector<util::Point> path(lastBestPath.size());
-        std::transform(lastBestPath.begin(),lastBestPath.end(),path.begin(), [&](const auto &element){
-            util::Location loc(element.x,element.y);
-            return obstacleMap_.mapToWorld(loc);
-        });
-        return path;
-
     }
+}
 
-
-
-void AntColony::initializePheromonesAtEdges()
+std::vector<Node> AntColony::ant_colony(util::GridMap<unsigned char> &grid, Node start, Node goal)
 {
-    int mapSize = obstacleMap_.getCellWidth()*obstacleMap_.getCellHeight();
-    nodes_.clear();
-    nodes_.reserve(mapSize);
-    for (int i = 0 ;i < mapSize; i++) {
-        auto location = obstacleMap_.indexToMap(i);
-        auto node = util::Node(i, location.x, location.y);
-        for (const auto &movement : util::Robot::getMotionModel()) {
-            util::Location newLocation = location + movement;
-            if (obstacleMap_.isWithinMapBounds(newLocation) && !isObstacle(newLocation) ) {
-                util::Edge edge(newLocation,0,0);
-                node.edges.emplace_back(edge);
+    this->grid_ = grid;
+    this->start_ = start;// Make sure start has id
+    this->goal_ = goal;
+    grid_size_ = grid_.getCellWidth();
+    Node c;
+    motions_ = GetMotion();
+    for (int i = 0; i < grid_size_; i++) {
+        for (int j = 0; j < grid_size_; j++) {
+            for (auto &motion : motions_) {
+                c = Node(i, j) + motion;
+                if (c.x_ >= 0 && c.x_ < grid_size_ && c.y_ >= 0 && c.y_ < grid_size_) pheromone_edges_.insert({ std::make_pair(i * grid_size_ + j, c.x_ * grid_size_ + c.y_), 1.0 });
             }
         }
-        nodes_.emplace_back(node);
     }
-}
-util::Node<int>& AntColony::selectNewNode(util::Node<int> &node)
-{
-    double pheromoneSum =std::accumulate(node.edges.begin(),node.edges.end(), 0.0,
-        [](double a, const util::Edge &b){return a+b.pheromone;});
-    std::vector<util::Edge> edgesList;
-    std::vector<double> probabilities;
-    for(auto &edge: node.edges) {
-        double probability = edge.pheromone / pheromoneSum;
-        if(pheromoneSum ==0) {
-            probability = 1.0 / node.edges.size();
-        }
-        edge.probability = probability;
-        edgesList.push_back(edge);
-        probabilities.push_back(probability);
-    }
-    std::transform(node.edges.begin(),node.edges.end(),node.edges.begin(),
-        [](auto &a){a.probability = 0.0; return a;});
+    this->max_steps_ = pow(grid_size_, 2) / 2 + grid_size_;
 
-    static std::mt19937 randomGenerator(std::random_device{}());
-    std::discrete_distribution<unsigned int> positionDistribution{ probabilities.begin(), probabilities.end() };
-    auto finalNodeLocation = edgesList.at(positionDistribution(randomGenerator)).finalNode;
-    return nodes_[obstacleMap_.mapToIndex(finalNodeLocation)];
+    std::random_device device;
+    std::mt19937 engine(device());
+    std::vector<Node> last_best_path;// saves best path of last iteration. Not over all.
+    Node possible_position;
 
-}
+    for (int i = 0; i < iterations_; i++) {
+        for (int j = 0; j < n_ants_; j++) {
+            // Can assign a thread to each ant if parallel required
+            Ant ant(start_, j);
+            while (ant.current_node_ != goal_ && ant.steps_ < max_steps_) {
+                ant.path_.push_back(ant.current_node_);
 
-
-void AntColony::deterioratePheromones()
-{
-    std::sort(paths_.begin(), paths_.end(),[](const auto &vec1, const auto &vec2) {return vec1.size()< vec2.size();});
-    for(int pathIndex =0; pathIndex < paths_.size(); pathIndex++) {
-        for(int elementIndex =0; elementIndex < paths_.at(pathIndex).size()-1; elementIndex++) {
-            auto currentNode = paths_[pathIndex][elementIndex];
-            auto iter = std::find_if(nodes_.begin(),nodes_.end(), [&](const auto &a){return a.id == currentNode.id;});
-            for(auto &edge: iter->edges) {
-                if(obstacleMap_.mapToIndex(edge.finalNode) == paths_.at(pathIndex).at(elementIndex+1).id) {
-                    edge.pheromone = (1.0 - evaporationRate_) * edge.pheromone + (rewardScalingFactor_ / paths_.at(pathIndex).size());
+                // Get next position
+                std::vector<Node> possible_positions;
+                std::vector<double> possible_probabilities;
+                float prob_sum = 0;
+                int n_obs = 0;
+                for (auto &m : motions_) {
+                    possible_position = ant.current_node_ + m;
+                    possible_position.id_ = possible_position.x_ * grid_size_ + possible_position.y_;
+                    if (possible_position.x_ >= 0 && possible_position.x_ < grid_size_ && possible_position.y_ >= 0 && possible_position.y_ < grid_size_
+                        && possible_position != ant.previous_node_) {
+                        possible_positions.push_back(possible_position);
+                        double new_prob = pow(pheromone_edges_[std::make_pair(possible_position.id_, ant.current_node_.id_)], alpha_) * pow(1.0 / pow(pow((possible_position.x_ - goal_.x_), 2) + pow((possible_position.y_ - goal_.y_), 2), 0.5), beta_);
+                        if (grid_[util::Location{ possible_position.x_, possible_position.y_ }] == 0) {
+                            n_obs += 1;
+                            new_prob = 0;
+                        }
+                        possible_probabilities.push_back(new_prob);
+                        prob_sum += new_prob;
+                    }
                 }
-                else {
-                    edge.pheromone = (1.0 - evaporationRate_) * edge.pheromone ;
+                if (n_obs == possible_positions.size())
+                    break;// Ant in a cul-de-sac
+                else if (prob_sum == 0) {
+                    double new_prob = 1.0 / (possible_positions.size() - n_obs);
+                    for (int i = 0; i < possible_positions.size(); i++) {
+                        if (grid_[util::Location{ possible_positions[i].x_, possible_positions[i].y_ }] == 1)
+                            possible_probabilities[i] = new_prob;
+                        else
+                            possible_probabilities[i] = 0;
+                    }
+                } else
+                    for (auto &p : possible_probabilities) p /= prob_sum;
+                std::discrete_distribution<> dist(possible_probabilities.begin(), possible_probabilities.end());
+                ant.previous_node_ = ant.current_node_;
+                ant.current_node_ = possible_positions[dist(engine)];
+                RemoveLoop(ant);
+
+                ant.steps_++;
+            }
+            // If goal found, add to path
+            if (ant.current_node_ == goal_) {
+                ant.current_node_.id_ = ant.current_node_.x_ * grid_size_ + ant.current_node_.y_;
+                ant.path_.push_back(ant.current_node_);
+                ant.found_goal_ = true;
+            }
+            ants_[j] = ant;
+        }
+
+        // Pheromone deterioration
+        for (auto it = pheromone_edges_.begin(); it != pheromone_edges_.end(); it++) it->second = it->second * (1 - evap_rate_);
+
+        int bpl = INT_MAX;
+        std::vector<Node> bp;
+
+        // Pheromone update based on successful ants
+        for (Ant &ant : ants_) {
+            // PrintAntPath(ant);
+            if (ant.found_goal_) {// Use iff goal reached
+                if (ant.path_.size() < bpl) {// Save best path yet in this iteration
+                    bpl = ant.path_.size();
+                    bp = ant.path_;
+                }
+                double c = Q_ / (ant.path_.size() - 1);//c = cost / reward. Reward here, increased pheromone
+                for (int i = 1; i < ant.path_.size(); i++) {// Assuming ant can tell which way the food was based on how the phermones detereorate. Good for path planning as prevents moving in the opposite direction to path and improves convergence
+                    auto it = pheromone_edges_.find(std::make_pair(ant.path_[i].id_, ant.path_[i - 1].id_));
+                    it->second += c;
                 }
             }
         }
+        if (i + 1 == iterations_) last_best_path = bp;
+    }//for every iteration loop ends here
+    if (last_best_path.empty()) {
+        last_best_path.clear();
+        Node no_path_node(-1, -1, -1, -1, -1, -1);
+        last_best_path.push_back(no_path_node);
+        return last_best_path;
     }
+    for (int i = 1; i < last_best_path.size(); i++) last_best_path[i].pid_ = last_best_path[i - 1].id_;
+    last_best_path.back().id_ = last_best_path.back().x_ * grid_size_ + last_best_path.back().y_;
+    return last_best_path;
 }
-
-
-bool AntColony::isObstacle(const util::Location &location) const
+std::vector<util::Point> AntColony::makePlan(util::GridMap<unsigned char> &grid, const util::Point &start_, const util::Point &goal_)
 {
-    return obstacleMap_[location] == 0;
+    //to nodes
+    Node start(grid.worldToMap(start_).x, grid.worldToMap(start_).y, 0, 0, 0, 0);
+    Node goal(grid.worldToMap(goal_).x, grid.worldToMap(goal_).y, 0, 0, 0, 0);
+    start.id_ = start.x_ * grid.getCellWidth() + start.y_;
+    start.pid_ = start.x_ * grid.getCellWidth() + start.y_;
+    goal.id_ = goal.x_ * grid.getCellWidth() + goal.y_;
+    start.h_cost_ = abs(start.x_ - goal.x_) + abs(start.y_ - goal.y_);
+    std::vector<Node> path = ant_colony(grid, start, goal);
+    if (path[0].id_ == -1) {
+        return std::vector<util::Point>();
+    }
+    std::vector<util::Point> pointPath;
+    for (auto node : path) {
+        auto point = util::Point(grid_.mapToWorld(util::Location(node.x_, node.y_)));
+        pointPath.push_back(point);
+    }
+    //std::reverse(pointPath.begin(), pointPath.end());
+    return pointPath;
 }
-
-}// namespace ants

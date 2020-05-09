@@ -6,7 +6,7 @@
 
 namespace pf {
 PotentialFieldsPlanner::PotentialFieldsPlanner(const util::GridMap<unsigned char> &ogm) : ogm_(ogm),
-                                                                                potentialMap_(std::vector<double>(ogm_.getCellWidth() * ogm_.getCellHeight()), ogm_.getCellWidth(), ogm_.getCellHeight())
+                                                                                potentialMap_(std::vector<double>(ogm.getCellWidth() * ogm.getCellHeight()), ogm.getCellWidth(), ogm.getCellHeight())
 {
 }
 
@@ -21,6 +21,9 @@ double PotentialFieldsPlanner::calculateRepulsivePotential(const util::Location 
     auto closestObstacleLocation = ogm_.findClosestObstacle(current);
     if (closestObstacleLocation != boost::none) {
         auto distanceToObstacle = ogm_.distanceEuclidean(current, *closestObstacleLocation);
+        if(distanceToObstacle >= 0.5) { //if cell is farther than robot radious then it is safe
+            return 0.0;
+        }
         if (distanceToObstacle < 0.1) {
             distanceToObstacle = 0.1;
         }

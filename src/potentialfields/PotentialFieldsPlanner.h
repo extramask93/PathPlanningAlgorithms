@@ -17,9 +17,9 @@ namespace pf {
         double calculateAttractivePotential(const util::Location &currentLocation, const util::Location &goalIndex) const;
         double calculateRepulsivePotential(const util::Location &currentLocation) const;
         void calculatePotentialField(const util::Location &location);
+        util::GridMap<double> potentialMap_;
     private:
         util::GridMap<unsigned char> ogm_;
-        util::GridMap<double> potentialMap_;
         util::Location goal_;
         util::Location start_;
         static constexpr bool OBSTACLE = 1;

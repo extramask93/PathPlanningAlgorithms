@@ -2,10 +2,10 @@ add_library(ants "")
 target_sources(ants
         PRIVATE
         AntColony.cpp
-        Ant.cpp
+        Utils.cpp
         PUBLIC
         ${CMAKE_CURRENT_LIST_DIR}/AntColony.h
-        ${CMAKE_CURRENT_LIST_DIR}/Ant.h
+        ${CMAKE_CURRENT_LIST_DIR}/Utils.h
         )
 #------------------------------------
 find_package (Boost 1.36 REQUIRED)

@@ -7,9 +7,9 @@
 #include <Robot.h>
 #include <iostream>
 #include <DepthFirst.h>
+#include <AntColony.h>
 #include "RrtPlanner.h"
 #include "rrtstar.h"
-#include "AntColony.h"
 #include "AStar.h"
 #include "Benchmarker.h"
 #include "MapLoader.h"
@@ -17,6 +17,12 @@ int  main(int , char **)
 {
 
     double resolution = 1.0;
+    auto temp = util::MapLoader::loadMap("map-warehouse.csv");
+    util::GridMap<unsigned char> map(std::get<0>(temp), std::get<1>(temp), std::get<2>(temp), resolution);
+
+    int n_ants = 10, iterations = 50;
+    float alpha = 1, beta =0.7, evap_rate = 0.3, Q = 10;
+    AntColony new_ant_colony(n_ants, alpha, beta, evap_rate, iterations, Q);
     std::vector testPointsMap{
         util::Point{ 11 * resolution, 11 * resolution },
         util::Point{ 22 * resolution, 11 * resolution },
@@ -26,8 +32,9 @@ int  main(int , char **)
         util::Point{ 33 * resolution, 30 * resolution },
         util::Point{ 37 * resolution, 37 * resolution },
     };
-    auto temp = util::MapLoader::loadMap("map-warehouse.csv");
-    util::GridMap<unsigned char> map(std::get<0>(temp), std::get<1>(temp), std::get<2>(temp), resolution);
+    auto plan = new_ant_colony.makePlan(map,{ 2 * resolution, 3 * resolution }, testPointsMap[3]);
+    map.plotPathOnMap(plan);
+    return 0;
     std::vector<int> gammas {5,50,100};
     for(auto point : testPointsMap) {
     for (int gamma : gammas) {

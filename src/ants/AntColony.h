@@ -1,46 +1,50 @@
-//
-// Created by damian on 02.05.2020.
-//
+#ifndef ANT_COLONY_H
+#define ANT_COLONY_H
 
-#ifndef PLANNING_ANTCOLONY_H
-#define PLANNING_ANTCOLONY_H
-#include "Point.h"
-#include "Location.h"
+#include "Utils.h"
 #include "GridMap.h"
-#include "Ant.h"
-#include "Node.h"
-#include "Edge.h"
-#include <boost/functional/hash.hpp>
-#include <unordered_map>
-namespace ants {
+
+struct pair_hash
+{
+
+    template<class T1, class T2>
+    std::size_t operator()(const std::pair<T1, T2> &pair) const
+    {
+        return std::hash<T1>()(pair.first) ^ std::hash<T2>()(pair.second);
+    }
+};
+
+class Ant
+{
+  public:
+    Ant(Node start = Node(0, 0), int id = 0);
+    std::vector<Node> path_;
+    bool found_goal_ = false;
+    Node current_node_;
+    Node previous_node_;
+    int steps_ = 0, id_;
+};
+
 class AntColony
 {
-    using IDPair = std::pair<unsigned ,unsigned >;
   public:
-    explicit AntColony(const util::GridMap<unsigned char> &obstacleMap);
-    std::vector<util::Point> makePlan(const util::Point &start, const util::Point &goal);
+    AntColony(int n_ants = 10, double alpha = 0.5, double beta = 0.5, double evap_rate = 0.5, int iterations = 10, double Q = 10.0);
+
+    void PrintAntPath(Ant &ant);
+
+    void RemoveLoop(Ant &ant);
+
+    std::vector<util::Point> makePlan(util::GridMap<unsigned char> &grid, const util::Point &start, const util::Point &goal);
+    std::vector<Node> ant_colony(util::GridMap<unsigned char> &grid, Node start, Node goal);
+
   private:
-    void initializePheromonesAtEdges();
-    util::Node<int>& selectNewNode(util::Node<int> &node);
-    void deterioratePheromones();
-    bool isObstacle(const util::Location &location) const;
-  private:
-    util::GridMap<unsigned char> obstacleMap_;
-    std::vector<util::Node<int>> nodes_;
-    util::Node<int> startNode_;
-    util::Node<int> goalNode_;
-    std::size_t numOfAnts_ = 10;
-    std::vector<std::vector<util::Node<int>>> paths_;
-    double alpha_ =1.0;
-    double beta_ =1.0;
-    double rewardScalingFactor_ =1.0;
-    double evaporationRate_= 0.01;
-    double initial_pheromone_level = 1.0;
-    std::size_t maxIterations_ = 10;
+    util::GridMap<unsigned char> grid_;
+    std::unordered_map<std::pair<int, int>, double, pair_hash> pheromone_edges_;
+    int n_ants_, iterations_, max_steps_, grid_size_;
+    double alpha_, beta_, evap_rate_, Q_;
+    Node start_, goal_;
     std::vector<Ant> ants_;
-    int maxSteps_ =100;
+    std::vector<Node> motions_;
 };
-}
 
-
-#endif//PLANNING_ANTCOLONY_H
+#endif
