@@ -19,10 +19,14 @@ set xlabel "Punkt" font ",10"
 set ylabel "Dlugosc trasy [m]"
 
 set title "Dlugosc sciezki" font ",15"
-plot [1:6]'rrt/rrt.dat' using 1:2  w lp title "RRT" pt 7 ps 2, 'prm/prm.dat' using 1:2 w lp title "PRM" pt 7 ps 2
+plot [0:6]'rrt/rrt.dat' using 1:2  w lp title "RRT" pt 7 ps 2, 'prm/prm.dat' using 1:2 w lp title "PRM" pt 7 ps 2, \
+'rrtstar/rrt-star.dat' using 1:2 w lp title "RRT*" pt 7 ps 2,
 
 set title "Czas wyszukiwania" font ",15"
 set ylabel "Czas wyszukiwania [ms]"
-plot [1:6]'rrt/rrt.dat' using 1:3 w lp title "RRT" pt 7 ps 2, 'prm/prm.dat' using 1:3 w lp title "PRM" pt 7 ps 2
+plot [0:6]'rrt/rrt.dat' using 1:3 w lp title "RRT" pt 7 ps 2, 'prm/prm.dat' using 1:3 w lp title "PRM" pt 7 ps 2, \
+'rrtstar/rrt-star.dat' using 1:3 w lp title "RRT*" pt 7 ps 2,
 
 unset multiplot
+show terminal
+

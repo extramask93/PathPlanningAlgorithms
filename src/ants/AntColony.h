@@ -1,6 +1,6 @@
 #ifndef ANT_COLONY_H
 #define ANT_COLONY_H
-
+#include <unordered_map>
 #include "Utils.h"
 #include "GridMap.h"
 
@@ -28,13 +28,13 @@ class Ant
 class AntColony
 {
   public:
-    AntColony(int n_ants = 10, double alpha = 0.5, double beta = 0.5, double evap_rate = 0.5, int iterations = 10, double Q = 10.0);
+    AntColony(util::GridMap<unsigned char> &grid,int n_ants = 10, double alpha = 0.5, double beta = 0.5, double evap_rate = 0.5, int iterations = 10, double Q = 10.0);
 
     void PrintAntPath(Ant &ant);
 
     void RemoveLoop(Ant &ant);
 
-    std::vector<util::Point> makePlan(util::GridMap<unsigned char> &grid, const util::Point &start, const util::Point &goal);
+    std::vector<util::Point> makePlan(const util::Point &start, const util::Point &goal);
     std::vector<Node> ant_colony(util::GridMap<unsigned char> &grid, Node start, Node goal);
 
   private:

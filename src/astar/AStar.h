@@ -6,16 +6,18 @@
 #define PLANNING_ASTAR_H
 #include "Point.h"
 #include "GridMap.h"
+#include "IPlanner.h"
 #include <vector>
 namespace astar {
-class AStar
+class AStar : public IPlanner
 {
   public:
     enum class HeuristicType { EUCLID,
         MANHATTAN,
         NO_HEURISTIC };
     explicit AStar(const util::GridMap<unsigned char> &map, HeuristicType heuristic = HeuristicType::EUCLID);
-    std::vector<util::Point> makePlan(const util::Point &start, const util::Point &goal);
+    virtual std::vector<util::Point> makePlan(const util::Point &start, const util::Point &goal) override;
+    virtual void initialize(const util::GridMap<unsigned char> &map, const util::Options &options = util::Options{}) override;
     void setHeuristic(AStar::HeuristicType heuristic);
     HeuristicType getHeuristic() const;
 

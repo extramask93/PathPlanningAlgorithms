@@ -19,14 +19,17 @@ set xlabel "Numer punktu" font ",10"
 set ylabel "Dlugosc trasy [m]"
 
 set title "Dlugosc sciezki" font ",15"
-plot [1:6]'gamma.dat' using 1:3 every 3::0 w lp title "{/Symbol g} = 5" pt 7 ps 2, '' using 1:3 every 3::1 w lp title "{/Symbol g}=50" pt 7 ps 2, \
- '' using 1:3 every 3::2 w lp title "{\Symbol g}=100" pt 7 ps 2
+plot [1:7]'gamma.dat' using 1:3 every 5::0 w lp title "{/Symbol g} = 5" pt 7 ps 2, '' using 1:3 every 5::1 w lp title "{/Symbol g}=10" pt 7 ps 2, \
+ '' using 1:3 every 5::2 w lp title "{\Symbol g}=20" pt 7 ps 2, '' using 1:3 every 5::3 w lp title "{\Symbol g}=50" pt 7 ps 2, \
+ '' using 1:3 every 5::4 w lp title "{\Symbol g}=100" pt 7 ps 2
 
 
 set title "Czas wyszukiwania" font ",15"
 set ylabel "Czas wyszukiwania [ms]"
-plot [1:6]'gamma.dat' using 1:4 every 3::0 w lp title "{/Symbol g} = 5" pt 7 ps 2, '' using 1:4 every 3::1 w lp title "{/Symbol g}=50" pt 7 ps 2, \
- '' using 1:4 every 3::2 w lp title "{/Symbol g}=100" pt 7 ps 2
+plot [1:7]'gamma.dat' using 1:4 every 5::0 w lp title "{/Symbol g} = 5" pt 7 ps 2, '' using 1:4 every 5::1 w lp title "{/Symbol g}=10" pt 7 ps 2, \
+ '' using 1:4 every 5::2 w lp title "{\Symbol g}=20" pt 7 ps 2, '' using 1:4 every 5::3 w lp title "{\Symbol g}=50" pt 7 ps 2, \
+ '' using 1:4 every 5::4 w lp title "{\Symbol g}=100" pt 7 ps 2
+
 
 
 unset multiplot

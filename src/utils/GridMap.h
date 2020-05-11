@@ -137,7 +137,7 @@ std::vector<util::Location> GridMap<CELL_T>::findAllObstacles() const
 {
   std::vector<util::Location> obstacleIndexes;
   for (uint index = 0; index < ogm_.size(); index++) {
-    if (ogm_[index] == 1) {
+    if (ogm_[index] == 0) {
       obstacleIndexes.push_back({ indexToMap(index) });
     }
   }
@@ -166,12 +166,13 @@ CELL_T &GridMap<CELL_T>::operator[](const util::Location &location)
 template<typename T>
 std::ostream &operator<<(std::ostream &out, const GridMap<T> &gridMap)
 {
-  out << std::fixed << std::setprecision(1);
+  //out << std::fixed << std::setprecision(1);
+  auto max = std::max_element(gridMap.ogm_.begin(),gridMap.ogm_.end());
   for (uint index = 0; index < gridMap.ogm_.size(); index++) {
     if (!(index % gridMap.mapWidth_)) {
       out << "\n";
     }
-    out << std::left << std::setw(4) << gridMap.ogm_[index] << " | ";
+    out << std::left << std::setw(6) << gridMap.ogm_[index]/ (*max) << " | ";
   }
   return out;
 }
@@ -293,10 +294,10 @@ void GridMap<CELL_T>::plotMap()
         (11,30),(22,30), (33,30),(37,38)*/
     std::vector<double> x{2};
     std::vector<double> y{3};
-    //plt::plot(x,y,"go");
-    //x = std::vector<double>{11,22,33,11,22,33,37};
-    //y = std::vector<double>{11,11,11,30,30,30,37};
-    //plt::plot(x,y,"rx");
+    plt::plot(x,y,"go");
+    x = std::vector<double>{11.5,22.5,33.5,11.5,22.5,33.5,36.5};
+    y = std::vector<double>{11.5,11.5,11.5,30.5,30.5,30.5,36.5};
+    plt::plot(x,y,"rx");
     plt::show();
 }
 template<typename CELL_T>

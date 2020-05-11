@@ -105,4 +105,9 @@ bool AStar::isObstacle(const util::Location &location) const
 {
     return obstacleMap_[location] == 0;
 }
+void AStar::initialize(const util::GridMap<unsigned char> &map, const util::Options &options)
+{
+    obstacleMap_ = map;
+    setHeuristic((HeuristicType)options.heuristic);
+}
 }// namespace astar

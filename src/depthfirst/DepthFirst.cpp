@@ -65,4 +65,8 @@ bool DepthFirst::isObstacle(const util::Location &location) const
 {
     return obstacleMap_[location] == 0;
 }
+void DepthFirst::initialize(const util::GridMap<unsigned char> &map, const util::Options &options)
+{
+    obstacleMap_ = map;
+}
 }

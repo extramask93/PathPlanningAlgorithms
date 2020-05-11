@@ -8,6 +8,7 @@
 #include <iomanip>
 #include <cmath>
 #include <fstream>
+#include <cstdarg>
 #include <numeric>
 namespace util {
 
@@ -70,5 +71,36 @@ void Benchmarker::printAverages()
         std::accumulate(results_.begin(),results_.end(),0.0, [](const auto &a, const auto &b){return a + b.cputimems;});
     std::cout<<"Average path length = "<< sumOfPaths/results_.size()<<" m\n";
     std::cout<<"Average time = "<< sumOfTimes/results_.size()<<" ms\n";
+}
+void Benchmarker::saveVar(const std::string &file, const char *fmt, ...)
+{
+
+    double sumOfPaths =
+        std::accumulate(results_.begin(),results_.end(),0.0, [](const auto &a, const auto &b){return a + b.pathLength;});
+    double sumOfTimes =
+        std::accumulate(results_.begin(),results_.end(),0.0, [](const auto &a, const auto &b){return a + b.cputimems;});
+    auto avergaePath =  sumOfPaths/results_.size();
+    auto averageTimes = sumOfTimes/results_.size();
+
+    std::ofstream saveFile(file, std::ios::app);
+    if(!saveFile.is_open()) {
+        throw std::runtime_error("Cant open file: " + file);
+    }
+    va_list args;
+    va_start(args, fmt);
+
+    while (*fmt != '\0') {
+        if (*fmt == 'd') {
+            int i = va_arg(args, int);
+            saveFile << i << ' ';
+        } else if (*fmt == 's') {
+            char * s = va_arg(args, char*);
+            saveFile << s << ' ';
+        }
+        ++fmt;
+    }
+
+    saveFile<<" "<<avergaePath<<" "<<averageTimes<<"\n";
+    va_end(args);
 }
 }// namespace util

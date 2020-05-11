@@ -10,9 +10,9 @@ Ant::Ant(Node start, int id)
     this->previous_node_ = Node(-1, -1);
 }
 
-AntColony::AntColony(int n_ants, double alpha, double beta, double evap_rate, int iterations, double Q) :
+AntColony::AntColony(util::GridMap<unsigned char> &grid,int n_ants, double alpha, double beta, double evap_rate, int iterations, double Q) :
 
-                                                                                                          grid_(util::GridMap(std::vector<unsigned char>{}, 0, 0))
+                                                                                                          grid_(grid)
 {
     this->n_ants_ = n_ants;
     this->alpha_ = alpha;
@@ -145,16 +145,15 @@ std::vector<Node> AntColony::ant_colony(util::GridMap<unsigned char> &grid, Node
     last_best_path.back().id_ = last_best_path.back().x_ * grid_size_ + last_best_path.back().y_;
     return last_best_path;
 }
-std::vector<util::Point> AntColony::makePlan(util::GridMap<unsigned char> &grid, const util::Point &start_, const util::Point &goal_)
+std::vector<util::Point> AntColony::makePlan(const util::Point &start_, const util::Point &goal_)
 {
-    //to nodes
-    Node start(grid.worldToMap(start_).x, grid.worldToMap(start_).y, 0, 0, 0, 0);
-    Node goal(grid.worldToMap(goal_).x, grid.worldToMap(goal_).y, 0, 0, 0, 0);
-    start.id_ = start.x_ * grid.getCellWidth() + start.y_;
-    start.pid_ = start.x_ * grid.getCellWidth() + start.y_;
-    goal.id_ = goal.x_ * grid.getCellWidth() + goal.y_;
+    Node start(grid_.worldToMap(start_).x, grid_.worldToMap(start_).y, 0, 0, 0, 0);
+    Node goal(grid_.worldToMap(goal_).x, grid_.worldToMap(goal_).y, 0, 0, 0, 0);
+    start.id_ = start.x_ * grid_.getCellWidth() + start.y_;
+    start.pid_ = start.x_ * grid_.getCellWidth() + start.y_;
+    goal.id_ = goal.x_ * grid_.getCellWidth() + goal.y_;
     start.h_cost_ = abs(start.x_ - goal.x_) + abs(start.y_ - goal.y_);
-    std::vector<Node> path = ant_colony(grid, start, goal);
+    std::vector<Node> path = ant_colony(grid_, start, goal);
     if (path[0].id_ == -1) {
         return std::vector<util::Point>();
     }
@@ -163,6 +162,5 @@ std::vector<util::Point> AntColony::makePlan(util::GridMap<unsigned char> &grid,
         auto point = util::Point(grid_.mapToWorld(util::Location(node.x_, node.y_)));
         pointPath.push_back(point);
     }
-    //std::reverse(pointPath.begin(), pointPath.end());
     return pointPath;
 }

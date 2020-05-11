@@ -65,7 +65,7 @@ util::Vertex RrtStar::steer(const util::Vertex &from, const util::Vertex &to, do
         distanceBetweenNodes = maxExtend;
     }
 
-    util::Vertex new_vertex(from.getLocation(), vertex_list_.size(), from.getIndex());
+    util::Vertex new_vertex(from.getLocation(), vertex_list_.size(), from.getIndex());//
     new_vertex.addToPath(from.getLocation());
     double angleBetweenNodes = atan2(yTo - yFrom, xTo - xFrom);
     int maxNumberOfExpandSteps = floor(distanceBetweenNodes / obstacleMap_.getResolution());
@@ -92,6 +92,7 @@ int RrtStar::findPath(const util::Vertex &start, const util::Vertex &goal)
 {
     int goal_index = -1;
     current_iterations_ = 0;
+    vertex_list_.clear();
 
     if (isObstacle(start) || isObstacle(goal)) {
         return goal_index;
@@ -148,7 +149,7 @@ void RrtStar::chooseNewParent(util::Vertex &newVertex, const std::vector<std::si
     assert(("Near vertex was not found, probably extending farther than parent search distance", nearVertcesIndxes.size() > indexOfMinDistance));
     std::size_t indexOfClosestvertex = nearVertcesIndxes.at(indexOfMinDistance);
     util::Vertex &closestVertex = vertex_list_.at(indexOfClosestvertex);
-    newVertex.setCost(closestVertex.getCost() + nearVerticesDistances[indexOfClosestvertex]);
+    newVertex.setCost(closestVertex.getCost() + nearVerticesDistances[indexOfMinDistance]);
     newVertex.setParentIndex(closestVertex.getIndex());
 }
 std::pair<std::vector<std::size_t>, std::vector<double>>

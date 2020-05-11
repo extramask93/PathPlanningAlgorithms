@@ -9,4 +9,4 @@ target_include_directories(depthfirst
         PUBLIC
         ${CMAKE_CURRENT_LIST_DIR}
         )
-target_link_libraries(depthfirst utils)
+target_link_libraries(depthfirst utils iplanner)

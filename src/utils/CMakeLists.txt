@@ -12,6 +12,7 @@ target_link_libraries(utils
 target_sources(utils
         PRIVATE
         GridMap.cpp
+        Options.cpp
         Robot.cpp
         Vertex.cpp
         Benchmarker.cpp
@@ -28,6 +29,7 @@ target_sources(utils
         ${CMAKE_CURRENT_LIST_DIR}/Edge.h
         ${CMAKE_CURRENT_LIST_DIR}/Benchmarker.h
         ${CMAKE_CURRENT_LIST_DIR}/MapLoader.h
+        ${CMAKE_CURRENT_LIST_DIR}/Options.h
         ${CMAKE_CURRENT_LIST_DIR}/matplotlibcpp.h
         )
 target_include_directories(utils

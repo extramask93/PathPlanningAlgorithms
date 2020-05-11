@@ -22,17 +22,22 @@ int  main(int , char **)
 
     int n_ants = 10, iterations = 50;
     float alpha = 1, beta =0.7, evap_rate = 0.3, Q = 10;
-    AntColony new_ant_colony(n_ants, alpha, beta, evap_rate, iterations, Q);
-    std::vector testPointsMap{
-        util::Point{ 11 * resolution, 11 * resolution },
-        util::Point{ 22 * resolution, 11 * resolution },
-        util::Point{ 33 * resolution, 11 * resolution },
-        util::Point{ 11 * resolution, 30 * resolution },
-        util::Point{ 22 * resolution, 30 * resolution },
-        util::Point{ 33 * resolution, 30 * resolution },
-        util::Point{ 37 * resolution, 37 * resolution },
+    //AntColony new_ant_colony(map,n_ants, alpha, beta, evap_rate, iterations, Q);
+    auto new_ant_colony = rrt::RrtPlanner(map);
+    std::vector<util::Point> testPointsMap{
+        util::Point{ 11.5 * resolution, 11.5 * resolution },
+        util::Point{ 22.5 * resolution, 11.5 * resolution },
+        util::Point{ 33.5 * resolution, 11.5 * resolution },
+        util::Point{ 11.5 * resolution, 30.5 * resolution },
+        util::Point{ 22.5 * resolution, 30.5 * resolution },
+        util::Point{ 33.5 * resolution, 30.5 * resolution },
+        util::Point{ 36.5 * resolution, 36.5 * resolution },
     };
-    auto plan = new_ant_colony.makePlan(map,{ 2 * resolution, 3 * resolution }, testPointsMap[3]);
+    //new_ant_colony.calculatePotentialField({ 11, 11 });
+    //std::ofstream asd("/home/damian/dupsko101.dat",std::ios::trunc);
+    //asd<<new_ant_colony.potentialMap_;
+    //asd.close();
+    auto plan = new_ant_colony.makePlan({ 2 * resolution, 3 * resolution }, {0,0});
     map.plotPathOnMap(plan);
     return 0;
     std::vector<int> gammas {5,50,100};

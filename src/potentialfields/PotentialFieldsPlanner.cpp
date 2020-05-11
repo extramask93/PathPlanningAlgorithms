@@ -6,22 +6,22 @@
 
 namespace pf {
 PotentialFieldsPlanner::PotentialFieldsPlanner(const util::GridMap<unsigned char> &ogm) : ogm_(ogm),
-                                                                                potentialMap_(std::vector<double>(ogm.getCellWidth() * ogm.getCellHeight()), ogm.getCellWidth(), ogm.getCellHeight())
+                                                                                potentialMap_(std::vector<float>(ogm.getCellWidth() * ogm.getCellHeight()), ogm.getCellWidth(), ogm.getCellHeight())
 {
 }
 
 
-double PotentialFieldsPlanner::calculateAttractivePotential(const util::Location &current, const util::Location &goal) const
+float PotentialFieldsPlanner::calculateAttractivePotential(const util::Location &current, const util::Location &goal) const
 {
     return 0.5 * ATTRACTIVE_POTENTIAL_GAIN * ogm_.distanceEuclidean(current, goal);
 }
 
-double PotentialFieldsPlanner::calculateRepulsivePotential(const util::Location &current) const
+float PotentialFieldsPlanner::calculateRepulsivePotential(const util::Location &current) const
 {
     auto closestObstacleLocation = ogm_.findClosestObstacle(current);
     if (closestObstacleLocation != boost::none) {
         auto distanceToObstacle = ogm_.distanceEuclidean(current, *closestObstacleLocation);
-        if(distanceToObstacle >= 0.5) { //if cell is farther than robot radious then it is safe
+        if(distanceToObstacle >= 1.0) { //if cell is farther than robot radious then it is safe
             return 0.0;
         }
         if (distanceToObstacle < 0.1) {
@@ -62,10 +62,10 @@ std::vector<util::Point> PotentialFieldsPlanner::makePlan(const util::Point &sta
     auto motions = util::Robot::getMotionModel();
     auto currentLocation = start;
     while (distanceToGoal >= ogm_.getResolution()) {
-        auto minPotential = std::numeric_limits<double>::infinity();
+        auto minPotential = std::numeric_limits<float>::infinity();
         auto minLocation = util::Location{};
         for (const auto &motion : motions) {
-            double potential;
+            float potential;
             util::Location nextLocation = currentLocation + motion;
             try {
                 potential = potentialMap_[nextLocation];

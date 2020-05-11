@@ -54,8 +54,8 @@ rrt::RrtPlanner::RrtPlanner(const util::GridMap<unsigned char> &obstacleMap) : g
                                                                      startVertex_(util::Point{ 0, 0 }),
                                                                      obstacleMap_(obstacleMap)
 {
-    maxNrOfIterations_ = 2000;
-    maxExtendDistance_ = obstacleMap.getCellWidth() * obstacleMap.getResolution() * 0.1;
+    maxNrOfIterations_ = 5000;
+    maxExtendDistance_ = obstacleMap.getCellWidth() * obstacleMap.getResolution() * 0.15;
     goalRadius_ = 1.0;
 }
 
@@ -182,7 +182,7 @@ double rrt::RrtPlanner::getRandomExtendDistance() const
 {
     static std::mt19937 randomGenerator(std::random_device{}());
     using Distribution = std::uniform_real_distribution<double>;
-    static Distribution distribution(obstacleMap_.getResolution(),
-                                      obstacleMap_.getCellWidth() * obstacleMap_.getResolution() * 0.1);
+    static Distribution distribution(obstacleMap_.getCellWidth()*obstacleMap_.getResolution()*0.1,
+                                      obstacleMap_.getCellWidth() * obstacleMap_.getResolution() * 0.15);
     return distribution(randomGenerator);
 }

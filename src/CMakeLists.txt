@@ -1,8 +1,10 @@
 add_executable(runner main.cpp)
 
 add_subdirectory(utils)
+add_subdirectory(IPlanner)
 add_subdirectory(potentialfields)
 add_subdirectory(prm)
+add_subdirectory(ga)
 add_subdirectory(rrtstar)
 add_subdirectory(rrt)
 add_subdirectory(astar)
@@ -20,4 +22,6 @@ target_link_libraries(runner
         astar
         ants
         depthfirst
+        project_warnings
+        project_options
         )

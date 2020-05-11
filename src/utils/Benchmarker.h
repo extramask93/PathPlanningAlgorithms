@@ -31,6 +31,7 @@ class Benchmarker
     void printAverages();
     void save(const std::string &fileLoc);
     void save(int nr, const std::string &file);
+    void saveVar(const std::string &file,const char* fmt...);
 
   private:
     std::clock_t startClock_;

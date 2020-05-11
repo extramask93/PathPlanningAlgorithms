@@ -144,6 +144,9 @@ std::vector<util::Point> prm::Prm::makePlan(const util::Point &start, const util
         }
     }
     std::vector<util::Point> path;
+    if(goalNode.parent == -1) {
+        return path;
+    }
     path.push_back({goalNode.x, goalNode.y});
     auto pind = goalNode.parent;
     while(pind != -1) {
@@ -179,6 +182,7 @@ void prm::Prm::addToRoadmap(const util::Point &start, const util::Point &goal)
         dists.resize(samples_.size());
         nns_->knn(q, indices, dists, samples_.size()-1,0 ,NNSearchF::SORT_RESULTS);
         for(int neighborIndex = 0; neighborIndex < indices.size(); neighborIndex++) {
+            auto dupa = dists[neighborIndex];
             if(isCollision(samples[sampleIndex],samples_[indices[neighborIndex]])) {
                 continue;
             }
