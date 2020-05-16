@@ -244,4 +244,4 @@ int main(){
   path_vector = new_genetic_algorithm.genetic_algorithm(grid, start, goal, 2*start.h_cost_);
   PrintPathInOrder(path_vector, start, goal, grid);
 }
-#endif BUILD_INDIVIDUAL
+#endif

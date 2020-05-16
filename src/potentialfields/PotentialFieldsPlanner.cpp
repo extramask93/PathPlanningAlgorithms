@@ -61,6 +61,8 @@ std::vector<util::Point> PotentialFieldsPlanner::makePlan(const util::Point &sta
     auto distanceToGoal = ogm_.distanceEuclidean(start, goal);
     auto motions = util::Robot::getMotionModel();
     auto currentLocation = start;
+    int i = 0;
+    double previousDistance = 0;
     while (distanceToGoal >= ogm_.getResolution()) {
         auto minPotential = std::numeric_limits<float>::infinity();
         auto minLocation = util::Location{};
@@ -79,11 +81,22 @@ std::vector<util::Point> PotentialFieldsPlanner::makePlan(const util::Point &sta
         }
         currentLocation = minLocation;
         distanceToGoal = ogm_.distanceEuclidean(minLocation, goal);
+        if((i % 10) == 0) {
+            if(distanceToGoal == previousDistance) {
+                return std::vector<util::Point>{};
+            }
+            previousDistance = distanceToGoal;
+        }
         path.push_back(ogm_.mapToWorld(minLocation));
+        i++;
     }
     path.push_back(goalP);
 
     return path;
+}
+void PotentialFieldsPlanner::initialize(const util::GridMap<unsigned char> &map, const util::Options &options)
+{
+    ogm_ = map;
 }
 
 

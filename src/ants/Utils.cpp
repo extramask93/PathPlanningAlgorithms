@@ -67,10 +67,18 @@ std::vector<Node> GetMotion()
     Node up(0, -1, 1, 0, 0, 0);
     Node left(-1, 0, 1, 0, 0, 0);
     Node right(1, 0, 1, 0, 0, 0);
+    Node diagonal1(1, 1, 1.4, 0, 0, 0);
+    Node diagonal2(-1, -1, 1.4, 0, 0, 0);
+    Node diagonal3(-1, 1, 1.4, 0, 0, 0);
+    Node diagonal4(1, -1, 1.4, 0, 0, 0);
     std::vector<Node> v;
     v.push_back(down);
     v.push_back(up);
     v.push_back(left);
     v.push_back(right);
+    v.push_back(diagonal1);
+    v.push_back(diagonal2);
+    v.push_back(diagonal3);
+    v.push_back(diagonal4);
     return v;
 }

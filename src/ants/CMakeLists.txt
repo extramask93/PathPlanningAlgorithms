@@ -19,4 +19,4 @@ target_include_directories(ants
         PUBLIC
         ${CMAKE_CURRENT_LIST_DIR}
         )
-target_link_libraries(ants utils)
+target_link_libraries(ants utils iplanner)

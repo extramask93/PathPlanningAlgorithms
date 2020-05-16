@@ -1,6 +1,7 @@
 
 
 #include <random>
+#include <Options.h>
 #include "AntColony.h"
 
 Ant::Ant(Node start, int id)
@@ -163,4 +164,8 @@ std::vector<util::Point> AntColony::makePlan(const util::Point &start_, const ut
         pointPath.push_back(point);
     }
     return pointPath;
+}
+void AntColony::initialize(const util::GridMap<unsigned char> &map, const util::Options &options)
+{
+    grid_ = map;
 }

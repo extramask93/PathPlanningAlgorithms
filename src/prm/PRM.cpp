@@ -4,6 +4,7 @@
 
 #include <random>
 #include <iostream>
+#include <Options.h>
 #include "PRM.h"
 
 prm::Prm::Prm(const util::GridMap<unsigned char> &map, unsigned nrOfSamples) : ogm_(map), nrOfSamples_(nrOfSamples){
@@ -194,4 +195,8 @@ void prm::Prm::addToRoadmap(const util::Point &start, const util::Point &goal)
             edges_[idx].push_back(indices[neighborIndex]);
         }
     }
+}
+void prm::Prm::initialize(const util::GridMap<unsigned char> &map, const util::Options &options)
+{
+    ogm_ = map;
 }

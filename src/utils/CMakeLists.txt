@@ -17,6 +17,7 @@ target_sources(utils
         Vertex.cpp
         Benchmarker.cpp
         MapLoader.cpp
+        MapGenerator.cpp
         PUBLIC
         ${CMAKE_CURRENT_LIST_DIR}/Location.h
         ${CMAKE_CURRENT_LIST_DIR}/MapException.h
@@ -31,6 +32,7 @@ target_sources(utils
         ${CMAKE_CURRENT_LIST_DIR}/MapLoader.h
         ${CMAKE_CURRENT_LIST_DIR}/Options.h
         ${CMAKE_CURRENT_LIST_DIR}/matplotlibcpp.h
+        ${CMAKE_CURRENT_LIST_DIR}/MapGenerator.h
         )
 target_include_directories(utils
         PUBLIC

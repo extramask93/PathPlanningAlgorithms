@@ -19,6 +19,7 @@ include_directories(${EIGEN3_INCLUDE_DIRS})
 target_link_libraries(prm
         PRIVATE
             utils
+            iplanner
             ${libnabo_LIBRARIES}
         )
 

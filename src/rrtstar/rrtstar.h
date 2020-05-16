@@ -8,6 +8,7 @@
 #include <vector>
 #include <boost/optional.hpp>
 #include <GridMap.h>
+#include <IPlanner.h>
 #include "Vertex.h"
 enum class ObstacleType
 {
@@ -21,12 +22,13 @@ enum class ObstacleType
 
 namespace rrt
 {
-    class RrtStar
+    class RrtStar : IPlanner
     {
     public:
         explicit RrtStar(const util::GridMap<unsigned char> &costmap);
         std::vector<util::Point> makePlan(const util::Point& start,
-                      const util::Point& goal);
+                      const util::Point& goal) override;
+        void initialize(const util::GridMap<unsigned char> &map, const util::Options &options) override;
         std::vector<util::Point>
         buildPlan(int goal_index);
         int findPath(const util::Vertex& start,const util::Vertex& goal);
@@ -50,7 +52,8 @@ namespace rrt
         bool isCollision(const util::Vertex &from, const util::Vertex &to);
         bool reachedGoal(const util::Vertex &new_vertex);
         util::Vertex searchBestGoalNode();
-    private:
+
+      private:
         util::GridMap<unsigned char> obstacleMap_;
         std::vector<util::Vertex> vertex_list_;
         int max_iterations_ = 2000;

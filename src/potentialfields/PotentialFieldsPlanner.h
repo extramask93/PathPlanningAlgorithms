@@ -8,15 +8,18 @@
 #include <boost/optional.hpp>
 #include <GridMap.h>
 #include <Robot.h>
+#include <IPlanner.h>
 
 namespace pf {
-    class PotentialFieldsPlanner {
+    class PotentialFieldsPlanner : IPlanner{
     public:
         explicit PotentialFieldsPlanner(const util::GridMap<unsigned char> &ogm);
-        std::vector<util::Point> makePlan(const util::Point &start, const util::Point &goal);
+        std::vector<util::Point> makePlan(const util::Point &start, const util::Point &goal) override ;
         float calculateAttractivePotential(const util::Location &currentLocation, const util::Location &goalIndex) const;
         float calculateRepulsivePotential(const util::Location &currentLocation) const;
         void calculatePotentialField(const util::Location &location);
+        void initialize(const util::GridMap<unsigned char> &map, const util::Options &options) override;
+      public:
         util::GridMap<float> potentialMap_;
     private:
         util::GridMap<unsigned char> ogm_;

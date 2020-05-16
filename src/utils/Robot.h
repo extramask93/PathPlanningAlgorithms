@@ -15,10 +15,9 @@ public:
   };
   static std::vector<util::Location> getMotionModel()
   {
-      if(movementType == MovementType::EUCLIDEAN) {
+      if(movementType == MovementType::MANHATTAN) {
           return std::vector<util::Location>{
               { 0, -1 }, /*|*/
-
               { -1, 0 }, /*-*/
               { 0, 1 }, /*|*/
               { 1, 0 }

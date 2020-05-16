@@ -56,7 +56,7 @@ TEST_CASE("Dijkstra planner with euclidean, cluttered map", "[Dijkstra,Euclidean
         }
 
         benchmarker.printAverages();
-        benchmarker.save(pointIdx,"Dijkstra-euclidean.dat");
+        benchmarker.save(pointIdx+1,"Dijkstra-euclidean.dat");
     }
 }
 
@@ -98,7 +98,7 @@ TEST_CASE("AStar planner with euclidean, cluttered map", "[AStar,Euclidean]")
         }
 
         benchmarker.printAverages();
-        benchmarker.save(pointIdx,"AStar-euclidean.dat");
+        benchmarker.save(pointIdx+1,"AStar-euclidean.dat");
     }
 }
 
@@ -137,7 +137,7 @@ TEST_CASE("DepthFirst planner with euclidean, cluttered map", "[DFS,Euclidean]")
         }
 
         benchmarker.printAverages();
-        benchmarker.save(pointIdx,"DFS-euclidean.dat");
+        benchmarker.save(pointIdx+1,"DFS-euclidean.dat");
     }
 }
 TEST_CASE("Grid planners, 4 connected vs grid size", "[All,GridSize]")

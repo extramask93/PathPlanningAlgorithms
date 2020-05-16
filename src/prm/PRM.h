@@ -10,21 +10,23 @@
 #include <Node.h>
 #include <queue>
 #include <map>
-
+#include <IPlanner.h>
 namespace prm {
-    class Prm {
+    class Prm : IPlanner{
     public:
 
         Prm(const util::GridMap<unsigned char> &map, unsigned int nrOfSamples);
         std::vector<std::vector<int>> generateRoadMap(unsigned nrOfSamples);
         std::vector<util::Point> generateSamples(unsigned nrOfSamples);
-        std::vector<util::Point> makePlan(const util::Point &start, const util::Point &goal);
+        std::vector<util::Point> makePlan(const util::Point &start, const util::Point &goal) override ;
+        void initialize(const util::GridMap<unsigned char> &map, const util::Options &options) override;
         std::vector<util::Point> samples_;
     private:
         std::vector<util::Point> nearestNeighbors(util::Point point ,std::vector<util::Point> samples, int nNeighbors);
         void addToRoadmap(const util::Point &start, const util::Point &goal);
         bool isCollision(const util::Point &from, const util::Point &to) const;
-    private:
+
+      private:
         static constexpr double MAX_EDGE_LENGTH_ = 100;
         static constexpr int MAX_NR_OF_EDGES_PER_POINT = 15; //Lavalle, planning algorithms
         unsigned nrOfSamples_;

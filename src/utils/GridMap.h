@@ -167,12 +167,11 @@ template<typename T>
 std::ostream &operator<<(std::ostream &out, const GridMap<T> &gridMap)
 {
   //out << std::fixed << std::setprecision(1);
-  auto max = std::max_element(gridMap.ogm_.begin(),gridMap.ogm_.end());
   for (uint index = 0; index < gridMap.ogm_.size(); index++) {
     if (!(index % gridMap.mapWidth_)) {
       out << "\n";
     }
-    out << std::left << std::setw(6) << gridMap.ogm_[index]/ (*max) << " | ";
+    out <<gridMap.ogm_[index] << " | ";
   }
   return out;
 }
@@ -288,7 +287,7 @@ void GridMap<CELL_T>::plotMap()
 {
 
     namespace plt = matplotlibcpp;
-    plt::imshow((unsigned char*)ogm_.data(),(int)getCellWidth(),(int)getCellHeight(),1);
+    plt::imshow(reinterpret_cast<unsigned char*>(ogm_.data()),static_cast<int>(getCellWidth()), static_cast<int>(getCellHeight()),1);
 
     /*(3,4),(11,11),(22,11),(33,11)
         (11,30),(22,30), (33,30),(37,38)*/

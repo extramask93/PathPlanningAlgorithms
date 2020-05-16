@@ -20,13 +20,11 @@ set multiplot layout 2,1
 set xlabel "Punkt" font ",10"
 set ylabel "Dlugosc trasy [m]"
 set title "Dlugosc trasy" font ",12"
-plot [1:7]'astar/AStar-euclidean.dat' using 1:2  w lp notitle pt 7 ps 2, 'dijkstra/Dijkstra-euclidean.dat' using 1:2 w lp notitle pt 7 ps 2,\
-'df/DFS-euclidean.dat' using 1:2 w lp notitle pt 7 ps 2,
+plot [1:7]'aco/aco.dat' using 1:2  w lp title "ACO" pt 7 ps 2
 
 set title "Czas wyszukiwania" font ",12"
 set ylabel "Czas wyszukiwania [ms]"
-plot [1:7]'astar/AStar-euclidean.dat' using 1:3  w lp title "AStar" pt 7 ps 2, 'dijkstra/Dijkstra-euclidean.dat' using 1:3 w lp title "Dijkstra" pt 7 ps 2,\
-'df/DFS-euclidean.dat' using 1:3 w lp title "DFS" pt 7 ps 2,
+plot [1:7]'aco/aco.dat' using 1:3  w lp title "ACO" pt 7 ps 2
 
 unset multiplot
 

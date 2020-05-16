@@ -13,8 +13,8 @@ struct Node
     {
         return lhs.cost < rhs.cost;
     }
-    double cost;
     int index;
+    double cost;
 };
 AStar::AStar(const util::GridMap<unsigned char> &map, HeuristicType heuristic) : obstacleMap_(map), currentHeuristic_(heuristic),
                                                                        goalIndex_(-1),startIndex_(-1)
@@ -31,6 +31,11 @@ std::vector<util::Point> AStar::makePlan(const util::Point &start, const util::P
     Node currentNode(startIndex_, 0.0);
     priorityCosts.insert(currentNode);
     while (!priorityCosts.empty() && cameFrom[goalIndex_] == -1) {
+        /*if(currentHeuristic_ != HeuristicType::NO_HEURISTIC) {
+            if( cameFrom[goalIndex_] != -1) {
+                break;
+            }
+        }*/
         currentNode = *priorityCosts.begin();
         priorityCosts.erase(priorityCosts.begin());
         std::vector<int> neighborIndexes = getNeighborIndexes(currentNode.index);
@@ -78,7 +83,7 @@ double AStar::getMoveCost(int currentIndex, int neighbourIndex) const
 {
     auto currentLocation = obstacleMap_.indexToMap(currentIndex);
     auto neighborLocation = obstacleMap_.indexToMap(neighbourIndex);
-    auto cost = obstacleMap_.distanceManhattan(currentLocation, neighborLocation);
+    auto cost = obstacleMap_.distanceEuclidean(currentLocation, neighborLocation);
     return cost;
 }
 double AStar::getHeuristicCost(int currentIndex, int goalIndex) const

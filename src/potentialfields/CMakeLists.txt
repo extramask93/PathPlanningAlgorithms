@@ -11,4 +11,4 @@ target_include_directories(potentialfields
         PUBLIC
             ${CMAKE_CURRENT_LIST_DIR}
         )
-target_link_libraries(potentialfields utils)
+target_link_libraries(potentialfields utils iplanner)

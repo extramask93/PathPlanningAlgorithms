@@ -186,3 +186,7 @@ double rrt::RrtPlanner::getRandomExtendDistance() const
                                       obstacleMap_.getCellWidth() * obstacleMap_.getResolution() * 0.15);
     return distribution(randomGenerator);
 }
+void rrt::RrtPlanner::initialize(const util::GridMap<unsigned char> &map, const util::Options &options)
+{
+    obstacleMap_ = map;
+}

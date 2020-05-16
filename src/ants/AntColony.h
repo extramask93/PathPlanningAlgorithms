@@ -1,6 +1,7 @@
 #ifndef ANT_COLONY_H
 #define ANT_COLONY_H
 #include <unordered_map>
+#include <IPlanner.h>
 #include "Utils.h"
 #include "GridMap.h"
 
@@ -25,7 +26,7 @@ class Ant
     int steps_ = 0, id_;
 };
 
-class AntColony
+class AntColony : IPlanner
 {
   public:
     AntColony(util::GridMap<unsigned char> &grid,int n_ants = 10, double alpha = 0.5, double beta = 0.5, double evap_rate = 0.5, int iterations = 10, double Q = 10.0);
@@ -34,7 +35,8 @@ class AntColony
 
     void RemoveLoop(Ant &ant);
 
-    std::vector<util::Point> makePlan(const util::Point &start, const util::Point &goal);
+    std::vector<util::Point> makePlan(const util::Point &start, const util::Point &goal) override ;
+    void initialize(const util::GridMap<unsigned char> &map, const util::Options &options) override;
     std::vector<Node> ant_colony(util::GridMap<unsigned char> &grid, Node start, Node goal);
 
   private:
