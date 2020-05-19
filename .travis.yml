@@ -7,7 +7,6 @@ install:
   - pip3 install --user conan cmake numpy
   - sudo ./install-libnabo.sh
   
-
 jobs:
   include:
     - os: linux
