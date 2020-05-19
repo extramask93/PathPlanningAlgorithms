@@ -17,7 +17,6 @@ macro(run_conan)
             REQUIRES
             ${CONAN_EXTRA_REQUIRES}
             catch2/2.12.1
-            boost/1.73.0
             eigen/3.3.7
             OPTIONS
             ${CONAN_EXTRA_OPTIONS}
