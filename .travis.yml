@@ -1,7 +1,7 @@
 language: cpp
 
 install:
-  - pip install --user conan cmake numpy
+  - pip3 install --user conan cmake numpy
 
 jobs:
   include:
