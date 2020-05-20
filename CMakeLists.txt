@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.15)
 project(Planning LANGUAGES CXX)
 include(cmake/StandardProjectSettings.cmake)
 add_library(project_options INTERFACE)
