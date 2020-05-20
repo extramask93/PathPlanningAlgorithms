@@ -7,6 +7,7 @@
 
 #include <boost/format.hpp>
 
+#include <boost/optional/optional_io.hpp>
 namespace util {
     struct Location {
         int x = 0;

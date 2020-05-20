@@ -2,8 +2,6 @@ add_library(utils "")
 
 find_package(Python3 COMPONENTS Development NumPy)
 include_directories(utils PUBLIC ${Python3_INCLUDE_DIRS} ${Python3_NumPy_INCLUDE_DIRS})
-message(${Python3_INCLUDE_DIRS})
-message(${Python3_NumPy_INCLUDE_DIRS})
 target_link_libraries(utils
         PUBLIC
         Python3::Python Python3::NumPy

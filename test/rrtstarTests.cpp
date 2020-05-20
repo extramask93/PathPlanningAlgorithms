@@ -2,7 +2,8 @@
 // Created by damian on 01.05.2020.
 //
 #include "rrtstar.h"
-#include "catch.hpp"
+
+#include <catch2/catch.hpp>
 #include "matplotlibcpp.h"
 namespace plt = matplotlibcpp;
 TEST_CASE( "One should be able to create rrt star planner with ogm supplied", "[Planner, RRTStar]" ) {

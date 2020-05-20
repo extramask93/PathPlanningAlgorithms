@@ -1,7 +1,7 @@
 //
 // Created by damian on 25.04.2020.
 //
-#include "catch.hpp"
+#include <catch2/catch.hpp>
 #include <GridMap.h>
 TEST_CASE( "Creating grid map via constructor and vector", "[Util,GridMap]" ) {
 

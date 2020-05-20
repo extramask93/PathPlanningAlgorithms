@@ -2,7 +2,7 @@
 // Created by damian on 07.05.2020.
 //
 #include <RrtPlanner.h>
-#include "catch.hpp"
+#include <catch2/catch.hpp>
 #include "GridMap.h"
 #include "rrtstar.h"
 #include "PRM.h"

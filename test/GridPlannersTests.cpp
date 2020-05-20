@@ -2,7 +2,7 @@
 // Created by damian on 05.05.2020.
 //
 #include <unordered_map>
-#include "catch.hpp"
+#include <catch2/catch.hpp>
 #include "GridMap.h"
 #include "MapLoader.h"
 #include "AStar.h"

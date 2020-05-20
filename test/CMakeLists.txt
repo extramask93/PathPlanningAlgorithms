@@ -11,4 +11,5 @@ target_link_libraries(planningtests
             astar
             depthfirst
             ants
+            CONAN_PKG::catch2
         )

@@ -1,7 +1,7 @@
 //
 // Created by damian on 25.04.2020.
 //
-#include "catch.hpp"
+#include <catch2/catch.hpp>
 #include <Location.h>
 TEST_CASE( "Default location is 0,0", "[Util,Location]" ) {
     util::Location emptyLocation;

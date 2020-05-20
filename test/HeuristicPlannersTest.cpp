@@ -1,7 +1,8 @@
 //
 // Created by damian on 11.05.2020.
 //
-#include "catch.hpp"
+
+#include <catch2/catch.hpp>
 #include "GridMap.h"
 #include "MapLoader.h"
 #include "Benchmarker.h"
