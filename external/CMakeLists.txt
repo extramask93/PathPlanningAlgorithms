@@ -1,7 +1,5 @@
 include(FetchContent)
 
-
-
 FetchContent_Declare(
         nabo
         GIT_REPOSITORY https://github.com/ethz-asl/libnabo.git
@@ -10,7 +8,6 @@ FetchContent_Declare(
 FetchContent_GetProperties(nabo)
 if(NOT nabo_POPULATED)
     FetchContent_Populate(nabo)
-    include_directories(${nabo_SOURCE_DIR})
     add_subdirectory(${nabo_SOURCE_DIR} ${nabo_BINARY_DIR})
 endif()
 

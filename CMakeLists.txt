@@ -33,7 +33,7 @@ if(ENABLE_TESTING)
     message("Building Tests...")
     add_subdirectory(test)
 endif()
-add_subdirectory(external)
+include(external/CMakeLists.txt)
 add_subdirectory(src)
 add_subdirectory(resources)
 #add run files
