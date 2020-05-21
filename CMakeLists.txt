@@ -27,6 +27,11 @@ set(CONAN_EXTRA_OPTIONS "")
 
 include(cmake/Conan.cmake)
 run_conan()
+include(${CMAKE_BINARY_DIR}/conan_paths.cmake)
+find_package (Eigen3 REQUIRED)
+include_directories(${Eigen3_INCLUDE_DIRS})
+message(STATUS "-----------------------" ${Eigen3_INCLUDE_DIRS})
+#
 
 if(ENABLE_TESTING)
     enable_testing()

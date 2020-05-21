@@ -19,6 +19,9 @@ macro(run_conan)
             catch2/2.12.1
             eigen/3.3.7
             #boost/1.73.0
+            GENERATORS
+            cmake_find_package
+            cmake_paths
             OPTIONS
             ${CONAN_EXTRA_OPTIONS}
             BASIC_SETUP
