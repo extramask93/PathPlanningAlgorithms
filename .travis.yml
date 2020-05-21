@@ -2,7 +2,8 @@ language: cpp
 
 
 install:
-  - sudo pip install conan cmake
+  - pip install --user conan cmake
+
 
 jobs:
   include:
