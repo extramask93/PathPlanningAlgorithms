@@ -2,7 +2,7 @@ language: cpp
 
 
 install:
-  - pip install --user conan cmake
+  - pip install --quiet --user conan cmake
 
 
 jobs:
