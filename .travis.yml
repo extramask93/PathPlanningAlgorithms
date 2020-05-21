@@ -20,15 +20,10 @@ jobs:
           packages:
             - gcc-9
             - g++-9
+            - boost1.67
             - doxygen
       after_script:
         - bash <(curl -s https://codecov.io/bash) -x /usr/bin/gcov-${GCC_VER}
-    - os: linux
-      dist: bionic
-      compiler: clang
-      env:
-        - MATRIX_EVAL="CC=clang && CXX=clang++"
-      addons: { apt: { packages: ['doxygen'] } }
 
 
 before_script:
