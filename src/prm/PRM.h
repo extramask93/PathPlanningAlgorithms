@@ -5,9 +5,9 @@
 #ifndef POTENTIALFIELDSPROJECT_PRM_H
 #define POTENTIALFIELDSPROJECT_PRM_H
 #include "GridMap.h"
-#include "nabo/nabo.h"
 #include <Point.h>
 #include <Node.h>
+#include <nabo/nabo.h>
 #include <queue>
 #include <map>
 #include <IPlanner.h>

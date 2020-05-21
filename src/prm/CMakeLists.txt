@@ -10,10 +10,15 @@ target_include_directories(prm
         ${CMAKE_CURRENT_LIST_DIR}
         )
 
+find_package(libnabo REQUIRED)
+include_directories(${libnabo_INCLUDE_DIRS})
+message(STATUS "++++++++++++++++++++++++++++++++++" ${libnabo_INCLUDE_DIRS})
+message(STATUS "++++++++++++++++++++++++++++++++++" ${libnabo_LIBRARIES})
 target_link_libraries(prm
         PRIVATE
             utils
             iplanner
-            nabo
+            CONAN_PKG::eigen
+            ${libnabo_LIBRARIES}
         )
 
