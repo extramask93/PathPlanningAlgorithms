@@ -4,8 +4,6 @@
 #include "rrtstar.h"
 
 #include <catch2/catch.hpp>
-#include "matplotlibcpp.h"
-namespace plt = matplotlibcpp;
 TEST_CASE( "One should be able to create rrt star planner with ogm supplied", "[Planner, RRTStar]" ) {
 std::vector<unsigned char> ogm {0, 0, 0, 0, 0,0,0,
                       0, 0, 0, 0, 0,0,0,
@@ -30,7 +28,4 @@ for(const auto &item : plan) {
 xplan.push_back(item.x);
 yplan.push_back(item.y);
 }
-plt::plot(xobstacle,yobstacle, "sk");
-plt::plot(xplan,yplan);
-plt::show();
 }

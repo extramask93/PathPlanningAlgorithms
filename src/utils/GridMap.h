@@ -14,7 +14,7 @@
 #include <boost/format.hpp>
 #include <iomanip>
 #include "Point.h"
-#include "matplotlibcpp.h"
+//#include "matplotlibcpp.h"
 namespace util {
 template<typename CELL_T>
 class GridMap
@@ -286,23 +286,23 @@ template<typename CELL_T>
 void GridMap<CELL_T>::plotMap()
 {
 
-    namespace plt = matplotlibcpp;
+    /*namespace plt = matplotlibcpp;
     plt::imshow(reinterpret_cast<unsigned char*>(ogm_.data()),static_cast<int>(getCellWidth()), static_cast<int>(getCellHeight()),1);
-
+        */
     /*(3,4),(11,11),(22,11),(33,11)
         (11,30),(22,30), (33,30),(37,38)*/
-    std::vector<double> x{2};
+    /*std::vector<double> x{2};
     std::vector<double> y{3};
     plt::plot(x,y,"go");
     x = std::vector<double>{11.5,22.5,33.5,11.5,22.5,33.5,36.5};
     y = std::vector<double>{11.5,11.5,11.5,30.5,30.5,30.5,36.5};
     plt::plot(x,y,"rx");
-    plt::show();
+    plt::show();*/
 }
 template<typename CELL_T>
 void GridMap<CELL_T>::plotPathOnMap(const std::vector<util::Point> &plan)
 {
-    namespace plt = matplotlibcpp;
+    /*namespace plt = matplotlibcpp;
     std::vector<double> xplan;
     std::vector<double> yplan;
     for(const auto &item : plan) {
@@ -318,7 +318,7 @@ void GridMap<CELL_T>::plotPathOnMap(const std::vector<util::Point> &plan)
         plt::plot(startx, starty, "ro");
         plt::plot(goalx, goaly, "rx");
     }
-    plotMap();
+    plotMap();*/
 }
 
 }// namespace util

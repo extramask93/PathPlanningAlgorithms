@@ -3,7 +3,6 @@
 //
 #include <catch2/catch.hpp>
 #include "PotentialFieldsPlanner.h"
-#include "matplotlibcpp.h"
 #include <fstream>
 #include <vector>
 #include <sstream>

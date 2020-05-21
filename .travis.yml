@@ -2,7 +2,7 @@ language: cpp
 
 
 install:
-  - sudo pip3 install conan cmake numpy
+  - sudo pip install conan cmake
 
 jobs:
   include:

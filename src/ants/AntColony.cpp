@@ -2,6 +2,7 @@
 
 #include <random>
 #include <Options.h>
+#include <climits>
 #include "AntColony.h"
 
 Ant::Ant(Node start, int id)
