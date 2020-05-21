@@ -20,7 +20,7 @@ jobs:
           packages:
             - gcc-9
             - g++-9
-            - boost1.67
+            - libboost-all-dev
             - doxygen
       after_script:
         - bash <(curl -s https://codecov.io/bash) -x /usr/bin/gcov-${GCC_VER}
