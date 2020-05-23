@@ -13,7 +13,8 @@ int main(int, char **)
 {
 
     double resolution = 1.0;
-    auto temp = util::MapLoader::loadMap((const std::string &)"map-warehouse.csv");
+
+    auto temp = util::MapLoader::loadMap((const std::string &)"../map-warehouse.csv");
     util::GridMap<unsigned char> map(std::get<0>(temp), std::get<1>(temp), std::get<2>(temp), resolution);
     std::vector<util::Point> testPointsMap{
         util::Point{ 11.5 * resolution, 11.5 * resolution },

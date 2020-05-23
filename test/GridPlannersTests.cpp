@@ -143,10 +143,10 @@ TEST_CASE("DepthFirst planner with euclidean, cluttered map", "[DFS,Euclidean]")
 TEST_CASE("Grid planners, 4 connected vs grid size", "[All,GridSize]")
 {
     std::vector<std::string> maps {
-        "whitemap20x20.csv",
-        "whitemap40x40.csv",
-        "whitemap80x80.csv",
-        "whitemap160x160.csv",
+        "../whitemap20x20.csv",
+        "../whitemap40x40.csv",
+        "../whitemap80x80.csv",
+        "../whitemap160x160.csv",
     };
 
     auto temp = util::MapLoader::loadMap(maps[0]);
@@ -168,7 +168,8 @@ TEST_CASE("Grid planners, 4 connected vs grid size", "[All,GridSize]")
             auto plan = planner.second->makePlan( {0, 0 }, {map.getCellWidth()-1.0, map.getCellHeight()-1.0});
             benchmarker.stop(plan);
             benchmarker.printAverages();
-            benchmarker.saveVar("differentMapGrid.dat","ds",map.getCellHeight(),planner.first.c_str());
+            //benchmarker.saveVar("differentMapGrid.dat","ds",map.getCellHeight(),planner.first.c_str());
+            benchmarker.saveVars("differentMapGrid.dat",map.getCellHeight(),planner.first.c_str());
         }
 
     }
