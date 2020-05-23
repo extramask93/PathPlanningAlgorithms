@@ -9,11 +9,11 @@ build_script:
 
       pip install --user conan
 
-      set PATH=%PATH%;C:\Users\appveyor\AppData\Roaming\Python\Scripts
+      set PATH=%PATH%;C:\Users\appveyor\AppData\Roaming\Python\Scripts;C:\Libraries\boost_1_73_0
 
       cmake c:\projects\source -G "Visual Studio 16 2019" -DCMAKE_BUILD_TYPE:STRING=Release
 
-      cmake --build . --config "Release" > nul
+      cmake --build . --config "Release"
 
 #test_script:
 #  - cmd: ctest -C Debug

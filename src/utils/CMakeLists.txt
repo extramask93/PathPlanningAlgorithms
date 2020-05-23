@@ -6,7 +6,10 @@ add_library(utils "")
 #        PRIVATE
 #        CONAN_PKG::boost
 #        )
-
+find_package(Boost 1.36.0)
+if(Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIRS})
+endif()
 target_sources(utils
         PRIVATE
         GridMap.cpp
