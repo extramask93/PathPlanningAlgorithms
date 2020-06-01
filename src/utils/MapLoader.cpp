@@ -2,6 +2,7 @@
 // Created by damian on 04.05.2020.
 //
 
+#include <iostream>
 #include "MapLoader.h"
 namespace util {
 
@@ -38,5 +39,38 @@ std::tuple<std::vector<unsigned char>, int, int> MapLoader::loadMap(const std::s
         }
     }
     return std::make_tuple(map, width, height);
+}
+std::tuple<std::vector<unsigned char>, int, int> MapLoader::loadPGMMap(const std::string &path)
+{
+    std::ifstream file(path);
+    if(!file.is_open()) {
+        std::cerr<< "Error during loading file: "<<path;
+        return std::tuple<std::vector<unsigned char>,int,int>();
+    }
+    /*load first line containing version*/
+    std::string buffer;
+    std::getline(file,buffer);
+    if(buffer.compare("P2") != 0) {
+        std::cerr<<"Error, only version P2 supported, but given: "<<buffer;
+        return std::tuple<std::vector<unsigned char>,int,int>();
+    }
+    /*get comment out of the way*/
+    std::getline(file,buffer);
+    /*read payload*/
+    std::stringstream stream;
+    stream << file.rdbuf();
+    int rows = 0;
+    int columns =0;
+    stream>>columns>>rows;
+    int maxPixelValue = 0;
+    stream>>maxPixelValue;
+    std::vector<unsigned char> grid(rows*columns, 0);
+    for(int row =0; row < rows; row++) {
+        for(int column =0; column < columns; column++) {
+            stream>>grid[row*columns + column];
+        }
+    }
+    return std::make_tuple(grid,rows,columns);
+
 }
 }

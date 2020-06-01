@@ -23,6 +23,5 @@ target_link_libraries(runner
         astar
         ants
         depthfirst
-        project_warnings
         project_options
         )

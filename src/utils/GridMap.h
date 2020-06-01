@@ -90,7 +90,7 @@ template<typename CELL_T>
 unsigned GridMap<CELL_T>::mapToIndex(util::Location location) const noexcept(false)
 {
   throwIfOutOfBounds(location);
-  return location.y * mapWidth_ + location.x;
+  return static_cast<unsigned>(location.y) * mapWidth_ + static_cast<unsigned>(location.x);
 }
 
 template<typename CELL_T>
@@ -125,8 +125,8 @@ double GridMap<CELL_T>::distanceManhattan(util::Location from, util::Location to
 template<typename CELL_T>
 util::Location GridMap<CELL_T>::indexToMap(unsigned int index) const noexcept(false)
 {
-  int y = index / mapWidth_;
-  int x = index - (y * mapWidth_);
+  int y = static_cast<int>(index) / static_cast<int>(mapWidth_);
+  int x = static_cast<int>(index) - (y * static_cast<int>(mapWidth_));
   util::Location result = util::Location{ x, y };
   throwIfOutOfBounds(result);
   return result;

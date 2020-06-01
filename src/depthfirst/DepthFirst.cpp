@@ -10,16 +10,16 @@ struct Node
 {
     Node(int idx, int pidx) : id(idx), pid(pidx) {}
     explicit Node() : id(-1), pid(-1) {}
-    int pid;
     int id;
+    int pid;
 };
 df::DepthFirst::DepthFirst(const util::GridMap<unsigned char> &map) : obstacleMap_(map)
 {
 }
 std::vector<util::Point> df::DepthFirst::makePlan(const util::Point &start, const util::Point &goal)
 {
-    startIndex_ = obstacleMap_.mapToIndex(obstacleMap_.worldToMap(start));
-    goalIndex_ = obstacleMap_.mapToIndex(obstacleMap_.worldToMap(goal));
+    startIndex_ = static_cast<int>(obstacleMap_.mapToIndex(obstacleMap_.worldToMap(start)));
+    goalIndex_ = static_cast<int>(obstacleMap_.mapToIndex(obstacleMap_.worldToMap(goal)));
     std::stack<Node> openSet;
     std::unordered_map<int,Node> closedSet;
     Node currentNode(startIndex_, -1);
@@ -36,10 +36,10 @@ std::vector<util::Point> df::DepthFirst::makePlan(const util::Point &start, cons
             break;
         }
         for(const auto &motion : util::Robot::getMotionModel()) {
-            util::Location currentNodeLocation = obstacleMap_.indexToMap(currentNode.id);
+            util::Location currentNodeLocation = obstacleMap_.indexToMap(static_cast<unsigned int>(currentNode.id));
             util::Location newLocation = currentNodeLocation + motion;
             if(obstacleMap_.isWithinMapBounds(newLocation) && !isObstacle(newLocation)) {
-                Node newNode(obstacleMap_.mapToIndex(newLocation),currentNode.id);
+                Node newNode(static_cast<int>(obstacleMap_.mapToIndex(newLocation)),currentNode.id);
                 if(closedSet.find(newNode.id) == closedSet.end()) {
                     openSet.push(newNode);
                     closedSet.insert(std::make_pair(newNode.id, newNode));
@@ -53,7 +53,7 @@ std::vector<util::Point> df::DepthFirst::makePlan(const util::Point &start, cons
         return bestPath;
     }
     while (currentNode.id != startIndex_) {
-        auto loc = obstacleMap_.indexToMap(closedSet[currentNode.id].id);
+        auto loc = obstacleMap_.indexToMap(static_cast<unsigned int>(closedSet[currentNode.id].id));
         bestPath.push_back(obstacleMap_.mapToWorld(loc));
         currentNode.id = closedSet[currentNode.id].pid;
     }
@@ -67,6 +67,7 @@ bool DepthFirst::isObstacle(const util::Location &location) const
 }
 void DepthFirst::initialize(const util::GridMap<unsigned char> &map, const util::Options &options)
 {
+    (void)options;
     obstacleMap_ = map;
 }
 }

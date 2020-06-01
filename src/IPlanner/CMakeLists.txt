@@ -9,4 +9,4 @@ target_include_directories(iplanner
         PUBLIC
         ${CMAKE_CURRENT_LIST_DIR}
         )
-target_link_libraries(iplanner utils)
+target_link_libraries(iplanner PRIVATE utils project_warnings)

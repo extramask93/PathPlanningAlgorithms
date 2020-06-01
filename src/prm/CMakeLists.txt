@@ -10,13 +10,17 @@ target_sources(prm
 target_include_directories(prm
         PUBLIC
         ${CMAKE_CURRENT_LIST_DIR}
-        ${nabo_SOURCE_DIR}
         )
 
+target_include_directories(prm SYSTEM
+        PUBLIC
+        ${nabo_SOURCE_DIR}
+        )
 target_link_libraries(prm
         PRIVATE
         utils
         iplanner
         CONAN_PKG::eigen
         nabo
+        #project_warnings
         )

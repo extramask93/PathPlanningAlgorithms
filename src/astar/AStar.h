@@ -30,8 +30,8 @@ class AStar : public IPlanner
   private:
     util::GridMap<unsigned char> obstacleMap_;
     HeuristicType currentHeuristic_;
-    int startIndex_;
     int goalIndex_;
+    int startIndex_;
 };
 }// namespace astar
 
