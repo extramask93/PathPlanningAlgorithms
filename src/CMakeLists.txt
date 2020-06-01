@@ -1,5 +1,8 @@
 add_executable(runner main.cpp)
 
+find_package(Python3 COMPONENTS Development NumPy)
+target_include_directories(runner PUBLIC ${PLOT_INCLUDE_DIR} SYSTEM)
+add_dependencies(runner MatplotlibcppDownload)
 
 add_subdirectory(utils)
 add_subdirectory(IPlanner)
@@ -12,7 +15,6 @@ add_subdirectory(astar)
 add_subdirectory(ants)
 add_subdirectory(depthfirst)
 
-
 target_link_libraries(runner
         PRIVATE
         potentialfields
@@ -24,4 +26,5 @@ target_link_libraries(runner
         ants
         depthfirst
         project_options
+        Python3::Python Python3::NumPy
         )

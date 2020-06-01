@@ -10,13 +10,13 @@
 #include <fstream>
 #include <tuple>
 #include <filesystem>
-
+#include <GridMap.h>
 namespace util {
 class MapLoader
 {
   public:
     static std::tuple<std::vector<unsigned char>, int, int> loadMap(const std::string &path);
-    static std::tuple<std::vector<unsigned char>, int, int> loadPGMMap(const std::string &path);
+    static util::GridMap<int> loadPGMMap(const std::string &path);
   private:
     static std::vector<std::string> split(const std::string &s, char delim);
 };

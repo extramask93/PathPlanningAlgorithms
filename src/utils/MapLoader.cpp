@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <cstddef>
 #include "MapLoader.h"
 namespace util {
 
@@ -40,19 +41,17 @@ std::tuple<std::vector<unsigned char>, int, int> MapLoader::loadMap(const std::s
     }
     return std::make_tuple(map, width, height);
 }
-std::tuple<std::vector<unsigned char>, int, int> MapLoader::loadPGMMap(const std::string &path)
+util::GridMap<int>  MapLoader::loadPGMMap(const std::string &path)
 {
     std::ifstream file(path);
-    if(!file.is_open()) {
+    if(!file) {
         std::cerr<< "Error during loading file: "<<path;
-        return std::tuple<std::vector<unsigned char>,int,int>();
     }
     /*load first line containing version*/
     std::string buffer;
     std::getline(file,buffer);
     if(buffer.compare("P2") != 0) {
         std::cerr<<"Error, only version P2 supported, but given: "<<buffer;
-        return std::tuple<std::vector<unsigned char>,int,int>();
     }
     /*get comment out of the way*/
     std::getline(file,buffer);
@@ -64,13 +63,15 @@ std::tuple<std::vector<unsigned char>, int, int> MapLoader::loadPGMMap(const std
     stream>>columns>>rows;
     int maxPixelValue = 0;
     stream>>maxPixelValue;
-    std::vector<unsigned char> grid(rows*columns, 0);
+    std::vector<int> grid(rows*columns, 0);
     for(int row =0; row < rows; row++) {
         for(int column =0; column < columns; column++) {
-            stream>>grid[row*columns + column];
+            int temp;
+            stream>>temp;
+            grid[row*rows + column] = temp > 0 ? 0 :1 ;
         }
     }
-    return std::make_tuple(grid,rows,columns);
+    return util::GridMap<int>(grid,rows,columns,1.0);
 
 }
 }
