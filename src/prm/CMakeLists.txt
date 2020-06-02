@@ -3,13 +3,14 @@ target_sources(prm
         PRIVATE
         PRM.cpp
         PUBLIC
-        ${CMAKE_CURRENT_LIST_DIR}/PRM.h
+ #       ${CMAKE_CURRENT_LIST_DIR}/PRM.h
         )
 
 
 target_include_directories(prm
         PUBLIC
-        ${CMAKE_CURRENT_LIST_DIR}
+        $<INSTALL_INTERFACE:include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
         )
 
 target_include_directories(prm SYSTEM
@@ -24,3 +25,6 @@ target_link_libraries(prm
         nabo
         #project_warnings
         )
+
+install(TARGETS prm EXPORT prm DESTINATION lib)
+install(FILES ${CMAKE_CURRENT_LIST_DIR}/PRM.h DESTINATION include)

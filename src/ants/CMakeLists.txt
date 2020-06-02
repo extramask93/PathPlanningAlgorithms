@@ -4,8 +4,8 @@ target_sources(ants
         AntColony.cpp
         Utils.cpp
         PUBLIC
-        ${CMAKE_CURRENT_LIST_DIR}/AntColony.h
-        ${CMAKE_CURRENT_LIST_DIR}/Utils.h
+       # ${CMAKE_CURRENT_LIST_DIR}/AntColony.h
+        #${CMAKE_CURRENT_LIST_DIR}/Utils.h
         )
 #------------------------------------
 find_package (Boost 1.36 REQUIRED)
@@ -17,6 +17,11 @@ endif()
 #-----------------------------------
 target_include_directories(ants
         PUBLIC
-        ${CMAKE_CURRENT_LIST_DIR}
+        $<INSTALL_INTERFACE:include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
+
         )
 target_link_libraries(ants utils iplanner)
+
+install(TARGETS ants EXPORT planners-export DESTINATION lib)
+install(FILES ${CMAKE_CURRENT_LIST_DIR}/AntColony.h ${CMAKE_CURRENT_LIST_DIR}/Utils.h DESTINATION include)

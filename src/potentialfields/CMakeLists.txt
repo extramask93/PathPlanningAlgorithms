@@ -5,10 +5,16 @@ target_sources(potentialfields
         PRIVATE
             PotentialFieldsPlanner.cpp
         PUBLIC
-            ${CMAKE_CURRENT_LIST_DIR}/PotentialFieldsPlanner.h
+         #   ${CMAKE_CURRENT_LIST_DIR}/PotentialFieldsPlanner.h
         )
 target_include_directories(potentialfields
         PUBLIC
-            ${CMAKE_CURRENT_LIST_DIR}
+        $<INSTALL_INTERFACE:include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
+
         )
 target_link_libraries(potentialfields utils iplanner)
+
+
+install(TARGETS potentialfields EXPORT planners-export DESTINATION lib)
+install(FILES ${CMAKE_CURRENT_LIST_DIR}/PotentialFieldsPlanner.h DESTINATION include)

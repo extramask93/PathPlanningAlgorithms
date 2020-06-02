@@ -3,10 +3,14 @@ target_sources(astar
         PRIVATE
         AStar.cpp
         PUBLIC
-        ${CMAKE_CURRENT_LIST_DIR}/AStar.h
+        #${CMAKE_CURRENT_LIST_DIR}/AStar.h
         )
 target_include_directories(astar
         PUBLIC
-        ${CMAKE_CURRENT_LIST_DIR}
+        $<INSTALL_INTERFACE:include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
         )
 target_link_libraries(astar PRIVATE utils iplanner project_warnings)
+
+install(TARGETS astar EXPORT planners-export DESTINATION lib)
+install(FILES ${CMAKE_CURRENT_LIST_DIR}/AStar.h DESTINATION include)

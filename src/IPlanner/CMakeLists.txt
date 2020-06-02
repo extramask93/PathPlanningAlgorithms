@@ -3,10 +3,15 @@ target_sources(iplanner
         PRIVATE
         IPlanner.cpp
         PUBLIC
-        ${CMAKE_CURRENT_LIST_DIR}/IPlanner.h
+ #       ${CMAKE_CURRENT_LIST_DIR}/IPlanner.h
         )
 target_include_directories(iplanner
         PUBLIC
-        ${CMAKE_CURRENT_LIST_DIR}
+        $<INSTALL_INTERFACE:include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
+
         )
 target_link_libraries(iplanner PRIVATE utils project_warnings)
+
+install(TARGETS iplanner EXPORT planners-export DESTINATION lib)
+install(FILES ${CMAKE_CURRENT_LIST_DIR}/IPlanner.h DESTINATION include)
