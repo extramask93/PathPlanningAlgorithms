@@ -48,4 +48,3 @@ target_include_directories(utils
         )
 install(TARGETS utils EXPORT planners-export DESTINATION ${CMAKE_INSTALL_LIBDIR})
 install(FILES ${INCLUDE_FILES} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-

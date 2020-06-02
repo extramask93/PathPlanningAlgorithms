@@ -3,12 +3,11 @@
 //
 #include <catch2/catch.hpp>
 #include <MapLoader.h>
-#include <filesystem>
 #include <iostream>
 SCENARIO("Loading map 10x10 from pgm file") {
     GIVEN("Map loader and map file") {
         auto loader = util::MapLoader();
-        auto filePath = std::filesystem::current_path() / "pgmmap10x10.pgm";
+        auto filePath  = "pgmmap10x10.pgm";
         WHEN("Map is correctly loaded")
         {
             auto map = loader.loadPGMMap(filePath);

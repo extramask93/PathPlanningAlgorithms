@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.15)
 project(Planning LANGUAGES CXX)
 include(cmake/StandardProjectSettings.cmake)
 add_library(project_options INTERFACE)
-target_compile_features(project_options INTERFACE cxx_std_17)
+target_compile_features(project_options INTERFACE cxx_std_14)
 
 add_library(project_warnings INTERFACE)
 include(cmake/CompilerWarnings.cmake)
