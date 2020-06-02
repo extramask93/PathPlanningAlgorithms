@@ -60,4 +60,5 @@ install(
         "${CMAKE_CURRENT_BINARY_DIR}/PlannersConfigVersion.cmake"
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/Planners"
 )
+set(CMAKE_EXPORT_PACKAGE_REGISTRY ON)
 export(PACKAGE Planners)
