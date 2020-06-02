@@ -9,7 +9,7 @@
 #include "AStar.h"
 #include "Benchmarker.h"
 #include "MapLoader.h"
-#include <matplotlibcpp.h>
+//#include <matplotlibcpp.h>
 int main(int, char **)
 {
 
