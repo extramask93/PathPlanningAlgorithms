@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.15)
 project(planning LANGUAGES CXX)
-set(PROJECT_VERSION 0.1.0)
 
 include(cmake/StandardProjectSettings.cmake)
 add_library(project_options INTERFACE)
@@ -69,7 +68,7 @@ install(EXPORT planning-export
         ${CMAKE_INSTALL_LIBDIR}/cmake/planning
         )
 
-#include(CMakePackageConfigHelpers)
+include(CMakePackageConfigHelpers)
 #configure_package_config_file(
 #        "planningConfig.cmake.in"
 #        "planningConfig.cmake"
@@ -78,17 +77,17 @@ install(EXPORT planning-export
 #        CMAKE_INSTALL_LIBDIR
 #)
 
-#write_basic_package_version_file(
-#        ${CMAKE_CURRENT_BINARY_DIR}/planningConfigVersion.cmake
-#        VERSION 1.0.0
-#        COMPATIBILITY SameMajorVersion
-#)
+write_basic_package_version_file(
+        ${CMAKE_CURRENT_BINARY_DIR}/planningConfigVersion.cmake
+        VERSION 1.0.0
+        COMPATIBILITY SameMajorVersion
+)
 
 ### Install Config and ConfigVersion files
-#install(
+install(
 #        FILES "${CMAKE_CURRENT_BINARY_DIR}/planningConfig.cmake"
-#        "${CMAKE_CURRENT_BINARY_DIR}/planningConfigVersion.cmake"
-#        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/planning"
-#)
+        FILES "${CMAKE_CURRENT_BINARY_DIR}/planningConfigVersion.cmake"
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/planning"
+)
 set(CMAKE_EXPORT_PACKAGE_REGISTRY ON)
 export(PACKAGE planning)
