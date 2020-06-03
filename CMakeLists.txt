@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.15)
-project(Planning LANGUAGES CXX)
+project(planning LANGUAGES CXX)
+set(PROJECT_VERSION 0.1.0)
+
 include(cmake/StandardProjectSettings.cmake)
 add_library(project_options INTERFACE)
 target_compile_features(project_options INTERFACE cxx_std_14)
@@ -41,6 +43,7 @@ endif()
 include(external/CMakeLists.txt)
 add_subdirectory(src)
 add_subdirectory(resources)
+
 #add run files
 #set(SOURCE_FILES main.cpp)
 #add_executable(PotentialFields_run ${SOURCE_FILES})
@@ -57,4 +60,35 @@ add_subdirectory(resources)
 #include_directories(PotentialFields_lib Utils_lib)
 #target_link_libraries(PotentialFields_run PotentialFields_lib Utils_lib KDTree)
 #target_link_libraries(PotentialFields_lib Utils_lib)
+install(EXPORT planning-export
+        FILE
+        planningConfig.cmake
+        NAMESPACE
+        planning::
+        DESTINATION
+        ${CMAKE_INSTALL_LIBDIR}/cmake/planning
+        )
 
+#include(CMakePackageConfigHelpers)
+#configure_package_config_file(
+#        "planningConfig.cmake.in"
+#        "planningConfig.cmake"
+#        INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Planners
+#        PATH_VARS
+#        CMAKE_INSTALL_LIBDIR
+#)
+
+#write_basic_package_version_file(
+#        ${CMAKE_CURRENT_BINARY_DIR}/planningConfigVersion.cmake
+#        VERSION 1.0.0
+#        COMPATIBILITY SameMajorVersion
+#)
+
+### Install Config and ConfigVersion files
+#install(
+#        FILES "${CMAKE_CURRENT_BINARY_DIR}/planningConfig.cmake"
+#        "${CMAKE_CURRENT_BINARY_DIR}/planningConfigVersion.cmake"
+#        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/planning"
+#)
+set(CMAKE_EXPORT_PACKAGE_REGISTRY ON)
+export(PACKAGE planning)

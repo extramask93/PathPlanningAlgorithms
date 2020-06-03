@@ -1,4 +1,5 @@
 add_library(rrt "")
+add_library(planning::rrt ALIAS rrt)
 target_sources(rrt
         PRIVATE
         RrtPlanner.cpp
@@ -16,5 +17,5 @@ target_link_libraries(rrt
         iplanner
         )
 
-install(TARGETS rrt EXPORT planners-export DESTINATION lib)
-install(FILES ${CMAKE_CURRENT_LIST_DIR}/RrtPlanner.h DESTINATION include)
+install(TARGETS rrt EXPORT planning-export DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(FILES ${CMAKE_CURRENT_LIST_DIR}/RrtPlanner.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})

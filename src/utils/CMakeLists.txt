@@ -1,5 +1,5 @@
 add_library(utils "")
-add_library(Planners::Utils ALIAS utils)
+add_library(planning::Utils ALIAS utils)
 
 
 #find_package(Python3 COMPONENTS Development NumPy)
@@ -17,6 +17,7 @@ set(INCLUDE_FILES
 ${CMAKE_CURRENT_LIST_DIR}/Location.h
 ${CMAKE_CURRENT_LIST_DIR}/MapException.h
 ${CMAKE_CURRENT_LIST_DIR}/MapIterator.h
+${CMAKE_CURRENT_LIST_DIR}/GridMap.h
 ${CMAKE_CURRENT_LIST_DIR}/Node.h
 ${CMAKE_CURRENT_LIST_DIR}/Point.h
 ${CMAKE_CURRENT_LIST_DIR}/RoadPoint.h
@@ -46,5 +47,5 @@ target_include_directories(utils
         $<INSTALL_INTERFACE:include>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
         )
-install(TARGETS utils EXPORT planners-export DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(TARGETS utils EXPORT planning-export DESTINATION ${CMAKE_INSTALL_LIBDIR})
 install(FILES ${INCLUDE_FILES} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})

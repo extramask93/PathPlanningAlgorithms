@@ -26,5 +26,5 @@ target_link_libraries(prm
         #project_warnings
         )
 
-install(TARGETS prm EXPORT prm DESTINATION lib)
-install(FILES ${CMAKE_CURRENT_LIST_DIR}/PRM.h DESTINATION include)
+install(TARGETS prm EXPORT prm DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(FILES ${CMAKE_CURRENT_LIST_DIR}/PRM.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})

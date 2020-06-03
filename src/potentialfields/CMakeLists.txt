@@ -1,6 +1,7 @@
 #find_package( Boost 1.67 )
 #include_directories( ${Boost_INCLUDE_DIR} )
 add_library(potentialfields "")
+add_library(planning::potentialfields ALIAS potentialfields)
 target_sources(potentialfields
         PRIVATE
             PotentialFieldsPlanner.cpp
@@ -16,5 +17,5 @@ target_include_directories(potentialfields
 target_link_libraries(potentialfields utils iplanner)
 
 
-install(TARGETS potentialfields EXPORT planners-export DESTINATION lib)
-install(FILES ${CMAKE_CURRENT_LIST_DIR}/PotentialFieldsPlanner.h DESTINATION include)
+install(TARGETS potentialfields EXPORT planning-export DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(FILES ${CMAKE_CURRENT_LIST_DIR}/PotentialFieldsPlanner.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})

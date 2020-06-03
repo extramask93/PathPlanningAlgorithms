@@ -1,4 +1,6 @@
 add_library(ants "")
+
+add_library(planning::ants ALIAS ants)
 target_sources(ants
         PRIVATE
         AntColony.cpp
@@ -23,5 +25,5 @@ target_include_directories(ants
         )
 target_link_libraries(ants utils iplanner)
 
-install(TARGETS ants EXPORT planners-export DESTINATION lib)
-install(FILES ${CMAKE_CURRENT_LIST_DIR}/AntColony.h ${CMAKE_CURRENT_LIST_DIR}/Utils.h DESTINATION include)
+install(TARGETS ants EXPORT planning-export DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(FILES ${CMAKE_CURRENT_LIST_DIR}/AntColony.h ${CMAKE_CURRENT_LIST_DIR}/Utils.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})

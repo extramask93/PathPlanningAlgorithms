@@ -1,4 +1,5 @@
 add_library(rrtstar "")
+add_library(planning::rrtstar ALIAS rrtstar)
 target_sources(rrtstar
         PRIVATE
         rrtstar.cpp
@@ -16,6 +17,6 @@ target_link_libraries(rrtstar
         iplanner
         )
 
-install(TARGETS rrtstar EXPORT planners-export DESTINATION lib)
-install(FILES ${CMAKE_CURRENT_LIST_DIR}/rrtstar.h DESTINATION include)
+install(TARGETS rrtstar EXPORT planning-export DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(FILES ${CMAKE_CURRENT_LIST_DIR}/rrtstar.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 

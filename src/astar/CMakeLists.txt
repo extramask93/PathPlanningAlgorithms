@@ -1,4 +1,6 @@
 add_library(astar "")
+
+add_library(planning::astar ALIAS astar)
 target_sources(astar
         PRIVATE
         AStar.cpp
@@ -12,5 +14,5 @@ target_include_directories(astar
         )
 target_link_libraries(astar PRIVATE utils iplanner project_warnings)
 
-install(TARGETS astar EXPORT planners-export DESTINATION lib)
-install(FILES ${CMAKE_CURRENT_LIST_DIR}/AStar.h DESTINATION include)
+install(TARGETS astar EXPORT planning-export DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(FILES ${CMAKE_CURRENT_LIST_DIR}/AStar.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
