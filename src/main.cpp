@@ -17,6 +17,7 @@ int main(int, char **)
 
     auto temp = util::MapLoader::loadMap((const std::string &)"/home/damian/PathPlanningAlgorithms/resources/maps/map-warehouse.csv");
     util::GridMap<unsigned char> map(std::get<0>(temp), std::get<1>(temp), std::get<2>(temp), resolution);
+    map.plotMap();
     std::vector<util::Point> testPointsMap{
         util::Point{ 11.5 * resolution, 11.5 * resolution },
         util::Point{ 22.5 * resolution, 11.5 * resolution },

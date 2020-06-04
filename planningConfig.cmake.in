@@ -10,7 +10,7 @@ set(planning_INCLUDE_DIRS "@planning_include_dirs@")
 if(CMAKE_COMPILER_IS_GNUCC)
 	set(planning_LIBRARIES @planning_library@)
 else(CMAKE_COMPILER_IS_GNUCC)
-	set(planning_LIBRARIES @libnabo_library@)
+	set(planning_LIBRARIES @planning_library@)
 endif(CMAKE_COMPILER_IS_GNUCC)
 
 # This causes catkin_simple to link against these libraries

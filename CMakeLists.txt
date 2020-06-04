@@ -72,7 +72,7 @@ include(CMakePackageConfigHelpers)
 #configure_package_config_file(
 #        "planningConfig.cmake.in"
 #        "planningConfig.cmake"
-#        INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Planners
+#        INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/planning
 #        PATH_VARS
 #        CMAKE_INSTALL_LIBDIR
 #)
@@ -85,6 +85,7 @@ write_basic_package_version_file(
 
 ### Install Config and ConfigVersion files
 install(
+        #do not use custom config we've got automatic generation by install(export
 #        FILES "${CMAKE_CURRENT_BINARY_DIR}/planningConfig.cmake"
         FILES "${CMAKE_CURRENT_BINARY_DIR}/planningConfigVersion.cmake"
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/planning"
