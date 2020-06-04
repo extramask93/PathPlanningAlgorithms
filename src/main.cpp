@@ -14,9 +14,7 @@ int main(int, char **)
 {
 
     double resolution = 1.0;
-
-    auto temp = util::MapLoader::loadMap((const std::string &)"/home/damian/PathPlanningAlgorithms/resources/maps/map-warehouse.csv");
-    util::GridMap<unsigned char> map(std::get<0>(temp), std::get<1>(temp), std::get<2>(temp), resolution);
+    auto map = util::MapLoader::loadPGMMap("pgmmap10x10.pgm");
     map.plotMap();
     std::vector<util::Point> testPointsMap{
         util::Point{ 11.5 * resolution, 11.5 * resolution },
