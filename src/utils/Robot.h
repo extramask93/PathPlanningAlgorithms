@@ -40,7 +40,7 @@ public:
   {
     return std::vector<char>{ '^', '<', 'v', '>' };
   }
-  static MovementType movementType;
+  static Robot::MovementType movementType;
 };
 
 }// namespace util

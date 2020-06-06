@@ -1,7 +1,7 @@
 add_library(utils "")
 add_library(planning::Utils ALIAS utils)
 
-option(BUILD_WITH_PLOT "Include matplotlib into build" ON)
+option(BUILD_WITH_PLOT "Include matplotlib into build" OFF)
 find_package(Python3 COMPONENTS Development NumPy)
 
 if((Python3_FOUND) AND (BUILD_WITH_PLOT))
