@@ -12,7 +12,8 @@ int rrt::RrtPlanner::makeGraph(const util::Point &start, const util::Point &goal
     startVertex_ = util::Vertex(start, 0, util::Vertex::NO_PARENT);
     int goalIndex = -1;
     vertexList_.push_back(startVertex_);
-    for (unsigned iteration = 0; iteration < maxNrOfIterations_; iteration++) {
+    unsigned iteration = 0;
+    for (; iteration < maxNrOfIterations_; iteration++) {
         auto randomVertex = getRandomVertex();
         auto closestVertex = findClosestVertex(randomVertex);
         auto newVertex = steer(closestVertex, randomVertex);
@@ -30,21 +31,21 @@ int rrt::RrtPlanner::makeGraph(const util::Point &start, const util::Point &goal
             break;
         }
     }
+    std::cout<<"Used "<<iteration<<" nodes\n";
     return goalIndex;
 }
 
 util::Vertex rrt::RrtPlanner::getRandomVertex() const
 {
     static std::mt19937 randomGenerator(std::random_device{}());
-    static unsigned callCounter=0;
     using Distribution = std::uniform_real_distribution<double>;
     static Distribution xDistribution(obstacleMap_.getOriginX(),
         obstacleMap_.getOriginX() + obstacleMap_.getWorldWidth());
     static Distribution yDistribution(obstacleMap_.getOriginY(),
         obstacleMap_.getOriginY() + obstacleMap_.getWorldHeight());
+    static Distribution goalSamplingDistribution = std::uniform_real_distribution<double>(0,1);
     // roll goal with 5%-10% probability -> https://www.cs.cmu.edu/~motionplanning/lecture/lec20.pdf
-    if(callCounter % 10) {
-        callCounter++;
+    if(goalSamplingDistribution(randomGenerator) >= (1 - goalSamplingRatio_)) {
         return util::Vertex(goalVertex_.getLocation(),util::Vertex::NO_ID, util::Vertex::NO_PARENT);
     }
     return util::Vertex{ util::Point(xDistribution(randomGenerator), yDistribution(randomGenerator)), util::Vertex::NO_ID, util::Vertex::NO_PARENT };
@@ -54,9 +55,10 @@ rrt::RrtPlanner::RrtPlanner(const util::GridMap<unsigned char> &obstacleMap) : g
                                                                      startVertex_(util::Point{ 0, 0 }),
                                                                      obstacleMap_(obstacleMap)
 {
-    maxNrOfIterations_ = 5000;
-    maxExtendDistance_ = obstacleMap.getCellWidth() * obstacleMap.getResolution() * 0.15;
-    goalRadius_ = 1.0;
+    maxNrOfIterations_ = 10000;
+    maxExtendDistance_ = obstacleMap.getCellWidth() * obstacleMap.getResolution() * 0.5;
+    goalSamplingRatio_ = 0.1;
+    goalRadius_ = 1.0;//std::ceil(obstacleMap.getCellWidth()*obstacleMap.getResolution()*0.01);
 }
 
 util::Vertex rrt::RrtPlanner::steer(const util::Vertex &from, const util::Vertex &to) const

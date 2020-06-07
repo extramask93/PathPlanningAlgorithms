@@ -286,8 +286,8 @@ double RrtStar::getRandomExtendDistance() const
 {
     static std::mt19937 randomGenerator(10/*std::random_device{}()*/);
     using Distribution = std::uniform_real_distribution<double>;
-    static Distribution distribution(obstacleMap_.getResolution(),
-                                     obstacleMap_.getCellWidth() * obstacleMap_.getResolution() * 0.1);
+    static Distribution distribution(obstacleMap_.getResolution()*obstacleMap_.getCellWidth()*0.3,
+                                     obstacleMap_.getCellWidth() * obstacleMap_.getResolution() * 0.5);
     return distribution(randomGenerator);
 }
 void RrtStar::setGamma(double gamma)

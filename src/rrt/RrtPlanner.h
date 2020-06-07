@@ -36,6 +36,7 @@ class RrtPlanner : IPlanner
     util::Vertex goalVertex_;
     util::Vertex startVertex_;
     double goalRadius_;
+    double goalSamplingRatio_;
     unsigned maxNrOfIterations_;
     double maxExtendDistance_;
     static constexpr unsigned OBSTACLE = 0;

@@ -54,7 +54,7 @@ util::GridMap<unsigned char>  MapLoader::loadPGMMap(const std::string &path)
         std::cerr<<"Error, only version P2 supported, but given: "<<buffer;
     }
     /*get comment out of the way*/
-    std::getline(file,buffer);
+    //std::getline(file,buffer);
     /*read payload*/
     std::stringstream stream;
     stream << file.rdbuf();
