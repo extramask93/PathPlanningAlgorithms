@@ -10,7 +10,9 @@
 #include <iomanip>
 #include <numeric>
 #include <fstream>
-#include "Point.h"
+#include <IPlanner.h>
+#include <Point.h>
+#include <GridMap.h>
 namespace util {
 struct BenchmarkResult
 {
@@ -32,6 +34,10 @@ class Benchmarker
     Benchmarker() = default;
     void start();
     BenchmarkResult stop(const std::vector<util::Point> &path_);
+    void evaluatePlanner(IPlanner &planner, std::shared_ptr<GridMap <unsigned char>> map, const Point &start, const Point &goal);
+    double evaluatePlanners(IPlanner &planner, std::shared_ptr<GridMap <unsigned char>> map,
+        const std::vector<std::pair<util::Point,util::Point>> &points, int nrOfRuns);
+    double pathLength(util::GridMap<unsigned char> *map, const std::vector<util::Point> &path) const;
     void printAverages();
     void save(const std::string &fileLoc);
     void save(int nr, const std::string &file);
@@ -69,6 +75,7 @@ void Benchmarker::saveVars(const std::string &file, const T &... elems)
     (void)std::initializer_list<int>{ (print(saveFile, elems), 0)... };
     saveFile << avergaePath << " " << averageTimes << "\n";
 }
+
 }// namespace util
 
 

@@ -12,10 +12,12 @@ add_subdirectory(rrt)
 add_subdirectory(astar)
 add_subdirectory(ants)
 add_subdirectory(depthfirst)
+add_subdirectory(sampling_base)
 
 target_link_libraries(runner
         PRIVATE
         potentialfields
+        sampling_base
         prm
         utils
         rrtstar

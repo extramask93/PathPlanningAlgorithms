@@ -13,6 +13,7 @@ target_include_directories(rrt
         )
 target_link_libraries(rrt
         PRIVATE
+        sampling_base
         utils
         iplanner
         )

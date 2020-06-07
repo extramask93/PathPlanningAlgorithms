@@ -14,6 +14,7 @@ target_include_directories(rrtstar
 target_link_libraries(rrtstar
         PRIVATE
         utils
+        sampling_base
         iplanner
         )
 

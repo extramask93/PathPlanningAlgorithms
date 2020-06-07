@@ -15,7 +15,7 @@ class MapLoader
 {
   public:
     static std::tuple<std::vector<unsigned char>, int, int> loadMap(const std::string &path);
-    static util::GridMap<unsigned char> loadPGMMap(const std::string &path);
+    static std::shared_ptr<util::GridMap<unsigned char>> loadPGMMap(const std::string &path);
   private:
     static std::vector<std::string> split(const std::string &s, char delim);
 };

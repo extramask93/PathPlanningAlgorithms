@@ -13,15 +13,15 @@ SCENARIO("Loading map 10x10 from pgm file") {
             auto map = loader.loadPGMMap(filePath);
             THEN("Map has width equal to 10")
             {
-                REQUIRE(map.getCellWidth() == 10);
+                REQUIRE(map->getCellWidth() == 10);
             }
             AND_THEN("Map has height equal to 10")
             {
-                REQUIRE(map.getCellHeight() == 10);
+                REQUIRE(map->getCellHeight() == 10);
             }
             AND_THEN("fivth element is occupied")
             {
-                REQUIRE(map.isFree(util::Location{ 5, 0 }) == false);
+                REQUIRE(map->isFree(util::Location{ 5, 0 }) == false);
             }
         }
     }

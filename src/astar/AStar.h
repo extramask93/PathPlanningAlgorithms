@@ -15,7 +15,7 @@ class AStar : public IPlanner
     enum class HeuristicType { EUCLID,
         MANHATTAN,
         NO_HEURISTIC };
-    explicit AStar(const util::GridMap<unsigned char> &map, HeuristicType heuristic = HeuristicType::EUCLID);
+    explicit AStar(std::shared_ptr<util::GridMap<unsigned char>> map, HeuristicType heuristic = HeuristicType::EUCLID);
     virtual std::vector<util::Point> makePlan(const util::Point &start, const util::Point &goal) override;
     virtual void initialize(const util::GridMap<unsigned char> &map, const util::Options &options = util::Options{}) override;
     void setHeuristic(AStar::HeuristicType heuristic);
@@ -28,7 +28,6 @@ class AStar : public IPlanner
     double getHeuristicCost(int currentIndex, int goalCell) const;
 
   private:
-    util::GridMap<unsigned char> obstacleMap_;
     HeuristicType currentHeuristic_;
     int goalIndex_;
     int startIndex_;

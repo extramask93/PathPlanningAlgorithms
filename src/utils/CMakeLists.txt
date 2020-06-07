@@ -2,18 +2,18 @@ add_library(utils "")
 add_library(planning::Utils ALIAS utils)
 
 option(BUILD_WITH_PLOT "Include matplotlib into build" OFF)
-find_package(Python3 COMPONENTS Development NumPy)
+find_package(Python2 COMPONENTS Development NumPy)
 
-if((Python3_FOUND) AND (BUILD_WITH_PLOT))
+if((Python2_FOUND) AND (BUILD_WITH_PLOT))
     message("--------Building with matplotlib support-----------")
     add_dependencies(utils MatplotlibcppDownload)
     target_compile_definitions(utils PUBLIC MATPLOTLIB)
-    target_include_directories(utils SYSTEM PUBLIC ${Python3_INCLUDE_DIRS} ${Python3_NumPy_INCLUDE_DIRS} )
+    target_include_directories(utils SYSTEM PUBLIC ${Python2_INCLUDE_DIRS} ${Python2_NumPy_INCLUDE_DIRS} )
     target_include_directories(utils SYSTEM PUBLIC
         $<INSTALL_INTERFACE:include>
         $<BUILD_INTERFACE:${PLOT_INCLUDE_DIR}>
         )
-    target_link_libraries(utils INTERFACE Python3::Python Python3::NumPy)
+    target_link_libraries(utils INTERFACE Python2::Python Python2::NumPy)
     install(FILES ${PLOT_INCLUDE_DIR}/matplotlibcpp.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 else()
     message("--------Building without matplotlib support-----------")
@@ -45,6 +45,7 @@ target_sources(utils
         MapLoader.cpp
         MapGenerator.cpp
         )
+target_link_libraries(utils PRIVATE iplanner)
 target_include_directories(utils
         PUBLIC
         $<INSTALL_INTERFACE:include>

@@ -41,7 +41,7 @@ std::tuple<std::vector<unsigned char>, int, int> MapLoader::loadMap(const std::s
     }
     return std::make_tuple(map, width, height);
 }
-util::GridMap<unsigned char>  MapLoader::loadPGMMap(const std::string &path)
+std::shared_ptr<util::GridMap<unsigned char>>  MapLoader::loadPGMMap(const std::string &path)
 {
     std::ifstream file(path);
     if(!file) {
@@ -71,7 +71,7 @@ util::GridMap<unsigned char>  MapLoader::loadPGMMap(const std::string &path)
             grid[row*rows + column] = temp > 0 ? 0 :1 ;
         }
     }
-    return util::GridMap<unsigned char>(grid,rows,columns,1.0);
+    return std::shared_ptr<util::GridMap<unsigned char>>(new GridMap<unsigned char>(grid,rows,columns));
 
 }
 }

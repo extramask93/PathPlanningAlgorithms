@@ -25,14 +25,14 @@ int main(int, char **)
         util::Point{ 36.5 * resolution, 36.5 * resolution },
     };
     //auto new_ant_colony = astar::AStar(map);
-    auto new_ant_colony = rrt::RrtPlanner(map);
+    auto new_ant_colony = rrt::RrtStar(map);
     util::Robot::movementType = util::Robot::MovementType::EUCLIDEAN;
     //new_ant_colony.setHeuristic(astar::AStar::HeuristicType::NO_HEURISTIC);
     util::Benchmarker benchmarker;
     benchmarker.start();
-    auto plan = new_ant_colony.makePlan({ 2.5, 3.5 }, util::Point{(map.getCellWidth()-1)*1.0,(map.getCellHeight()-1)*1.0});
+    auto plan = new_ant_colony.makePlan({ 2.5, 3.5 }, util::Point{ (map->getCellWidth() - 1) * 1.0, (map->getCellHeight() - 1) * 1.0 });
     benchmarker.stop(plan);
     benchmarker.printAverages();
-    map.plotPathOnMap(plan);
+    map->plotPathOnMap(plan);
     return 0;
 }

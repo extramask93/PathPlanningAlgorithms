@@ -103,4 +103,35 @@ void Benchmarker::saveVar(const std::string &file, const char *fmt, ...)
     saveFile<<" "<<avergaePath<<" "<<averageTimes<<"\n";
     va_end(args);
 }
+double Benchmarker::evaluatePlanners(IPlanner &planner, std::shared_ptr<GridMap <unsigned char>> map,
+    const std::vector<std::pair<util::Point,util::Point>> &points, int nrOfRuns)
+{
+    for(std::size_t pointNr=0; pointNr<points.size(); pointNr++) {
+        for(int run = 0 ; run < nrOfRuns; run++) {
+            evaluatePlanner(planner,map,points[pointNr].first, points[pointNr].second);
+        }
+        std::ofstream saveFile("results.csv",std::ios::app);
+        saveFile<<'\n'<<'\n';
+    }
+}
+void Benchmarker::evaluatePlanner(IPlanner &planner, std::shared_ptr<GridMap <unsigned char>> map, const Point &start, const Point &goal)
+{
+    std::ofstream saveFile("results.csv", std::ios::app);
+    auto startClock = std::clock();
+    planner.setMap(map);
+    auto plan = planner.makePlan(start,goal);
+    auto stopClock = std::clock();
+    auto cputimems = 1000.0 * (stopClock - startClock) / CLOCKS_PER_SEC;
+    auto cputimes = (stopClock - startClock) / CLOCKS_PER_SEC;
+    auto pl = pathLength(map.get(),plan);
+    saveFile << start.x <<','<<start.y <<','<< goal.x <<','<<goal.y<<','<< cputimems <<','<< pl<<'\n';
+}
+double Benchmarker::pathLength(util::GridMap<unsigned char> *map, const std::vector<util::Point> &path) const
+{
+    double pathLength = 0.0;
+    for (int i = 0; i < path.size() - 1; i++) {
+        pathLength += map->worldDistanceEuclidean(path[i],path[i-1]);
+    }
+    return pathLength;
+}
 }// namespace util

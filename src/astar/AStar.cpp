@@ -16,16 +16,16 @@ struct Node
     int index;
     double cost;
 };
-AStar::AStar(const util::GridMap<unsigned char> &map, HeuristicType heuristic) : obstacleMap_(map), currentHeuristic_(heuristic),
+AStar::AStar(std::shared_ptr<util::GridMap<unsigned char>> map, HeuristicType heuristic) : IPlanner(map), currentHeuristic_(heuristic),
                                                                        goalIndex_(-1),startIndex_(-1)
 {
 }
 std::vector<util::Point> AStar::makePlan(const util::Point &start, const util::Point &goal)
 {
-    startIndex_ = static_cast<int>(obstacleMap_.mapToIndex(obstacleMap_.worldToMap(start)));
-    goalIndex_ = static_cast<int>(obstacleMap_.mapToIndex(obstacleMap_.worldToMap(goal)));
+    startIndex_ = static_cast<int>(map_->mapToIndex(map_->worldToMap(start)));
+    goalIndex_ = static_cast<int>(map_->mapToIndex(map_->worldToMap(goal)));
     std::multiset<Node> priorityCosts;
-    std::vector<double> gCosts(obstacleMap_.getCellWidth() * obstacleMap_.getCellHeight(), std::numeric_limits<double>::infinity());
+    std::vector<double> gCosts(map_->getCellWidth() * map_->getCellHeight(), std::numeric_limits<double>::infinity());
     std::vector<int> cameFrom(gCosts.size(), -1);
     gCosts[static_cast<unsigned>(startIndex_)] = 0.0;
     Node currentNode(startIndex_, 0.0);
@@ -58,8 +58,8 @@ std::vector<util::Point> AStar::makePlan(const util::Point &start, const util::P
     currentNode.index = goalIndex_;
     bestPath.push_back(goal);
     while (currentNode.index != startIndex_) {
-        auto loc = obstacleMap_.indexToMap(static_cast<unsigned int>(cameFrom[static_cast<unsigned  long>(currentNode.index)]));
-        bestPath.push_back(obstacleMap_.mapToWorld(loc));
+        auto loc = map_->indexToMap(static_cast<unsigned int>(cameFrom[static_cast<unsigned  long>(currentNode.index)]));
+        bestPath.push_back(map_->mapToWorld(loc));
         currentNode.index = cameFrom[static_cast<unsigned long>(currentNode.index)];
     }
     bestPath.push_back(start);
@@ -71,30 +71,30 @@ std::vector<int> AStar::getNeighborIndexes(int index) const
     std::vector<int> neighborIndexes;
     auto motionModel = util::Robot::getMotionModel();
     for (const auto &motion : motionModel) {
-        auto currentLocation = obstacleMap_.indexToMap(static_cast<unsigned int>(index));
+        auto currentLocation = map_->indexToMap(static_cast<unsigned int>(index));
         currentLocation = currentLocation + motion;
-        if (obstacleMap_.isWithinMapBounds(currentLocation) && !isObstacle(currentLocation)) {
-            neighborIndexes.push_back(static_cast<int>(obstacleMap_.mapToIndex(currentLocation)));
+        if (map_->isWithinMapBounds(currentLocation) && !isObstacle(currentLocation)) {
+            neighborIndexes.push_back(static_cast<int>(map_->mapToIndex(currentLocation)));
         }
     }
     return neighborIndexes;
 }
 double AStar::getMoveCost(int currentIndex, int neighbourIndex) const
 {
-    auto currentLocation = obstacleMap_.indexToMap(static_cast<unsigned int>(currentIndex));
-    auto neighborLocation = obstacleMap_.indexToMap(static_cast<unsigned int>(neighbourIndex));
-    auto cost = obstacleMap_.distanceEuclidean(currentLocation, neighborLocation);
+    auto currentLocation = map_->indexToMap(static_cast<unsigned int>(currentIndex));
+    auto neighborLocation = map_->indexToMap(static_cast<unsigned int>(neighbourIndex));
+    auto cost = map_->distanceEuclidean(currentLocation, neighborLocation);
     return cost;
 }
 double AStar::getHeuristicCost(int currentIndex, int goalIndex) const
 {
-    auto currentLocation = obstacleMap_.indexToMap(static_cast<unsigned int>(currentIndex));
-    auto goalLocation = obstacleMap_.indexToMap(static_cast<unsigned int>(goalIndex));
+    auto currentLocation = map_->indexToMap(static_cast<unsigned int>(currentIndex));
+    auto goalLocation = map_->indexToMap(static_cast<unsigned int>(goalIndex));
     if (currentHeuristic_ == HeuristicType::EUCLID) {
-        return obstacleMap_.distanceEuclidean(currentLocation, goalLocation);
+        return map_->distanceEuclidean(currentLocation, goalLocation);
     }
     if (currentHeuristic_ == HeuristicType::MANHATTAN) {
-        return obstacleMap_.distanceManhattan(currentLocation, goalLocation);
+        return map_->distanceManhattan(currentLocation, goalLocation);
     }
     return 0.0;
 }
@@ -108,11 +108,11 @@ AStar::HeuristicType AStar::getHeuristic() const
 }
 bool AStar::isObstacle(const util::Location &location) const
 {
-    return obstacleMap_[location] == 0;
+    return (*map_)[location] == 0;
 }
 void AStar::initialize(const util::GridMap<unsigned char> &map, const util::Options &options)
 {
-    obstacleMap_ = map;
+    (void)map;
     setHeuristic(static_cast<HeuristicType>(options.heuristic));
 }
 }// namespace astar
