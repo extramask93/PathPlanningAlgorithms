@@ -12,14 +12,13 @@
 #include <map>
 #include <IPlanner.h>
 namespace prm {
-    class Prm : IPlanner{
+    class Prm : public IPlanner{
     public:
 
-        Prm(const util::GridMap<unsigned char> &map, unsigned int nrOfSamples);
+        Prm(std::shared_ptr<util::GridMap<unsigned char>> map, unsigned int nrOfSamples);
         std::vector<std::vector<int>> generateRoadMap(unsigned nrOfSamples);
         std::vector<util::Point> generateSamples(unsigned nrOfSamples);
         std::vector<util::Point> makePlan(const util::Point &start, const util::Point &goal) override ;
-        void initialize(const util::GridMap<unsigned char> &map, const util::Options &options) override;
         std::vector<util::Point> samples_;
     private:
         std::vector<util::Point> nearestNeighbors(util::Point point ,std::vector<util::Point> samples, int nNeighbors);
@@ -30,7 +29,6 @@ namespace prm {
         static constexpr double MAX_EDGE_LENGTH_ = 100;
         static constexpr int MAX_NR_OF_EDGES_PER_POINT = 15; //Lavalle, planning algorithms
         unsigned nrOfSamples_;
-        util::GridMap<unsigned char> ogm_;
         util::Point start_;
         util::Point goal_;
         Nabo::NNSearchF *nns_ = nullptr;

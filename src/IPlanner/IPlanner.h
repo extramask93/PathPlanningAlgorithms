@@ -15,11 +15,11 @@ class IPlanner
   public:
     IPlanner() = default;
     IPlanner(std::shared_ptr<util::GridMap<unsigned char>> map, const std::string &name = "");
-    virtual void initialize(const util::GridMap<unsigned char> &map,const util::Options &options = util::Options{}) = 0;
-    virtual void initialize2(std::shared_ptr<util::GridMap<unsigned char>> map,const util::Options &options = util::Options{});
+    virtual void initialize(std::shared_ptr<util::GridMap<unsigned char>> map,const util::Options &options = util::Options{});
     virtual std::vector<util::Point> makePlan(const util::Point &start, const util::Point &goal) = 0;
     virtual bool isStartAndGoalValid(const util::Point &start, const util::Point &goal);
     virtual std::string getName() const final;
+    virtual void setName(const std::string &name) final;
     virtual void setMap(std::shared_ptr<util::GridMap<unsigned char>> map);
     virtual util::GridMap<unsigned char>* getMap();
     /*rule of five*/
@@ -32,7 +32,7 @@ class IPlanner
   protected:
     std::shared_ptr<util::GridMap<unsigned char>> map_{nullptr};
     util::Options options_;
-    std::string name_;
+    std::string name_ = "Unknown planner";
 };
 
 

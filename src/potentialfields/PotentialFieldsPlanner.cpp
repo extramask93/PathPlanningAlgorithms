@@ -5,22 +5,22 @@
 #include "PotentialFieldsPlanner.h"
 
 namespace pf {
-PotentialFieldsPlanner::PotentialFieldsPlanner(const util::GridMap<unsigned char> &ogm) : ogm_(ogm),
-                                                                                potentialMap_(std::vector<float>(ogm.getCellWidth() * ogm.getCellHeight()), ogm.getCellWidth(), ogm.getCellHeight())
+PotentialFieldsPlanner::PotentialFieldsPlanner(std::shared_ptr<util::GridMap<unsigned char>> map) : IPlanner(map),
+                                                                                potentialMap_(std::vector<float>(map->getCellWidth() * map->getCellHeight()), map->getCellWidth(), map->getCellHeight())
 {
 }
 
 
 float PotentialFieldsPlanner::calculateAttractivePotential(const util::Location &current, const util::Location &goal) const
 {
-    return 0.5 * ATTRACTIVE_POTENTIAL_GAIN * ogm_.distanceEuclidean(current, goal);
+    return 0.5 * ATTRACTIVE_POTENTIAL_GAIN * map_->distanceEuclidean(current, goal);
 }
 
 float PotentialFieldsPlanner::calculateRepulsivePotential(const util::Location &current) const
 {
-    auto closestObstacleLocation = ogm_.findClosestObstacle(current);
+    auto closestObstacleLocation = map_->findClosestObstacle(current);
     if (closestObstacleLocation != boost::none) {
-        auto distanceToObstacle = ogm_.distanceEuclidean(current, *closestObstacleLocation);
+        auto distanceToObstacle = map_->distanceEuclidean(current, *closestObstacleLocation);
         if(distanceToObstacle >= 1.0) { //if cell is farther than robot radious then it is safe
             return 0.0;
         }
@@ -50,20 +50,20 @@ void PotentialFieldsPlanner::calculatePotentialField(const util::Location &goal)
 
 std::vector<util::Point> PotentialFieldsPlanner::makePlan(const util::Point &startP, const util::Point &goalP)
 {
-    util::Location start = ogm_.worldToMap(startP);
-    util::Location goal = ogm_.worldToMap(goalP);
+    util::Location start = map_->worldToMap(startP);
+    util::Location goal = map_->worldToMap(goalP);
 
     calculatePotentialField(goal);
     start_ = start;
     goal_ = goal;
     std::vector<util::Point> path;
     path.push_back(startP);
-    auto distanceToGoal = ogm_.distanceEuclidean(start, goal);
+    auto distanceToGoal = map_->distanceEuclidean(start, goal);
     auto motions = util::Robot::getMotionModel();
     auto currentLocation = start;
     int i = 0;
     double previousDistance = 0;
-    while (distanceToGoal >= ogm_.getResolution()) {
+    while (distanceToGoal >= map_->getResolution()) {
         auto minPotential = std::numeric_limits<float>::infinity();
         auto minLocation = util::Location{};
         for (const auto &motion : motions) {
@@ -80,24 +80,21 @@ std::vector<util::Point> PotentialFieldsPlanner::makePlan(const util::Point &sta
             }
         }
         currentLocation = minLocation;
-        distanceToGoal = ogm_.distanceEuclidean(minLocation, goal);
+        distanceToGoal = map_->distanceEuclidean(minLocation, goal);
         if((i % 10) == 0) {
             if(distanceToGoal == previousDistance) {
                 return std::vector<util::Point>{};
             }
             previousDistance = distanceToGoal;
         }
-        path.push_back(ogm_.mapToWorld(minLocation));
+        path.push_back(map_->mapToWorld(minLocation));
         i++;
     }
     path.push_back(goalP);
 
     return path;
 }
-void PotentialFieldsPlanner::initialize(const util::GridMap<unsigned char> &map, const util::Options &options)
-{
-    ogm_ = map;
-}
+
 
 
 }// namespace pf

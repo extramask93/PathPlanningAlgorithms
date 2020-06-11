@@ -41,15 +41,16 @@ util::Vertex SamplingBase<T>::getRandomVertex() const
     if (goalSamplingDistribution(randomGenerator) >= (1 - derived().goalSamplingRatio_)) {
         return util::Vertex(derived().goalVertex_.getLocation(), util::Vertex::NO_ID, util::Vertex::NO_PARENT);
     }
-    return util::Vertex{ util::Point(xDistribution(randomGenerator), yDistribution(randomGenerator)), util::Vertex::NO_ID, util::Vertex::NO_PARENT };
+    auto location = derived().map_->worldToMap(util::Point(xDistribution(randomGenerator), yDistribution(randomGenerator)));
+    return util::Vertex{ derived().map_->mapToWorld(location), util::Vertex::NO_ID, util::Vertex::NO_PARENT };
 }
 template<class T>
 double SamplingBase<T>::getRandomExtendDistance() const
 {
     static std::mt19937 randomGenerator(std::random_device{}());
     using Distribution = std::uniform_real_distribution<double>;
-    static Distribution distribution(derived().map_->getResolution()*derived().map_->getCellWidth()*0.3,
-                                     derived().map_->getCellWidth() * derived().map_->getResolution() * 0.5);
+    static Distribution distribution(derived().map_->getResolution()*derived().map_->getCellWidth()*0.2,
+                                     derived().map_->getCellWidth() * derived().map_->getResolution() * 0.3);
     return distribution(randomGenerator);
 }
 template<class T>

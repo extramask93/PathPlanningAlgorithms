@@ -12,15 +12,13 @@ namespace df {
 class DepthFirst : public IPlanner
 {
   public:
-    explicit DepthFirst(const util::GridMap<unsigned char> &map);
+    explicit DepthFirst(std::shared_ptr<util::GridMap<unsigned char>> map);
     std::vector<util::Point> makePlan(const util::Point &start, const util::Point &goal) override;
-    void initialize(const util::GridMap<unsigned char> &map, const util::Options &options) override;
 
   protected:
     bool isObstacle(const util::Location &location) const;
 
   private:
-    util::GridMap<unsigned char> obstacleMap_;
     int startIndex_;
     int goalIndex_;
 };

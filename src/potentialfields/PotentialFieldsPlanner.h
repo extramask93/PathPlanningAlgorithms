@@ -11,18 +11,16 @@
 #include <IPlanner.h>
 
 namespace pf {
-    class PotentialFieldsPlanner : IPlanner{
+    class PotentialFieldsPlanner : public IPlanner{
     public:
-        explicit PotentialFieldsPlanner(const util::GridMap<unsigned char> &ogm);
+        explicit PotentialFieldsPlanner(std::shared_ptr<util::GridMap<unsigned char>> map);
         std::vector<util::Point> makePlan(const util::Point &start, const util::Point &goal) override ;
         float calculateAttractivePotential(const util::Location &currentLocation, const util::Location &goalIndex) const;
         float calculateRepulsivePotential(const util::Location &currentLocation) const;
         void calculatePotentialField(const util::Location &location);
-        void initialize(const util::GridMap<unsigned char> &map, const util::Options &options) override;
       public:
         util::GridMap<float> potentialMap_;
     private:
-        util::GridMap<unsigned char> ogm_;
         util::Location goal_;
         util::Location start_;
         static constexpr bool OBSTACLE = 1;

@@ -26,6 +26,8 @@ public:
   unsigned getCellWidth() const;
   unsigned getCellHeight() const;
   double getResolution() const;
+  std::string getName() const;
+  void setName(const std::string &name);
   bool isWithinMapBounds(util::Location location) const;
   bool isFree(util::Location location) const noexcept(false);
   double distanceEuclidean(util::Location from, util::Location to) const noexcept(false);
@@ -60,6 +62,7 @@ protected:
   unsigned mapHeight_;
   double resolution_;
   util::Point origin_;
+  std::string name_ = "Unnamed map";
 };
 
 template<typename CELL_T>
@@ -324,6 +327,16 @@ void GridMap<CELL_T>::plotPathOnMap(const std::vector<util::Point> &plan)
     plotMap();
 #endif
 }
+
+    template<typename CELL_T>
+    std::string GridMap<CELL_T>::getName() const {
+        return name_;
+    }
+
+    template<typename CELL_T>
+    void GridMap<CELL_T>::setName(const std::string &name) {
+        name_ = name;
+    }
 
 }// namespace util
 

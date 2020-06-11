@@ -22,7 +22,7 @@ bool IPlanner::isStartAndGoalValid(const util::Point &start, const util::Point &
     return true;
 
 }
-void IPlanner::initialize2(std::shared_ptr<util::GridMap<unsigned char>> map, const util::Options &options)
+void IPlanner::initialize(std::shared_ptr<util::GridMap<unsigned char>> map, const util::Options &options)
 {
     map_ = map;
     options_ = options;
@@ -34,4 +34,9 @@ void IPlanner::setMap(std::shared_ptr<util::GridMap<unsigned char>> map)
 util::GridMap<unsigned char> *IPlanner::getMap()
 {
     return map_.get();
+}
+
+void IPlanner::setName(const std::string &name) {
+    name_ = name;
+
 }

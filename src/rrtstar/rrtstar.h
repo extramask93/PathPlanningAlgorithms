@@ -30,7 +30,6 @@ class RrtStar : public IPlanner
     explicit RrtStar(std::shared_ptr<util::GridMap<unsigned char>> map);
     std::vector<util::Point> makePlan(const util::Point &start,
         const util::Point &goal) override;
-    void initialize(const util::GridMap<unsigned char> &map, const util::Options &options) override;
     int findPath(const util::Vertex &start, const util::Vertex &goal);
     void setGamma(double gamma);
     void setRunToMaxIterations(bool setting);

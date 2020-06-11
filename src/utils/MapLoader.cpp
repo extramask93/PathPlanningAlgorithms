@@ -71,7 +71,8 @@ std::shared_ptr<util::GridMap<unsigned char>>  MapLoader::loadPGMMap(const std::
             grid[row*rows + column] = temp > 0 ? 0 :1 ;
         }
     }
-    return std::shared_ptr<util::GridMap<unsigned char>>(new GridMap<unsigned char>(grid,rows,columns));
-
+    auto ptr = std::shared_ptr<util::GridMap<unsigned char>>(new GridMap<unsigned char>(grid,rows,columns));
+    ptr->setName(path.substr(path.rfind("/")+1));
+    return ptr;
 }
 }

@@ -50,3 +50,4 @@ catch_discover_tests(
         -s
         --reporter=xml
         --out=tests_fast.xml)
+

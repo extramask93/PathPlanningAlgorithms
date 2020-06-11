@@ -17,7 +17,6 @@ class AStar : public IPlanner
         NO_HEURISTIC };
     explicit AStar(std::shared_ptr<util::GridMap<unsigned char>> map, HeuristicType heuristic = HeuristicType::EUCLID);
     virtual std::vector<util::Point> makePlan(const util::Point &start, const util::Point &goal) override;
-    virtual void initialize(const util::GridMap<unsigned char> &map, const util::Options &options = util::Options{}) override;
     void setHeuristic(AStar::HeuristicType heuristic);
     HeuristicType getHeuristic() const;
 

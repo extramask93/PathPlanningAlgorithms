@@ -12,7 +12,7 @@ target_include_directories(astar
         $<INSTALL_INTERFACE:include>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
         )
-target_link_libraries(astar PRIVATE iplanner project_warnings)
+target_link_libraries(astar PRIVATE iplanner )
 target_link_libraries(astar PRIVATE utils)
 
 install(TARGETS astar EXPORT planning-export DESTINATION ${CMAKE_INSTALL_LIBDIR})

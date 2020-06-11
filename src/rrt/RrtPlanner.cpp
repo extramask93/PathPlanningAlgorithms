@@ -8,6 +8,7 @@
 
 int rrt::RrtPlanner::makeGraph(const util::Point &start, const util::Point &goal)
 {
+    vertexList_.clear();
     goalVertex_ = util::Vertex(goal, util::Vertex::NO_ID, util::Vertex::NO_PARENT);
     startVertex_ = util::Vertex(start, 0, util::Vertex::NO_PARENT);
     int goalIndex = -1;
@@ -66,8 +67,3 @@ std::vector<util::Point> rrt::RrtPlanner::makePlan(const util::Point &start, con
     return plan;
 }
 
-void rrt::RrtPlanner::initialize(const util::GridMap<unsigned char> &map, const util::Options &options)
-{
-    (void)map;
-    (void)options;
-}

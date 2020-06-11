@@ -181,10 +181,6 @@ bool RrtStar::isCollision(const util::Vertex &from, const util::Vertex &to)
     }
     return false;
 }
-void RrtStar::initialize(const util::GridMap<unsigned char> &map, const util::Options &options)
-{
-    (void)map;
-    (void)options;
-}
+
 
 };// namespace rrt

@@ -7,19 +7,19 @@
 #include <Options.h>
 #include "PRM.h"
 
-prm::Prm::Prm(const util::GridMap<unsigned char> &map, unsigned nrOfSamples) : ogm_(map), nrOfSamples_(nrOfSamples){
+prm::Prm::Prm(std::shared_ptr<util::GridMap<unsigned char>> map, unsigned nrOfSamples) : IPlanner(map), nrOfSamples_(nrOfSamples){
     generateRoadMap(nrOfSamples_);
 }
 
 std::vector<util::Point> prm::Prm::generateSamples(unsigned int nrOfSamples) {
     static std::mt19937 randomGenerator(std::random_device{}());
-    std::uniform_real_distribution<> distributionX(0,ogm_.getWorldWidth());
-    std::uniform_real_distribution<> distributionY(0, ogm_.getWorldHeight());
+    std::uniform_real_distribution<> distributionX(0,map_->getWorldWidth());
+    std::uniform_real_distribution<> distributionY(0, map_->getWorldHeight());
     std::vector<util::Point> samples;
     for(unsigned sampleNr = 0; sampleNr < nrOfSamples; ) {
         util::Point point = util::Point{distributionX(randomGenerator), distributionY(randomGenerator)};
-        util::Location location = ogm_.worldToMap(point);
-        if(ogm_.isFree(location)) {
+        util::Location location = map_->worldToMap(point);
+        if(map_->isFree(location)) {
             samples.push_back(point);
             sampleNr++;
         }
@@ -76,8 +76,8 @@ std::vector<util::Point>
 prm::Prm::nearestNeighbors(util::Point point, std::vector<util::Point> samples, int nNeighbors) {
     std::sort(samples.begin(), samples.end(),
             [&](const util::Point &a, const util::Point &b) {
-            auto d1 = ogm_.worldDistanceEuclidean(a, point);
-            auto d2 = ogm_.worldDistanceEuclidean(b,point);
+            auto d1 = map_->worldDistanceEuclidean(a, point);
+            auto d2 = map_->worldDistanceEuclidean(b,point);
             return d1<d2;
     });
     return std::vector<util::Point>{samples.begin(), samples.begin()+nNeighbors};
@@ -85,19 +85,19 @@ prm::Prm::nearestNeighbors(util::Point point, std::vector<util::Point> samples, 
 
 bool prm::Prm::isCollision(const util::Point &from, const util::Point &to) const {
 
-    auto distanceBetweenNodes = ogm_.worldDistanceEuclidean(from, to);
+    auto distanceBetweenNodes = map_->worldDistanceEuclidean(from, to);
     if(distanceBetweenNodes > MAX_EDGE_LENGTH_) {
         return true;
     }
     double angleBetweenNodes = std::atan2(to.y - from.y, to.x - from.x);
-    int maxNumberOfExpandSteps = std::floor(distanceBetweenNodes / ogm_.getResolution());
+    int maxNumberOfExpandSteps = std::floor(distanceBetweenNodes / map_->getResolution());
     for (int i = 0; i < maxNumberOfExpandSteps; i++)
     {
-        double xIncrement =  i * ogm_.getResolution() * cos(angleBetweenNodes);
-        double yIncrement =  i * ogm_.getResolution() * sin(angleBetweenNodes);
+        double xIncrement =  i * map_->getResolution() * cos(angleBetweenNodes);
+        double yIncrement =  i * map_->getResolution() * sin(angleBetweenNodes);
         util::Point increment {xIncrement, yIncrement};
-        auto cell = ogm_.worldToMap(from + increment);
-        if(!ogm_.isFree(cell)) {
+        auto cell = map_->worldToMap(from + increment);
+        if(!map_->isFree(cell)) {
             return true;
         }
     }
@@ -127,7 +127,7 @@ std::vector<util::Point> prm::Prm::makePlan(const util::Point &start, const util
 
         for(int i = 0; i < roadMap[currentID].size(); i++) {
             int nextID = roadMap[currentID][i];
-            double distance = ogm_.worldDistanceEuclidean(samples_[currentID], samples_[nextID]);
+            double distance = map_->worldDistanceEuclidean(samples_[currentID], samples_[nextID]);
             util::Node<double> node(nextID, samples_[nextID].x, samples_[nextID].y, distance, currentID);
             if(closedList_.count(nextID) > 0) {
                 continue;
@@ -196,7 +196,4 @@ void prm::Prm::addToRoadmap(const util::Point &start, const util::Point &goal)
         }
     }
 }
-void prm::Prm::initialize(const util::GridMap<unsigned char> &map, const util::Options &options)
-{
-    ogm_ = map;
-}
+

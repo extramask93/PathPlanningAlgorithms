@@ -21,7 +21,6 @@ class RrtPlanner : public IPlanner
   public:
     explicit RrtPlanner(std::shared_ptr<util::GridMap<unsigned char>> &map);
     std::vector<util::Point> makePlan(const util::Point &start, const util::Point &goal) override;
-    void initialize(const util::GridMap<unsigned char> &map, const util::Options &options) override;
     void setMaxExtendDistance(double distance);
     void setMaxNrOfIterations(unsigned iterationNr);
 

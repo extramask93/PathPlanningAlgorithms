@@ -32,6 +32,7 @@ class Benchmarker
 {
   public:
     Benchmarker() = default;
+    Benchmarker(const std::string &outputFileName) : outputFileName_(outputFileName) {}
     void start();
     BenchmarkResult stop(const std::vector<util::Point> &path_);
     void evaluatePlanner(IPlanner &planner, std::shared_ptr<GridMap <unsigned char>> map, const Point &start, const Point &goal);
@@ -47,9 +48,8 @@ class Benchmarker
   private:
     template<typename T>
     void print(std::ostream &os, const T &elem);
-
-
   private:
+    std::string outputFileName_ = "results.csv";
     std::clock_t startClock_;
     std::clock_t stopClock_;
     std::list<util::BenchmarkResult> results_;

@@ -13,10 +13,11 @@ target_include_directories(rrt
         )
 target_link_libraries(rrt
         PRIVATE
-        sampling_base
         utils
         iplanner
         )
-
+target_link_libraries(rrt
+        PUBLIC
+        sampling_base)
 install(TARGETS rrt EXPORT planning-export DESTINATION ${CMAKE_INSTALL_LIBDIR})
 install(FILES ${CMAKE_CURRENT_LIST_DIR}/RrtPlanner.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})

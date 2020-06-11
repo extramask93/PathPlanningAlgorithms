@@ -5,9 +5,6 @@ target_sources(ants
         PRIVATE
         AntColony.cpp
         Utils.cpp
-        PUBLIC
-       # ${CMAKE_CURRENT_LIST_DIR}/AntColony.h
-        #${CMAKE_CURRENT_LIST_DIR}/Utils.h
         )
 #------------------------------------
 find_package (Boost 1.36 REQUIRED)

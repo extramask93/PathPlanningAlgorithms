@@ -12,9 +12,9 @@ Ant::Ant(Node start, int id)
     this->previous_node_ = Node(-1, -1);
 }
 
-AntColony::AntColony(util::GridMap<unsigned char> &grid,int n_ants, double alpha, double beta, double evap_rate, int iterations, double Q) :
+AntColony::AntColony(std::shared_ptr<util::GridMap<unsigned char>> grid,
+    int n_ants, double alpha, double beta, double evap_rate, int iterations, double Q) : IPlanner(grid)
 
-                                                                                                          grid_(grid)
 {
     this->n_ants_ = n_ants;
     this->alpha_ = alpha;
@@ -38,10 +38,9 @@ void AntColony::RemoveLoop(Ant &ant)
 
 std::vector<Node> AntColony::ant_colony(util::GridMap<unsigned char> &grid, Node start, Node goal)
 {
-    this->grid_ = grid;
     this->start_ = start;// Make sure start has id
     this->goal_ = goal;
-    grid_size_ = grid_.getCellWidth();
+    grid_size_ = map_->getCellWidth();
     Node c;
     motions_ = GetMotion();
     for (int i = 0; i < grid_size_; i++) {
@@ -78,7 +77,7 @@ std::vector<Node> AntColony::ant_colony(util::GridMap<unsigned char> &grid, Node
                         && possible_position != ant.previous_node_) {
                         possible_positions.push_back(possible_position);
                         double new_prob = pow(pheromone_edges_[std::make_pair(possible_position.id_, ant.current_node_.id_)], alpha_) * pow(1.0 / pow(pow((possible_position.x_ - goal_.x_), 2) + pow((possible_position.y_ - goal_.y_), 2), 0.5), beta_);
-                        if (grid_[util::Location{ possible_position.x_, possible_position.y_ }] == 0) {
+                        if ((*map_)[util::Location{ possible_position.x_, possible_position.y_ }] == 0) {
                             n_obs += 1;
                             new_prob = 0;
                         }
@@ -91,7 +90,7 @@ std::vector<Node> AntColony::ant_colony(util::GridMap<unsigned char> &grid, Node
                 else if (prob_sum == 0) {
                     double new_prob = 1.0 / (possible_positions.size() - n_obs);
                     for (int i = 0; i < possible_positions.size(); i++) {
-                        if (grid_[util::Location{ possible_positions[i].x_, possible_positions[i].y_ }] == 1)
+                        if ((*map_)[util::Location{ possible_positions[i].x_, possible_positions[i].y_ }] == 1)
                             possible_probabilities[i] = new_prob;
                         else
                             possible_probabilities[i] = 0;
@@ -149,24 +148,21 @@ std::vector<Node> AntColony::ant_colony(util::GridMap<unsigned char> &grid, Node
 }
 std::vector<util::Point> AntColony::makePlan(const util::Point &start_, const util::Point &goal_)
 {
-    Node start(grid_.worldToMap(start_).x, grid_.worldToMap(start_).y, 0, 0, 0, 0);
-    Node goal(grid_.worldToMap(goal_).x, grid_.worldToMap(goal_).y, 0, 0, 0, 0);
-    start.id_ = start.x_ * grid_.getCellWidth() + start.y_;
-    start.pid_ = start.x_ * grid_.getCellWidth() + start.y_;
-    goal.id_ = goal.x_ * grid_.getCellWidth() + goal.y_;
+    Node start(map_->worldToMap(start_).x, map_->worldToMap(start_).y, 0, 0, 0, 0);
+    Node goal(map_->worldToMap(goal_).x, map_->worldToMap(goal_).y, 0, 0, 0, 0);
+    start.id_ = start.x_ * map_->getCellWidth() + start.y_;
+    start.pid_ = start.x_ * map_->getCellWidth() + start.y_;
+    goal.id_ = goal.x_ * map_->getCellWidth() + goal.y_;
     start.h_cost_ = abs(start.x_ - goal.x_) + abs(start.y_ - goal.y_);
-    std::vector<Node> path = ant_colony(grid_, start, goal);
+    std::vector<Node> path = ant_colony(*map_, start, goal);
     if (path[0].id_ == -1) {
         return std::vector<util::Point>();
     }
     std::vector<util::Point> pointPath;
     for (auto node : path) {
-        auto point = util::Point(grid_.mapToWorld(util::Location(node.x_, node.y_)));
+        auto point = util::Point(map_->mapToWorld(util::Location(node.x_, node.y_)));
         pointPath.push_back(point);
     }
     return pointPath;
 }
-void AntColony::initialize(const util::GridMap<unsigned char> &map, const util::Options &options)
-{
-    grid_ = map;
-}
+
