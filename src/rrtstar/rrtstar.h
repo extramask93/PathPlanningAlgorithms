@@ -47,7 +47,7 @@ class RrtStar : public IPlanner
     util::Vertex goalVertex_;
     util::Vertex startVertex_;
     std::vector<util::Vertex> vertexList_;
-    int max_iterations_ = 5000;
+    int max_iterations_ = 3500;
     bool runTillMaxIterations_ = false;
     double gamma_ = 1.0;
     double max_extend_distance_ = 8.0;

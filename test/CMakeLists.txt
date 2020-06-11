@@ -12,7 +12,7 @@ target_link_libraries(catch_main PRIVATE project_options)
 
 
 set(SOURCE_FILES PlannerTests.cpp GridMapTests.cpp
-         MapLoaderTests.cpp GridPlannersCorridors.cpp)
+         MapLoaderTests.cpp GridPlannersCorridors.cpp PlannersMaze.cpp)
 
 add_executable(tests ${SOURCE_FILES})
 target_link_libraries(tests PRIVATE

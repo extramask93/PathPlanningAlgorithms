@@ -40,7 +40,7 @@ int rrt::RrtPlanner::makeGraph(const util::Point &start, const util::Point &goal
 rrt::RrtPlanner::RrtPlanner(std::shared_ptr<util::GridMap<unsigned char>> &map) : IPlanner(map), goalVertex_(util::Point{ 0, 0 }),
                                                                      startVertex_(util::Point{ 0, 0 })
 {
-    maxNrOfIterations_ = 10000;
+    maxNrOfIterations_ = 100000;//11000;
     maxExtendDistance_ = map_->getCellWidth() * map_->getResolution() * 0.5;
     goalSamplingRatio_ = 0.1;
     goalRadius_ = 1.0;//std::ceil(obstacleMap.getCellWidth()*obstacleMap.getResolution()*0.01);

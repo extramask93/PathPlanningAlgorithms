@@ -133,8 +133,7 @@ double Benchmarker::pathLength(util::GridMap<unsigned char> *map, const std::vec
         return pathLength;
     }
     for (int i = 0; i < path.size() - 1; i++) {
-        auto mapco = map->worldToMap(path[i]);
-        pathLength += map->distanceEuclidean(mapco.x,mapco.y);
+        pathLength += map->worldDistanceEuclidean(path[i],path[i+1]);
     }
     return pathLength;
 }
