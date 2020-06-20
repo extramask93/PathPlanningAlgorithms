@@ -150,6 +150,8 @@ std::vector<util::Point> AntColony::makePlan(const util::Point &start_, const ut
 {
     Node start(map_->worldToMap(start_).x, map_->worldToMap(start_).y, 0, 0, 0, 0);
     Node goal(map_->worldToMap(goal_).x, map_->worldToMap(goal_).y, 0, 0, 0, 0);
+    this->ants_ = std::vector<Ant>(n_ants_);
+
     start.id_ = start.x_ * map_->getCellWidth() + start.y_;
     start.pid_ = start.x_ * map_->getCellWidth() + start.y_;
     goal.id_ = goal.x_ * map_->getCellWidth() + goal.y_;

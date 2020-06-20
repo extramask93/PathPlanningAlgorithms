@@ -1,6 +1,7 @@
 //
-// Created by damian on 07.06.2020.
+// Created by damian on 12.06.2020.
 //
+
 #include <catch2/catch.hpp>
 #include <GridMap.h>
 #include <AStar.h>
@@ -46,12 +47,6 @@ getRandomStartAndGoalLocations(std::shared_ptr<util::GridMap<unsigned char>> map
     return result;
 }
 
-static std::vector<std::string> Corridormaps = {
-        "/home/damian/PathPlanningAlgorithms/resources/maps/korytarze/korytarz1.pgm",
-        "/home/damian/PathPlanningAlgorithms/resources/maps/korytarze/korytarz2.pgm",
-        "/home/damian/PathPlanningAlgorithms/resources/maps/korytarze/korytarz3.pgm",
-};
-
 static std::vector<std::string> Sizemaps = {
         "/home/damian/PathPlanningAlgorithms/resources/maps/wielkosci/map100x100.pgm",
         "/home/damian/PathPlanningAlgorithms/resources/maps/wielkosci/map500x500.pgm",
@@ -59,125 +54,135 @@ static std::vector<std::string> Sizemaps = {
         "/home/damian/PathPlanningAlgorithms/resources/maps/wielkosci/map2000x2000.pgm",
 };
 
-static std::vector<std::pair<util::Point, util::Point>> points1 = {
-        {{436.477, 371.604}, {197.589, 192.953}},
-        {{362.583, 223.582}, {204.179, 255.2}},
-        {{200.799, 333.171}, {304.847, 435.493}},
-        {{95.9787, 185.552}, {225.158, 230.27}},
-        {{434.83,  282.063}, {280.333, 439.657}},
-};
-
-static std::vector<std::pair<util::Point, util::Point>> points2 = {
-        {{226.885, 299.122}, {77.5639, 386.195}},
-        {{ 103.066, 288.547 },{ 301.477, 443.872 }},
-        {{ 149.617, 381.427 },{ 407.528, 263.157 }},
-        {{ 93.9751, 321.653 },{ 305.85, 452.636 }},
-        {{ 69.9906, 238.158 },{ 239.067, 311.747 }},
-};
-
-TEST_CASE("Dijkstra planner corridors", "[Dijkstra]") {
-    for (const auto &mapPath : Corridormaps) {
+TEST_CASE("Dijkstra planner size", "[Dijkstra]") {
+    for (const auto &mapPath : Sizemaps) {
         auto map = util::MapLoader::loadPGMMap(mapPath);
         auto planner = astar::AStar(map);
         util::Robot::movementType = util::Robot::MovementType::EUCLIDEAN;
         planner.setHeuristic(astar::AStar::HeuristicType::NO_HEURISTIC);
         planner.setName("Dijkstra");
-        auto benchmarker = util::Benchmarker("corridors-dijkstra.csv");
+        auto benchmarker = util::Benchmarker("size-dijkstra.csv");
         auto points = getRandomStartAndGoalLocations(map, 5);
         //auto path = planner.makePlan(points[0].first, points[0].second);
         //map->plotPathOnMap(path);
-        benchmarker.evaluatePlanners(planner, map, points, 100);
+        benchmarker.evaluatePlanners(planner, map, points, 10);
     }
 }
 
-TEST_CASE("AStar planner corridors", "[AStar]") {
-    for (const auto &mapPath : Corridormaps) {
+TEST_CASE("AStar planner size", "[AStar]") {
+    for (const auto &mapPath : Sizemaps) {
         auto map = util::MapLoader::loadPGMMap(mapPath);
         auto planner = astar::AStar(map);
         util::Robot::movementType = util::Robot::MovementType::EUCLIDEAN;
         planner.setHeuristic(astar::AStar::HeuristicType::EUCLID);
         planner.setName("astar");
-        auto benchmarker = util::Benchmarker("corridors-astar.csv");
+        auto benchmarker = util::Benchmarker("size-astar.csv");
         auto points = getRandomStartAndGoalLocations(map, 5);
         //auto path = planner.makePlan(points[0].first, points[0].second);
         //map->plotPathOnMap(path);
-        benchmarker.evaluatePlanners(planner, map, points, 100);
+        benchmarker.evaluatePlanners(planner, map, points, 10);
     }
 }
 
-TEST_CASE("DepthFirst planner corridors", "[DepthFirst]") {
-    for (const auto &mapPath : Corridormaps) {
+TEST_CASE("DepthFirst planner size", "[DepthFirst]") {
+    for (const auto &mapPath : Sizemaps) {
         auto map = util::MapLoader::loadPGMMap(mapPath);
         auto planner = df::DepthFirst(map);
         util::Robot::movementType = util::Robot::MovementType::EUCLIDEAN;
         planner.setName("df");
-        auto benchmarker = util::Benchmarker("corridors-df.csv");
+        auto benchmarker = util::Benchmarker("size-df.csv");
         auto points = getRandomStartAndGoalLocations(map, 5);
-        benchmarker.evaluatePlanners(planner, map, points, 100);
+        benchmarker.evaluatePlanners(planner, map, points, 10);
     }
 }
 
-TEST_CASE("RRT planner corridors", "[RRT]") {
-    //for(const auto &mapPath : Corridormaps) {
-    auto map = util::MapLoader::loadPGMMap(Corridormaps[2]);
+static std::vector<std::pair<util::Point, util::Point>> points1 = {
+        {{154.889, 298.791}, {436.196, 491.51}},
+        {{233.702, 437.872}, {148.034, 65.6455}},
+        {{421.409, 329.518},{297.72,  218.177}},
+        {{178.125, 293.565},{74.7357, 85.6193}},
+        {{274.408, 63.4859},{39.8963, 117.519}}
+};
+
+static std::vector<std::pair<util::Point, util::Point>> points2 = {
+        {{659.965, 214.953},{203.047, 382.865}},
+        {{224.873, 114.649},{583.017, 232.641}},
+        {{556.518, 523.811},{350.958, 705.332}},
+        {{820.704, 134.563},{604.726, 283.148}},
+        {{664.655, 377.441},{747.582, 140.576}}
+};
+
+static std::vector<std::pair<util::Point, util::Point>> points3 = {
+        {{776.099, 1732.98},{1913.71, 973.107}},
+        {{211.866, 680.075},{1671.14, 930.883}},
+        {{225.329, 1087.84},{1441.6,  1731.63}},
+        {{5.83217, 590.884},{1973.78, 476.665}},
+        {{1466.79, 1924.39},{1630.91, 1388.45}}
+};
+
+TEST_CASE("RRT planner size", "[RRT]") {
+    //for(const auto &mapPath : Sizemaps) {
+    auto map = util::MapLoader::loadPGMMap(Sizemaps[3]);
     auto planner = rrt::RrtPlanner(map);
     planner.setName("rrt");
-    auto benchmarker = util::Benchmarker("corridors-rrt.csv");
-    auto points = points2;// getRandomStartAndGoalLocations(map,5);
+    auto benchmarker = util::Benchmarker("size-rrt.csv");
+    auto points = points3;//getRandomStartAndGoalLocations(map, 5);
+    //auto plan = planner.makePlan(util::Point{659.965,214.953}, util::Point{203.047,382.865});
+    //map->plotPathOnMap(plan);
     benchmarker.evaluatePlanners(planner, map, points, 100);
     //}
 }
 
-TEST_CASE("RRTStar planner corridors", "[RRTStar]") {
-    //for (const auto &mapPath : Corridormaps) {
-        auto map = util::MapLoader::loadPGMMap(Corridormaps[2]);
-        auto planner = rrt::RrtStar(map);
-        planner.setName("rrt-star");
-        planner.setRunToMaxIterations(true);
-        planner.setGamma(50);
-        auto benchmarker = util::Benchmarker("corridors-rrt-star.csv");
-        auto points = points2;//getRandomStartAndGoalLocations(map, 5);
-        //auto path = planner.makePlan(points[0].first, points[0].second);
-        //map->plotPathOnMap(path);
-        benchmarker.evaluatePlanners(planner, map, points, 100);
+TEST_CASE("RRTStar planner size", "[RRTStar]") {
+    //for(const auto &mapPath : Sizemaps) {
+    auto map = util::MapLoader::loadPGMMap(Sizemaps[3]);
+    auto planner = rrt::RrtStar(map);
+    planner.setName("rrt-star");
+    planner.setRunToMaxIterations(true);
+    planner.setGamma(50);
+    auto benchmarker = util::Benchmarker("size-rrt-star.csv");
+    auto points = points3;//getRandomStartAndGoalLocations(map, 5);
+    //auto path = planner.makePlan(points[0].first, points[0].second);
+    //map->plotPathOnMap(path);
+    benchmarker.evaluatePlanners(planner, map, points, 100);
     //}
 }
 
-TEST_CASE("RPM planner corridors", "[PRM]") {
-    for (const auto &mapPath : Corridormaps) {
-        auto map = util::MapLoader::loadPGMMap(mapPath);
-        auto planner = prm::Prm(map, 100);
-        planner.setName("prm");
-        auto benchmarker = util::Benchmarker("corridors-prm-star.csv");
-        auto points = getRandomStartAndGoalLocations(map, 5);
-        //auto path = planner.makePlan(points[0].first, points[0].second);
-        //map->plotPathOnMap(path);
-        benchmarker.evaluatePlanners(planner, map, points, 100);
-    }
+TEST_CASE("RPM planner size", "[PRM]") {
+    //for(const auto &mapPath : Sizemaps) {
+    auto map = util::MapLoader::loadPGMMap(Sizemaps[3]);
+    auto planner = prm::Prm(map, 900); //500 for 1000x1000, 900 for 2000x2000
+    planner.setName("prm");
+    auto benchmarker = util::Benchmarker("size-prm.csv");
+    auto points = points3;//getRandomStartAndGoalLocations(map, 5);
+    //auto path = planner.makePlan(points[0].first, points[0].second);
+    //map->plotPathOnMap(path);
+    benchmarker.evaluatePlanners(planner, map, points, 100);
+    //}
 }
 
-TEST_CASE("Potential fields planner corridors", "[PF]") {
-    //for(const auto &mapPath : Corridormaps) {
-    auto map = util::MapLoader::loadPGMMap(Corridormaps[0]);
+TEST_CASE("Potential fields planner size", "[PF]") {
+    //for(const auto &mapPath : Sizemaps) {
+    auto map = util::MapLoader::loadPGMMap(Sizemaps[1]);
     auto planner = pf::PotentialFieldsPlanner(map);
     planner.setName("pf");
-    auto benchmarker = util::Benchmarker("corridors-pf.csv");
-    auto points = getRandomStartAndGoalLocations(map, 5);
+    auto benchmarker = util::Benchmarker("size-pf.csv");
+    auto points = points1;//getRandomStartAndGoalLocations(map, 5);
     //auto path = planner.makePlan(points[0].first, points[0].second);
     //map->plotPathOnMap(path);
     benchmarker.evaluatePlanners(planner, map, points, 1);
     //}
 }
 
-TEST_CASE("Ant colony planner corridors", "[ANT]") {
-    for (const auto &mapPath : Corridormaps) {
-        auto map = util::MapLoader::loadPGMMap(mapPath);
+TEST_CASE("Ant colony planner size", "[ANT]") {
+    //for (const auto &mapPath : Sizemaps) {
+        auto map = util::MapLoader::loadPGMMap(Sizemaps[0]);
         auto planner = AntColony(map);
         planner.setName("ant");
-        auto benchmarker = util::Benchmarker("corridors-ant.csv");
+        auto benchmarker = util::Benchmarker("size-ant.csv");
         auto points = getRandomStartAndGoalLocations(map, 5);
         //auto path = planner.makePlan(points[0].first, points[0].second);
         //map->plotPathOnMap(path);
         benchmarker.evaluatePlanners(planner, map, points,1);
-    }
+    //}
 }

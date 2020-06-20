@@ -11,8 +11,8 @@ target_link_libraries(catch_main PUBLIC CONAN_PKG::catch2)
 target_link_libraries(catch_main PRIVATE project_options)
 
 
-set(SOURCE_FILES PlannerTests.cpp GridMapTests.cpp
-         MapLoaderTests.cpp GridPlannersCorridors.cpp PlannersMaze.cpp)
+set(SOURCE_FILES PlannerTests.cpp GridMapTests.cpp SamplingMethodsTests.cpp
+         MapLoaderTests.cpp GridPlannersCorridors.cpp PlannersMaze.cpp PlannersSize.cpp)
 
 add_executable(tests ${SOURCE_FILES})
 target_link_libraries(tests PRIVATE

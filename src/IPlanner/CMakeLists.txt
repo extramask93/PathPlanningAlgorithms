@@ -12,7 +12,8 @@ target_include_directories(iplanner
         $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
 
         )
-target_link_libraries(iplanner PRIVATE utils project_warnings)
+target_link_libraries(iplanner PUBLIC utils)
+target_link_libraries(iplanner PRIVATE  project_warnings)
 
 install(TARGETS iplanner EXPORT planning-export DESTINATION ${CMAKE_INSTALL_LIBDIR})
 install(FILES ${CMAKE_CURRENT_LIST_DIR}/IPlanner.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})

@@ -100,14 +100,16 @@ TEST_CASE("DepthFirst planner maze", "[DepthFirst]")
 
 TEST_CASE("RRT planner maze", "[RRT]")
 {
-    for(const auto &mapPath : Mazemaps) {
-        auto map = util::MapLoader::loadPGMMap(mapPath);
+    //for(const auto &mapPath : Mazemaps) {
+        auto map = util::MapLoader::loadPGMMap(Mazemaps[0]);
         auto planner  = rrt::RrtPlanner(map);
         planner.setName("rrt");
         auto benchmarker = util::Benchmarker("maze-rrt.csv");
         auto points = getRandomStartAndGoalLocations(map,5);
-        benchmarker.evaluatePlanners(planner, map, points,1);
-    }
+        auto path = planner.makePlan(points[0].first, points[0].second);
+        map->plotPathOnMap(path);
+        //benchmarker.evaluatePlanners(planner, map, points,1);
+    //}
 }
 
 TEST_CASE("RRTStar planner maze", "[RRTStar]")

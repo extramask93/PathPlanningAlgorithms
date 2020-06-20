@@ -53,9 +53,6 @@ namespace astar {
                     nextNode.index = neighborIndexes[i];
                     nextNode.cost = gCosts[static_cast<unsigned long>(neighborIndexes[i])] +
                                     getHeuristicCost(neighborIndexes[i], goalIndex_);
-                    if (cameFrom[neighborIndexes[i]] != -1) {
-                        std::cout << "-----------dupa-------------\n";
-                    }
                     cameFrom[static_cast<unsigned long>(neighborIndexes[i])] = currentNode.index;
                     priorityCosts.insert(nextNode);
                 }

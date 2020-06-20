@@ -16,7 +16,7 @@ bool IPlanner::isStartAndGoalValid(const util::Point &start, const util::Point &
         if(s == g) {
             return false;
         }
-    } catch (util::OutOfBoundsException ex) {
+    } catch (util::OutOfBoundsException &ex) {
         return false;
     }
     return true;

@@ -19,7 +19,6 @@ else()
     message("--------Building without matplotlib support-----------")
 endif()
 set(INCLUDE_FILES
-
         ${CMAKE_CURRENT_LIST_DIR}/Location.h
         ${CMAKE_CURRENT_LIST_DIR}/MapException.h
         ${CMAKE_CURRENT_LIST_DIR}/MapIterator.h
@@ -30,7 +29,6 @@ set(INCLUDE_FILES
         ${CMAKE_CURRENT_LIST_DIR}/Robot.h
         ${CMAKE_CURRENT_LIST_DIR}/Vertex.h
         ${CMAKE_CURRENT_LIST_DIR}/Edge.h
-        ${CMAKE_CURRENT_LIST_DIR}/Benchmarker.h
         ${CMAKE_CURRENT_LIST_DIR}/MapLoader.h
         ${CMAKE_CURRENT_LIST_DIR}/Options.h
         ${CMAKE_CURRENT_LIST_DIR}/MapGenerator.h
@@ -41,11 +39,16 @@ target_sources(utils
         Options.cpp
         Robot.cpp
         Vertex.cpp
-        Benchmarker.cpp
         MapLoader.cpp
         MapGenerator.cpp
         )
+if(ENABLE_TESTING)
+
+set(INCLUDE_FILES ${INCLUDE_FILES} ${CMAKE_CURRENT_LIST_DIR}/Benchmarker.h)
+target_sources(utils PRIVATE Benchmarker.cpp)
 target_link_libraries(utils PRIVATE iplanner)
+endif()
+
 target_include_directories(utils
         PUBLIC
         $<INSTALL_INTERFACE:include>

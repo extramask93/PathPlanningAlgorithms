@@ -140,11 +140,13 @@ util::Location GridMap<CELL_T>::indexToMap(unsigned int index) const noexcept(fa
 template<typename CELL_T>
 std::vector<util::Location> GridMap<CELL_T>::findAllObstacles() const
 {
-  std::vector<util::Location> obstacleIndexes;
-  for (uint index = 0; index < ogm_.size(); index++) {
-    if (ogm_[index] == 0) {
-      obstacleIndexes.push_back({ indexToMap(index) });
-    }
+  static std::vector<util::Location> obstacleIndexes;
+  if(obstacleIndexes.empty()) {
+      for (uint index = 0; index < ogm_.size(); index++) {
+          if (ogm_[index] == 0) {
+              obstacleIndexes.push_back({indexToMap(index)});
+          }
+      }
   }
   return obstacleIndexes;
 }

@@ -29,7 +29,7 @@ class Ant
 class AntColony : public IPlanner
 {
   public:
-    AntColony(std::shared_ptr<util::GridMap<unsigned char>> grid,int n_ants = 1, double alpha = 0.5, double beta = 0.5, double evap_rate = 0.5, int iterations = 1, double Q = 10.0);
+    AntColony(std::shared_ptr<util::GridMap<unsigned char>> grid,int n_ants = 10, double alpha = 0.5, double beta = 0.5, double evap_rate = 0.5, int iterations = 10, double Q = 10.0);
 
     void PrintAntPath(Ant &ant);
 

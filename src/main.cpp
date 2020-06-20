@@ -8,7 +8,6 @@
 #include "RrtPlanner.h"
 #include "rrtstar.h"
 #include "AStar.h"
-#include "Benchmarker.h"
 #include "MapLoader.h"
 //#include <matplotlibcpp.h>
 int main(int, char **)
@@ -33,11 +32,7 @@ int main(int, char **)
     auto new_ant_colony = pf::PotentialFieldsPlanner(map);
     util::Robot::movementType = util::Robot::MovementType::EUCLIDEAN;
     //new_ant_colony.setHeuristic(astar::AStar::HeuristicType::NO_HEURISTIC);
-    util::Benchmarker benchmarker;
-    benchmarker.start();
     auto plan = new_ant_colony.makePlan({ 2.5, 3.5 }, util::Point{ (map->getCellWidth() - 1) * 1.0, (map->getCellHeight() - 1) * 1.0 });
-    benchmarker.stop(plan);
-    benchmarker.printAverages();
     map->plotPathOnMap(plan);
     return 0;
 }
