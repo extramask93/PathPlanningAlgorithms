@@ -1,0 +1,9 @@
+damian@damian-ThinkPad-T430:~/catkin_ws/devel/lib/benchmark$ ./benchmark_node 1 100
+[ INFO] [1592743714.479267599, 102.576000000]: Path len 23.021329 	 Time 111.720000
+damian@damian-ThinkPad-T430:~/catkin_ws/devel/lib/benchmark$ ./benchmark_node 2 100
+[ INFO] [1592743734.612327871, 118.987000000]: Path len 32.368983 	 Time 112.990000
+damian@damian-ThinkPad-T430:~/catkin_ws/devel/lib/benchmark$ ./benchmark_node 3 100
+[ INFO] [1592743752.661605657, 133.766000000]: Path len 34.208053 	 Time 107.550000
+damian@damian-ThinkPad-T430:~/catkin_ws/devel/lib/benchmark$ ./benchmark_node 4 100
+[ INFO] [1592743770.907601396, 148.862000000]: Path len 31.035897 	 Time 106.350000
+

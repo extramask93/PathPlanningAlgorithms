@@ -12,7 +12,7 @@ target_include_directories(rrt
         $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
         )
 target_link_libraries(rrt
-        PRIVATE
+        PUBLIC
         utils
         iplanner
         )
